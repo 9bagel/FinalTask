@@ -24,7 +24,7 @@ public class ServiceLogic {
 
     public List<Service> getServicesByType(String serviceName, String language) throws LogicException {
         LanguageType languageType;
-        if (language == null || language.isEmpty()) {
+        if (language.equals("null")) {
             languageType = LanguageType.EN_US;
         } else {
             languageType = LanguageType.valueOf(language.toUpperCase());

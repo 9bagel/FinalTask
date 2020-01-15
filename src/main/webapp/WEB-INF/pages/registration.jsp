@@ -3,35 +3,41 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale" scope="application"/>
-<html xmlns:c="http://java.sun.com/JSP/Page">
-<body>
+<html>
 <c:import url="/WEB-INF/pages/fragments/header.jsp"/>
+<body>
+<c:import url="/WEB-INF/pages/fragments/navigation.jsp"/>
 <div class="container">
+
+    <div class="row">
+        <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
+
+        <div class="col-lg-9">
     <h2><fmt:message bundle="${locale}" key="text.registration.form" /></h2>
     <form name="loginForm" action="controller" method="post">
         <input type="hidden" name="command" value="registration"/>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label class="block"><fmt:message bundle="${locale}" key="text.registration.login" /></label>
+                <label class="block"><fmt:message bundle="${locale}" key="text.registration.login" />:</label>
                 <input type="text" pattern="^[\w-]{3,10}$" name="login" class="form-control" placeholder="<fmt:message bundle="${locale}" key="text.login" />" required>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label class="block"><fmt:message bundle="${locale}" key="text.registration.email" /></label>
+                <label class="block"><fmt:message bundle="${locale}" key="text.registration.email" />:</label>
                 <input type="email" name="email" class="form-control" placeholder="<fmt:message bundle="${locale}" key="text.email" />" required>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label class="block"><fmt:message bundle="${locale}" key="text.registration.password" /></label>
+                <label class="block"><fmt:message bundle="${locale}" key="text.registration.password" />:</label>
                 <input type="password" pattern="^[A-Za-z0-9]{8,15}$" name="password" class="form-control"
                        placeholder="<fmt:message bundle="${locale}" key="text.password" />" required>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label class="block"><fmt:message bundle="${locale}" key="text.registration.repeat" /></label>
+                <label class="block"><fmt:message bundle="${locale}" key="text.registration.label.repeat" />:</label>
                 <input type="password" pattern="^[A-Za-z0-9]{8,15}$" name="passwordRepeat" class="form-control"
                        placeholder="<fmt:message bundle="${locale}" key="text.registration.repeat" />" required>
             </div>
@@ -48,6 +54,8 @@
             </div>
         </div>
     </form>
+</div>
+</div>
 </div>
 
 </body>

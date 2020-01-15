@@ -4,9 +4,14 @@
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale" scope="application"/>
 <html>
-<body>
 <c:import url="/WEB-INF/pages/fragments/header.jsp"/>
+<body>
+<c:import url="/WEB-INF/pages/fragments/navigation.jsp"/>
 <div class="container">
+
+    <div class="row">
+        <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
+        <div class="col-lg-9">
     <h2><fmt:message bundle="${locale}" key="text.login.form" /></h2>
     <form name="loginForm" action="controller" method="post">
         <input type="hidden" name="command" value="login"/>
@@ -33,6 +38,8 @@
             </div>
         </div>
     </form>
+</div>
+</div>
 </div>
 
 </body>
