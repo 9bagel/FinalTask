@@ -4,11 +4,10 @@ import by.epam.learn.bahlei.finaltask.entity.Entity;
 
 public class Service implements Entity {
     private int id;
-    private ServiceType serviceType;
+    private int typeId;
     private String title;
     private String description;
     private int price;
-    private LanguageType languageType;
 
     public Service() {
     }
@@ -21,12 +20,12 @@ public class Service implements Entity {
         this.id = id;
     }
 
-    public ServiceType getServiceType() {
-        return serviceType;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setServiceType(ServiceType serviceType) {
-        this.serviceType = serviceType;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public String getTitle() {
@@ -51,13 +50,5 @@ public class Service implements Entity {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public LanguageType getLanguageType() {
-        return languageType;
-    }
-
-    public void setLanguageType(LanguageType languageType) {
-        this.languageType = languageType;
     }
 }

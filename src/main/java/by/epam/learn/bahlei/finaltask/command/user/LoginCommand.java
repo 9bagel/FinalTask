@@ -35,7 +35,9 @@ public class LoginCommand implements ActionCommand {
         //Check if user exists in database and password correct
         try {
             User user = userLogic.login(login, password);
-            session.setAttribute("user", login);
+            session.setAttribute(Constants.SESSION_USER_LOGIN, user.getLogin());
+            session.setAttribute(Constants.SESSION_USER_ID, user.getId());
+            session.setAttribute(Constants.SESSION_USER_TYPE_ID, user.getTypeId());
             path = "/FinalTask";
 
         } catch (LogicException e) {

@@ -96,7 +96,7 @@
                 <div class="card mt-4">
                     <div class="card-body">
                         <h3 class="card-title">${service.title}</h3>
-                        <h4><fmt:message bundle="${locale}" key="text.price"/>: ${service.price}</h4>
+                        <h4><fmt:message bundle="${locale}" key="text.price"/>: ${service.price} <fmt:message bundle="${locale}" key="text.ruble"/></h4>
                         <p class="card-text">${service.description}</p>
                         <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
                         4.0 stars

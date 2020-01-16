@@ -91,7 +91,7 @@ public class UserDao extends UserDaoAbstract {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getHashedPassword());
             preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setInt(4, user.getRoleType().getTypeId());
+            preparedStatement.setInt(4, user.getTypeId());
             preparedStatement.setLong(5, user.getId());
 
         } catch (SQLException e) {

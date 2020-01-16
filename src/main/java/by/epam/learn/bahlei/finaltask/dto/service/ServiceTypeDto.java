@@ -1,6 +1,6 @@
-package by.epam.learn.bahlei.finaltask.entity.service;
+package by.epam.learn.bahlei.finaltask.dto.service;
 
-public enum ServiceType {
+public enum ServiceTypeDto {
     HAIRCUT(1),
     PAW_CARE(2),
     WASHING_DRYING(3),
@@ -14,7 +14,7 @@ public enum ServiceType {
 
     private int id;
 
-    ServiceType(int id) {
+    ServiceTypeDto(int id) {
         this.id = id;
     }
 
@@ -22,9 +22,9 @@ public enum ServiceType {
         return id;
     }
 
-    public static ServiceType getById(int id) {
-        for (ServiceType serviceType : values()) {
-            if (serviceType.id == id) return serviceType;
+    public static ServiceTypeDto getById(int id) {
+        for (ServiceTypeDto serviceTypeDto : values()) {
+            if (serviceTypeDto.id == id) return serviceTypeDto;
         }
         throw new IllegalArgumentException("No such typeId for serviceType");
     }

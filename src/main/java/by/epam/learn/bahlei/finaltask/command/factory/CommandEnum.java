@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
 import by.epam.learn.bahlei.finaltask.command.service.ShowServicePageCommand;
 import by.epam.learn.bahlei.finaltask.command.user.LoginCommand;
+import by.epam.learn.bahlei.finaltask.command.user.LogoutCommand;
 import by.epam.learn.bahlei.finaltask.command.user.RegistrationCommand;
 
 public enum CommandEnum {
@@ -28,6 +29,11 @@ public enum CommandEnum {
     CHANGE_LOCALE {
         {
             this.command = new ChangeLocaleCommand();
+        }
+    },
+    LOGOUT {
+        {
+            this.command = new LogoutCommand();
         }
     };
 

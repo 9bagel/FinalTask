@@ -3,9 +3,9 @@ package by.epam.learn.bahlei.finaltask.logic.service;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
-import by.epam.learn.bahlei.finaltask.entity.service.LanguageType;
+import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
+import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
-import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 
 import java.util.List;
@@ -23,22 +23,23 @@ public class ServiceLogic {
     }
 
     public List<Service> getServicesByType(String serviceName, String language) throws LogicException {
-        LanguageType languageType;
-        if (language.equals("null")) {
-            languageType = LanguageType.EN_US;
-        } else {
-            languageType = LanguageType.valueOf(language.toUpperCase());
-        }
-        ServiceType serviceType = ServiceType.valueOf(serviceName.toUpperCase());
-        Service service = new Service();
-        service.setLanguageType(languageType);
-        service.setServiceType(serviceType);
+        LanguageTypeDto languageType = getLanguageTypeByName(language);
+        ServiceTypeDto serviceTypeDto = ServiceTypeDto.valueOf(serviceName.toUpperCase());
 
         try {
-
-            return serviceDao.getServicesByType(service);
+            return serviceDao.getServicesByTypeAndLanguage(serviceTypeDto, languageType);
         } catch (DaoException e) {
             throw new LogicException();
         }
+    }
+
+    private LanguageTypeDto getLanguageTypeByName(String language) {
+        LanguageTypeDto languageType;
+        if (language.equals("null")) {
+            languageType = LanguageTypeDto.EN_US;
+        } else {
+            languageType = LanguageTypeDto.valueOf(language.toUpperCase());
+        }
+        return languageType;
     }
 }

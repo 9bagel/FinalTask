@@ -9,6 +9,10 @@ public class Constants {
     public static final String DB_USER = "db.user";
     public static final String DB_POOL = "db.poolSize";
 
+    public static final String SESSION_USER_LOGIN = "login";
+    public static final String SESSION_USER_ID = "id";
+    public static final String SESSION_USER_TYPE_ID = "type_id";
+
     public static final String LOGIN_PAGE = "/WEB-INF/pages/login.jsp";
     public static final String REGISTRATION_PAGE = "/WEB-INF/pages/registration.jsp";
     public static final String MAIN_PAGE = "/WEB-INF/pages/main.jsp";

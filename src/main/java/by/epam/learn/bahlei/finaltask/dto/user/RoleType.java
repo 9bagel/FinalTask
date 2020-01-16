@@ -1,4 +1,4 @@
-package by.epam.learn.bahlei.finaltask.entity;
+package by.epam.learn.bahlei.finaltask.dto.user;
 
 public enum RoleType {
     ADMINISTRATOR(1),

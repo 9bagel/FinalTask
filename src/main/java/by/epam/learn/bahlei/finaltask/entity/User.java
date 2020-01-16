@@ -5,7 +5,8 @@ public class User implements Entity {
     private String hashedPassword;
     private String email;
     private long id;
-    private RoleType roleType;
+    private int typeId;
+
 
     public User() {
     }
@@ -48,11 +49,11 @@ public class User implements Entity {
         this.id = id;
     }
 
-    public RoleType getRoleType() {
-        return roleType;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 }

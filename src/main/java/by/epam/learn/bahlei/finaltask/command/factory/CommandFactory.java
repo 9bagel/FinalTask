@@ -10,6 +10,7 @@ public class CommandFactory {
     private static final String COMMAND = "command";
 
     public ActionCommand defineCommand(HttpServletRequest request) {
+
         ActionCommand command = new EmptyCommand();
         String action = request.getParameter(COMMAND);
         String pathInfo = request.getPathInfo();

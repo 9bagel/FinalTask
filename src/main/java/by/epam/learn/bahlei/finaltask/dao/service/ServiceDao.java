@@ -3,9 +3,9 @@ package by.epam.learn.bahlei.finaltask.dao.service;
 import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
-import by.epam.learn.bahlei.finaltask.entity.service.LanguageType;
+import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
+import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
-import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +30,7 @@ public class ServiceDao extends ServiceDaoAbstract {
         throw new DaoException("Operation not supported");
     }
 
-    protected List<Service> parseResultSet(ResultSet resultSet, LanguageType languageType) throws DaoException {
+    protected List<Service> parseResultSet(ResultSet resultSet, LanguageTypeDto languageType) throws DaoException {
 
         List<Service> serviceList = new ArrayList<>();
         try {
@@ -42,7 +42,6 @@ public class ServiceDao extends ServiceDaoAbstract {
                 String description = resultSet.getString(languageType.getDescriptionColumnName());
 
                 int typeId = resultSet.getInt(TYPE_ID);
-                ServiceType serviceType = ServiceType.getById(typeId);
 
                 int price = resultSet.getInt(PRICE_COLUMN_NAME);
                 int id = resultSet.getInt(ID_COLUMN_NAME);
@@ -50,7 +49,7 @@ public class ServiceDao extends ServiceDaoAbstract {
                 service.setId(id);
                 service.setTitle(title);
                 service.setDescription(description);
-                service.setServiceType(serviceType);
+                service.setTypeId(typeId);
                 service.setPrice(price);
 
                 serviceList.add(service);
@@ -76,18 +75,16 @@ public class ServiceDao extends ServiceDaoAbstract {
         return INSTANCE;
     }
 
-    public List<Service> getServicesByType(Service service) throws DaoException {
-        ServiceType serviceType = service.getServiceType();
-        LanguageType languageType = service.getLanguageType();
+    public List<Service> getServicesByTypeAndLanguage(ServiceTypeDto serviceTypeDto, LanguageTypeDto languageTypeDto) throws DaoException {
 
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServicesByTypeId())) {
 
-            int typeId = serviceType.getId();
+            int typeId = serviceTypeDto.getId();
             preparedStatement.setInt(TYPE_ID_INDEX, typeId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            return parseResultSet(resultSet, languageType);
+            return parseResultSet(resultSet, languageTypeDto);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException();
         }
