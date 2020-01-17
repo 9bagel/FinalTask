@@ -38,7 +38,7 @@ public class LoginCommand implements ActionCommand {
             session.setAttribute(Constants.SESSION_USER_LOGIN, user.getLogin());
             session.setAttribute(Constants.SESSION_USER_ID, user.getId());
             session.setAttribute(Constants.SESSION_USER_TYPE_ID, user.getTypeId());
-            path = "/FinalTask";
+            path = request.getContextPath();
 
         } catch (LogicException e) {
 
@@ -47,7 +47,7 @@ public class LoginCommand implements ActionCommand {
 
             LOGGER.info("User does not exists");
             session.setAttribute("errorLoginPassMessage", Constants.ERROR_LOGIN);
-            path = request.getContextPath() + "/login";
+            path = request.getContextPath() + "/controller/login";
         }
         return new Response(path, Response.ResponseType.REDIRECT);
     }

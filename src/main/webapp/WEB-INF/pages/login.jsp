@@ -14,7 +14,7 @@
         <div class="col-lg-9">
     <h2><fmt:message bundle="${locale}" key="text.login.form" /></h2>
     <form name="loginForm" action="controller" method="post">
-        <input type="hidden" name="command" value="login"/>
+        <input type="hidden" name="command" value="login_action"/>
         <div class="row">
             <div class="col-md-12 form-group">
                 <input type="text" name="login" class="form-control" placeholder="<fmt:message bundle="${locale}" key="text.login" />" required>

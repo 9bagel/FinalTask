@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <c:choose>
-                    <c:when test="${not empty sessionScope.user}">
+                    <c:when test="${not empty sessionScope.login}">
                         <h3 class="welcome">${sessionScope.login}, hello!</h3>
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=logout">
                             <fmt:message bundle="${locale}" key="text.logout"/>
@@ -25,12 +25,12 @@
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item active">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/login">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/controller/login">
                                 <fmt:message bundle="${locale}" key="text.signin"/>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/registration">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/controller/registration">
                                 <fmt:message bundle="${locale}" key="text.signup"/>
                             </a>
                         </li>

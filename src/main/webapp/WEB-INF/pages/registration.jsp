@@ -15,7 +15,7 @@
         <div class="col-lg-9">
     <h2><fmt:message bundle="${locale}" key="text.registration.form" /></h2>
     <form name="loginForm" action="controller" method="post">
-        <input type="hidden" name="command" value="registration"/>
+        <input type="hidden" name="command" value="registration_action"/>
         <div class="row">
             <div class="col-md-12 form-group">
                 <label class="block"><fmt:message bundle="${locale}" key="text.registration.login" />:</label>
@@ -50,7 +50,7 @@
         </c:if>
         <div class="row">
             <div class="col-md-12 form-group">
-                <button type="button" class="btn btn-success"><fmt:message bundle="${locale}" key="button.send" /></button>
+                <button type="submit" class="btn btn-success"><fmt:message bundle="${locale}" key="button.send" /></button>
             </div>
         </div>
     </form>

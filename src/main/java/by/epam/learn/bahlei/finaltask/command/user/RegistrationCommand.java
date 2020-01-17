@@ -30,13 +30,13 @@ public class RegistrationCommand implements ActionCommand {
 
         try {
             userLogic.registration(login, password, email);
-            path = Constants.LOGIN_PAGE;
+            path = request.getContextPath();
         } catch (LogicException e) {
             throw LOGGER.throwing(new CommandException("LogicException in Registration command:", e));
         } catch (UserException e) {
             LOGGER.info("Unknown user tried to enter");
             request.setAttribute("errorLoginPassMessage", "User name or password is incorrect");
-            path = Constants.REGISTRATION_PAGE;
+            path = request.getContextPath() + "/controller/registration";
         }
         return new Response(path, Response.ResponseType.REDIRECT);
     }
