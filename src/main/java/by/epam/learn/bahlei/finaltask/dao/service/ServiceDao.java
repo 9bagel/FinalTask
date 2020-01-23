@@ -24,6 +24,10 @@ public class ServiceDao extends ServiceDaoAbstract {
     private ServiceDao() {
     }
 
+    public static ServiceDao getInstance() {
+        return INSTANCE;
+    }
+
     protected List<Service> parseResultSet(ResultSet resultSet) throws DaoException {
         throw new DaoException("Operation not supported");
     }
@@ -69,10 +73,6 @@ public class ServiceDao extends ServiceDaoAbstract {
 
     }
 
-    public static ServiceDao getInstance() {
-        return INSTANCE;
-    }
-
     public List<Service> getServicesByTypeAndLanguage(ServiceTypeDto serviceTypeDto, LanguageTypeDto languageTypeDto) throws DaoException {
 
         try (ProxyConnection connection = connectionPool.getConnection();
@@ -89,28 +89,19 @@ public class ServiceDao extends ServiceDaoAbstract {
 
     }
 
+    public Service getServiceByIdAndLanguageType(int serviceId, LanguageTypeDto languageTypeDto) throws DaoException {
 
-    public Service getServiceById(int serviceId) {
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getServicesByTypeIdQuery())) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getServiceByIdQuery())) {
+
             preparedStatement.setInt(1, serviceId);
-            ResultSet resultSet = preparedStatement.executeQuery(getServiceByIdQuery());
-        } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public List<Service> getServicesByTypeId(int typeId) throws DaoException {
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getServicesByTypeIdQuery())) {
-
-            preparedStatement.setInt(1, typeId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return parseResultSet(resultSet);
+
+            List<Service> services = parseResultSet(resultSet, languageTypeDto);
+            return services.iterator().next();
         } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException("Exception in getServicesByTypeId in ServiceDao", e));
+            throw new DaoException();
         }
+
     }
 }

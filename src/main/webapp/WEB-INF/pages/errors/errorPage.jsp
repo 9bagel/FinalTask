@@ -18,8 +18,8 @@
                     <div class="alert alert-danger" role="alert">
                         <fmt:message bundle="${locale}" key="${sessionScope.errorMessage}"/>
                     </div>
-                    <img src="${pageContext.request.contextPath}/resources/img/error.jpg"/>
                 </c:if>
+                <img src="${pageContext.request.contextPath}/resources/img/error.jpg"/>
                 <c:remove var="errorMessage" scope="session"/>
             </div>
         </div>

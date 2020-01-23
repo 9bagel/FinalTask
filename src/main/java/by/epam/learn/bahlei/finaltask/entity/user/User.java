@@ -6,7 +6,7 @@ public class User implements Entity {
     private String login;
     private String hashedPassword;
     private String email;
-    private long id;
+    private int id;
     private int typeId;
 
 
@@ -43,11 +43,11 @@ public class User implements Entity {
         this.email = email;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

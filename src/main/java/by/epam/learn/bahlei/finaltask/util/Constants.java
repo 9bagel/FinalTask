@@ -10,11 +10,12 @@ public class Constants {
     public static final String DB_POOL = "db.poolSize";
 
     public static final String SESSION_USER_LOGIN = "login";
-    public static final String SESSION_USER_ID = "id";
-    public static final String SESSION_USER_TYPE_ID = "type_id";
+    public static final String USER_ID = "id";
+    public static final String USER_ROLE_ID = "role_id";
 
     public static final String SESSION_ERROR_ATTRIBUTE = "errorMessage";
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
+    public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
 
     public static final String LOGIN_JSP = "/WEB-INF/pages/login.jsp";
     public static final String LOGIN_PAGE = "/controller/login";
