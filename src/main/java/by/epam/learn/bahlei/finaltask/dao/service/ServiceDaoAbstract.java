@@ -1,7 +1,6 @@
 package by.epam.learn.bahlei.finaltask.dao.service;
 
 import by.epam.learn.bahlei.finaltask.dao.AbstractEntityDao;
-import by.epam.learn.bahlei.finaltask.entity.service.LocalisedService;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 
 public abstract class ServiceDaoAbstract extends AbstractEntityDao<Service> {
@@ -31,7 +30,7 @@ public abstract class ServiceDaoAbstract extends AbstractEntityDao<Service> {
     }
 
     protected String getServicesByTypeIdQuery() {
-        return "SELECT * FROM services WHERE type_id = ?";
+        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE type_id = ?";
     }
 
     protected String getServiceByIdQuery() {

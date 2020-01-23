@@ -4,7 +4,7 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
-import by.epam.learn.bahlei.finaltask.entity.service.LocalisedService;
+import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.entity.user.UserType;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
@@ -65,6 +65,6 @@ public class UserLogic {
     }
 
     public void addServiceToCart(int userId, int serviceId) {
-        LocalisedService localisedService = serviceDao.getServiceById(serviceId);
+        Service service = serviceDao.getServiceById(serviceId);
     }
 }

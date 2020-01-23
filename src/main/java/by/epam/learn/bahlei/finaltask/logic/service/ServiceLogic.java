@@ -5,7 +5,6 @@ import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
 import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
-import by.epam.learn.bahlei.finaltask.entity.service.LocalisedService;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 
@@ -23,11 +22,12 @@ public class ServiceLogic {
         return INSTANCE;
     }
 
-    public List<Service> getServicesByTypeId(int typeId) throws LogicException {
-//        LanguageTypeDto languageType = getLanguageTypeByName(locale);
-//        ServiceTypeDto serviceTypeDto = ServiceTypeDto.valueOf(serviceName.toUpperCase());
+    public List<Service> getServicesByTypeAndLanguage(String serviceName, String language) throws LogicException {
         try {
-            return serviceDao.getServicesByTypeId(typeId);
+            LanguageTypeDto languageTypeDto = getLanguageTypeByName(language);
+            ServiceTypeDto serviceTypeDto = ServiceTypeDto.valueOf(serviceName.toUpperCase());
+
+            return serviceDao.getServicesByTypeAndLanguage(serviceTypeDto, languageTypeDto);
         } catch (DaoException e) {
             throw new LogicException();
         }
@@ -41,10 +41,5 @@ public class ServiceLogic {
             languageType = LanguageTypeDto.valueOf(language.toUpperCase());
         }
         return languageType;
-    }
-
-    public List<LocalisedService> parseLocalisedServices(List<Service> services, String locale) {
-
-        
     }
 }

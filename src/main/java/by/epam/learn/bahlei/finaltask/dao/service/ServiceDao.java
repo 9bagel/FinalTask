@@ -5,7 +5,6 @@ import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolExc
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
 import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
-import by.epam.learn.bahlei.finaltask.entity.service.LocalisedService;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
@@ -26,41 +25,38 @@ public class ServiceDao extends ServiceDaoAbstract {
     }
 
     protected List<Service> parseResultSet(ResultSet resultSet) throws DaoException {
+        throw new DaoException("Operation not supported");
+    }
+
+    protected List<Service> parseResultSet(ResultSet resultSet, LanguageTypeDto languageType) throws DaoException {
+
+        List<Service> serviceList = new ArrayList<>();
         try {
-            List<Service> services = new ArrayList<>();
             while (resultSet.next()) {
                 Service service = new Service();
 
-                String titleEn = resultSet.getString(Constants.TITLE_COLUMN_NAME_EN);
-                String titleRu = resultSet.getString(Constants.TITLE_COLUMN_NAME_RU);
-                String titleBy = resultSet.getString(Constants.TITLE_COLUMN_NAME_BY);
+                String title = resultSet.getString(languageType.getTitleColumnName());
 
-                String descriptionEn = resultSet.getString(Constants.DESCRIPTION_COLUMN_NAME_EN);
-                String descriptionRu = resultSet.getString(Constants.DESCRIPTION_COLUMN_NAME_RU);
-                String descriptionBy = resultSet.getString(Constants.DESCRIPTION_COLUMN_NAME_BY);
+                String description = resultSet.getString(languageType.getDescriptionColumnName());
 
                 int typeId = resultSet.getInt(Constants.TYPE_ID);
+
                 int price = resultSet.getInt(Constants.PRICE_COLUMN_NAME);
                 int id = resultSet.getInt(Constants.ID_COLUMN_NAME);
 
-                service.setTitleEn(titleEn);
-                service.setTitleRu(titleRu);
-                service.setTitleBy(titleBy);
-
-                service.setDescriptionEn(descriptionEn);
-                service.setDescriptionRu(descriptionRu);
-                service.setDescriptionBy(descriptionBy);
-
                 service.setId(id);
+                service.setTitle(title);
+                service.setDescription(description);
                 service.setTypeId(typeId);
                 service.setPrice(price);
 
-                services.add(service);
+                serviceList.add(service);
             }
-            return services;
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in parseResultSet in ServiceDao", e));
         }
+
+        return serviceList;
     }
 
     @Override
@@ -86,14 +82,15 @@ public class ServiceDao extends ServiceDaoAbstract {
             preparedStatement.setInt(TYPE_ID_INDEX, typeId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            return parseResultSet(resultSet);
+            return parseResultSet(resultSet, languageTypeDto);
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException();
         }
 
     }
 
-    public LocalisedService getServiceById(int serviceId) {
+
+    public Service getServiceById(int serviceId) {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServicesByTypeIdQuery())) {
             preparedStatement.setInt(1, serviceId);

@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS service_types (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS localisedServices (
+CREATE TABLE IF NOT EXISTS services (
     id INT NOT NULL AUTO_INCREMENT,
     type_id INT NOT NULL,
     title_en text NOT NULL,
@@ -73,5 +73,5 @@ CREATE TABLE IF NOT EXISTS ordered_services (
     service_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (order_id) REFERENCES orders (id),
-    FOREIGN KEY (service_id) REFERENCES localisedServices (id)
+    FOREIGN KEY (service_id) REFERENCES services (id)
 );

@@ -14,15 +14,15 @@
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
         <div class="col-lg-9">
 
-            <c:forEach items="${localisedServices}" var="localisedService">
+            <c:forEach items="${services}" var="service">
                 <div class="card mt-4">
                     <div class="card-body">
-                        <h3 class="card-title">${localisedService.title}</h3>
-                        <h4><fmt:message bundle="${locale}" key="text.price"/>: ${localisedService.price} <fmt:message bundle="${locale}" key="text.ruble"/></h4>
-                        <p class="card-text">${localisedService.description}</p>
+                        <h3 class="card-title">${service.title}</h3>
+                        <h4><fmt:message bundle="${locale}" key="text.price"/>: ${service.price} <fmt:message bundle="${locale}" key="text.ruble"/></h4>
+                        <p class="card-text">${service.description}</p>
                         <form method="get" action="controller">
                             <input type="hidden" name="command" value="add_to_cart">
-                            <input type="hidden" name="service_id" value="${localisedService.id}">
+                            <input type="hidden" name="service_id" value="${service.id}">
                             <button type="submit" class="btn btn-primary" ><fmt:message bundle="${locale}" key="button.addToCart"/></button>
                         </form>
 

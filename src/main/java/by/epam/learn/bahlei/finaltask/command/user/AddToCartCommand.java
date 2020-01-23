@@ -19,11 +19,13 @@ public class AddToCartCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
 
-        if (session.getAttribute(Constants.SESSION_USER_TYPE_ID) == null) {
+        if (session.getAttribute(Constants.SESSION_USER_ID) == null) {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.YOU_NEED_TO_LOGIN_MESSAGE);
             return new Response(Constants.ERROR_PAGE, Response.ResponseType.FORWARD);
         } else {
-            userLogic.addServiceToCart();
+            int userId = (int) session.getAttribute(Constants.SESSION_USER_ID);
+            int serviceId = Integer.parseInt(request.getParameter(Constants.PARAMETER_SERVICE_ID));
+            userLogic.addServiceToCart(userId, serviceId);
         }
 
         return new Response(Constants.ERROR_PAGE, Response.ResponseType.FORWARD);

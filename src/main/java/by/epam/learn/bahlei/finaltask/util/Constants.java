@@ -13,7 +13,6 @@ public class Constants {
     public static final String SESSION_USER_ID = "id";
     public static final String SESSION_USER_TYPE_ID = "type_id";
 
-
     public static final String SESSION_ERROR_ATTRIBUTE = "errorMessage";
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
 
@@ -43,4 +42,6 @@ public class Constants {
     public static final String USER_LOGIN = "login";
     public static final String USER_Password = "password";
     public static final String USER_EMAIL = "email";
+
+    public static final String PARAMETER_SERVICE_ID = "service_id";
 }
