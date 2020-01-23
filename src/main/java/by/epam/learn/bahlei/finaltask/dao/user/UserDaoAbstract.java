@@ -1,7 +1,7 @@
 package by.epam.learn.bahlei.finaltask.dao.user;
 
 import by.epam.learn.bahlei.finaltask.dao.AbstractEntityDao;
-import by.epam.learn.bahlei.finaltask.entity.User;
+import by.epam.learn.bahlei.finaltask.entity.user.User;
 
 public abstract class UserDaoAbstract extends AbstractEntityDao<User> {
     @Override

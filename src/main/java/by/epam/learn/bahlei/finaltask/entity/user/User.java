@@ -1,4 +1,6 @@
-package by.epam.learn.bahlei.finaltask.entity;
+package by.epam.learn.bahlei.finaltask.entity.user;
+
+import by.epam.learn.bahlei.finaltask.entity.Entity;
 
 public class User implements Entity {
     private String login;

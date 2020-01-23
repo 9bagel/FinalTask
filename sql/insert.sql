@@ -25,7 +25,7 @@ INSERT into service_types(name) values
 ("Taxi");
 
 
-INSERT into services(type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price) values
+INSERT into localisedServices(type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price) values
 (1,
 "Hygienic haircut",
 "Гигиеническая стрижка",
@@ -105,7 +105,7 @@ INSERT into services(type_id, title_en, title_ru, title_by, description_en, desc
 "Combing out of wool",
 "Вычесывание из шерсти колтунов",
 "Вычесывание з воўны каўтуноў",
-"The cost of the service is 15 rubles / hour. Cutting the tangles under the machine from 3 to 6 rubles.",
+"The cost of the localisedService is 15 rubles / hour. Cutting the tangles under the machine from 3 to 6 rubles.",
 "Стоимость услуги 15 рублей/час. Срезание колтунов под машинку от 3 до 6 рублей.",
 "Кошт паслугі 15 рублёў / гадзіну. Зразанне каўтуноў пад машынку ад 3 да 6 рублёў.",
 15),
@@ -168,7 +168,7 @@ INSERT into services(type_id, title_en, title_ru, title_by, description_en, desc
 "TAXI for your pet",
 "TAXI для вашего питомца",
 "TAXI для вашага гадаванца",
-"We pick up the pet and take it back, depending on the district of the city of Minsk and the suburbs. You do not have time or opportunity to come to the salon, and your pet needs professional care, we took care of this too: departure of our professional driver for your pet and delivery back after all the procedures in our salon. Transportation is carried out in a specially equipped car and with absolute safety for the pet. At this time, you can safely do your favorite or important business without being distracted by a trip to the salon. Beauty salon for animals Manifik is the only salon in Minsk that provides this kind of service. We also leave for the village of Tarasovo, pos. Ratomka, pos. Borovlyany when ordering a full range of services.",
+"We pick up the pet and take it back, depending on the district of the city of Minsk and the suburbs. You do not have time or opportunity to come to the salon, and your pet needs professional care, we took care of this too: departure of our professional driver for your pet and delivery back after all the procedures in our salon. Transportation is carried out in a specially equipped car and with absolute safety for the pet. At this time, you can safely do your favorite or important business without being distracted by a trip to the salon. Beauty salon for animals Manifik is the only salon in Minsk that provides this kind of localisedService. We also leave for the village of Tarasovo, pos. Ratomka, pos. Borovlyany when ordering a full range of localisedServices.",
 "Заберём питомца и отвезём обратно в зависимости от района города Минска и пригорода. У вас нет времени или возможности приехать в салон, а ваш питомец нуждается в профессиональном уходе, мы позаботились и об этом: выезд нашего профессионального водителя за вашим питомцем и доставка обратно после проведения всех процедур в нашем салоне. Перевозка осуществляется в специально оборудованном автомобиле и с абсолютной безопасностью для питомца. Вы в это время можете спокойно заниматься вашими любимыми или важными делами, не отвлекаясь на поездку в салон. Салон красоты для животных Манифик- это единственный салон в Минске, оказывающий такого рода услугу. Так же мы выезжаем в д. Тарасово, пос. Ратомка, пос. Боровляны при заказе полного комплекса услуг.",
 "Забярэм гадаванца і адвязём назад у залежнасці ад раёна горада Мінска і прыгарада. У вас няма часу або магчымасці прыехаць у салон, а ваш гадаванец мае патрэбу ў прафесійным сыходзе, мы паклапаціліся і пра гэта: выезд нашага прафесійнага кіроўцы за вашым гадаванцам і дастаўка назад пасля правядзення ўсіх працэдур ў нашым салоне. Перавозка ажыццяўляецца ў спецыяльна абсталяваным аўтамабілі і з абсалютнай бяспекай для гадаванца. Вы ў гэты час можаце спакойна займацца вашымі любімымі або важнымі справамі, не адцягваючыся на паездку ў салон. Салон прыгажосці для жывёл Манифик - гэта адзіны салон у Мінску, які аказвае такога роду паслугу. Гэтак жа мы выязджаем у в. Тарасава, пас. Ратамка, пас. Бараўляны пры замове поўнага комплексу паслуг.",
 7);

@@ -26,12 +26,12 @@
             </div>
         </div>
         <br/>
-        <c:if test="${not empty errorLoginPassMessage}">
+        <c:if test="${not empty errorMessage}">
             <div class="alert alert-danger" role="alert">
-                ${sessionScope.errorLoginPassMessage}
+                <fmt:message bundle="${locale}" key="${sessionScope.errorMessage}" />
             </div>
         </c:if>
-        <c:remove var="errorLoginPassMessage" scope="session"/>
+        <c:remove var="errorMessage" scope="session"/>
         <div class="row">
             <div class="col-md-12 form-group">
                 <button type="submit" class="btn btn-success"><fmt:message bundle="${locale}" key="button.send" /></button>

@@ -10,6 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowLoginPageCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        return new Response(Constants.LOGIN_PAGE, Response.ResponseType.FORWARD);
+        return new Response(Constants.LOGIN_JSP, Response.ResponseType.FORWARD);
     }
 }

@@ -1,10 +1,9 @@
 package by.epam.learn.bahlei.finaltask.dao.user;
 
-import by.epam.learn.bahlei.finaltask.connectionpool.ConnectionPool;
 import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
-import by.epam.learn.bahlei.finaltask.entity.User;
+import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +19,6 @@ public class UserDao extends UserDaoAbstract {
 
     private static final UserDao INSTANCE = new UserDao();
     private static final Logger LOGGER = LogManager.getLogger(UserDao.class);
-    private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     private UserDao() {
     }

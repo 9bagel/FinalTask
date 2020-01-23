@@ -3,7 +3,7 @@ package by.epam.learn.bahlei.finaltask.command.user;
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
-import by.epam.learn.bahlei.finaltask.entity.User;
+import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
@@ -26,6 +26,7 @@ public class LoginCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         String path;
+        User user;
 
         //Extracting login and password from request
         String login = request.getParameter(PARAM_NAME_LOGIN);
@@ -34,21 +35,22 @@ public class LoginCommand implements ActionCommand {
 
         //Check if user exists in database and password correct
         try {
-            User user = userLogic.login(login, password);
-            session.setAttribute(Constants.SESSION_USER_LOGIN, user.getLogin());
-            session.setAttribute(Constants.SESSION_USER_ID, user.getId());
-            session.setAttribute(Constants.SESSION_USER_TYPE_ID, user.getTypeId());
-            path = request.getContextPath();
-
+            user = userLogic.login(login, password);
         } catch (LogicException e) {
 
             throw LOGGER.throwing(new CommandException("LogicException in execute method in LoginCommand:", e));
         } catch (UserException e) {
 
             LOGGER.info("User does not exists");
-            session.setAttribute("errorLoginPassMessage", Constants.ERROR_LOGIN);
-            path = request.getContextPath() + "/controller/login";
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ERROR_LOGIN);
+            path = request.getContextPath() + Constants.LOGIN_PAGE;
+            return new Response(path, Response.ResponseType.REDIRECT);
         }
+
+        session.setAttribute(Constants.SESSION_USER_LOGIN, user.getLogin());
+        session.setAttribute(Constants.SESSION_USER_ID, user.getId());
+        session.setAttribute(Constants.SESSION_USER_TYPE_ID, user.getTypeId());
+        path = request.getContextPath();
         return new Response(path, Response.ResponseType.REDIRECT);
     }
 }

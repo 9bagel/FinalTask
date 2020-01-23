@@ -3,6 +3,7 @@ package by.epam.learn.bahlei.finaltask.command.service;
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
+import by.epam.learn.bahlei.finaltask.entity.service.LocalisedService;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
@@ -19,18 +20,22 @@ public class ShowServicePageCommand implements ActionCommand {
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        List<Service> services = null;
+        List<Service> services;
+        List<LocalisedService> localisedServices;
         HttpSession session = request.getSession();
+        int typeId = Integer.parseInt(request.getParameter("type_id"));
+        String locale = String.valueOf(session.getAttribute("lang"));
+
         try {
-            String serviceName = request.getParameter("service_name");
-            String language = String.valueOf(session.getAttribute("lang"));
-            services = serviceLogic.getServicesByType(serviceName, language);
+            services = serviceLogic.getServicesByTypeId(typeId);
+            localisedServices = serviceLogic.parseLocalisedServices(services, locale);
+            request.setAttribute("services", services);
+            return new Response(Constants.SERVICE_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
-            e.printStackTrace();
+            return new Response(Constants.ERROR_PAGE, Response.ResponseType.REDIRECT);
         }
 
-        request.setAttribute("services", services);
 
-        return new Response(Constants.SERVICE_PAGE, Response.ResponseType.FORWARD);
     }
+
 }

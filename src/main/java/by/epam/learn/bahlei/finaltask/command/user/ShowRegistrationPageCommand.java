@@ -10,6 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ShowRegistrationPageCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        return new Response(Constants.REGISTRATION_PAGE, Response.ResponseType.FORWARD);
+        return new Response(Constants.REGISTRATION_JSP, Response.ResponseType.FORWARD);
     }
 }

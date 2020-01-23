@@ -2,6 +2,7 @@ package by.epam.learn.bahlei.finaltask.command.factory;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
+import by.epam.learn.bahlei.finaltask.command.user.AddToCartCommand;
 import by.epam.learn.bahlei.finaltask.command.service.ShowServicePageCommand;
 import by.epam.learn.bahlei.finaltask.command.user.*;
 
@@ -44,6 +45,11 @@ public enum CommandEnum {
     LOGOUT {
         {
             this.command = new LogoutCommand();
+        }
+    },
+    ADD_TO_CART {
+        {
+            this.command = new AddToCartCommand();
         }
     };
 

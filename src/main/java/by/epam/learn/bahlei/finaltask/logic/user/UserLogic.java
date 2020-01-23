@@ -2,8 +2,11 @@ package by.epam.learn.bahlei.finaltask.logic.user;
 
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
+import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
-import by.epam.learn.bahlei.finaltask.entity.User;
+import by.epam.learn.bahlei.finaltask.entity.service.LocalisedService;
+import by.epam.learn.bahlei.finaltask.entity.user.User;
+import by.epam.learn.bahlei.finaltask.entity.user.UserType;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.encryptor.BcryptUtil;
@@ -15,6 +18,7 @@ public class UserLogic {
     private static final UserLogic INSTANCE = new UserLogic();
     private DaoFactory daoFactory = DaoFactory.getInstance();
     private UserDao userDao = daoFactory.getUserDao();
+    private ServiceDao serviceDao = daoFactory.getServiceDao();
 
     private UserLogic() {
     }
@@ -52,5 +56,15 @@ public class UserLogic {
 
         return user;
 
+    }
+
+    public void checkPermission(int userTypeId, UserType requiredType) throws LogicException {
+        if (userTypeId != requiredType.getId()) {
+            throw new LogicException("Not enough permissions");
+        }
+    }
+
+    public void addServiceToCart(int userId, int serviceId) {
+        LocalisedService localisedService = serviceDao.getServiceById(serviceId);
     }
 }
