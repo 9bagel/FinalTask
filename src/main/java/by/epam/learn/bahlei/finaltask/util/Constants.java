@@ -12,6 +12,7 @@ public class Constants {
     public static final String SESSION_USER_LOGIN = "login";
     public static final String ID = "id";
     public static final String USER_ROLE_ID = "role_id";
+    public static final String USER_BALANCE = "balance";
     public static final String USER_ID = "user_id";
     public static final String STATUS_ID = "status_id";
     public static final String DATE = "date";
@@ -24,6 +25,7 @@ public class Constants {
     public static final String ATTRIBUTE_SERVICES = "services";
 
     public static final String LOGIN_JSP = "/WEB-INF/pages/login.jsp";
+    public static final String BALANCE_JSP = "/WEB-INF/pages/balance.jsp";
     public static final String REGISTRATION_JSP = "/WEB-INF/pages/registration.jsp";
     public static final String MAIN_JSP = "/WEB-INF/pages/main.jsp";
     public static final String SERVICE_JSP = "/WEB-INF/pages/service.jsp";

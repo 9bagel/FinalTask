@@ -12,7 +12,7 @@ import com.google.protobuf.ServiceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class AddToCartCommand implements ActionCommand {
+public class AddToBasketCommand implements ActionCommand {
 
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private OrderLogic orderLogic = logicFactory.getOrderLogic();

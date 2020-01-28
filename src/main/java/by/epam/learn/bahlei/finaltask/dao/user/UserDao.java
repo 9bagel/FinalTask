@@ -9,6 +9,7 @@ import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,6 +66,7 @@ public class UserDao extends UserDaoAbstract {
                 user.setEmail(resultSet.getString(Constants.USER_EMAIL));
                 user.setId(resultSet.getInt(Constants.ID));
                 user.setTypeId(resultSet.getInt(Constants.USER_ROLE_ID));
+                user.setBalance(BigDecimal.valueOf(resultSet.getInt(Constants.USER_BALANCE)));
                 userList.add(user);
             }
         } catch (SQLException e) {

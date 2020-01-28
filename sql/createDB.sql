@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
     login VARCHAR(15) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
     role_id INT DEFAULT(2) NOT NULL,
+    balance INT DEFAULT(0) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );

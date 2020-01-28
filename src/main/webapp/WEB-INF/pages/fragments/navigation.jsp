@@ -22,9 +22,6 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=logout">
                             <fmt:message bundle="${locale}" key="text.logout"/>
                         </a>
-                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=basket">
-                            <fmt:message bundle="${locale}" key="text.basket"/>
-                        </a>
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item active">

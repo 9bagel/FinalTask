@@ -46,8 +46,10 @@ public class UserLogic {
 
     public User registration(String login, String password, String email) throws LogicException, UserException {
         String hashedPassword = BcryptUtil.generateHash(password);
-        User user = new User(login, hashedPassword, email);
-
+        User user = new User();
+        user.setLogin(login);
+        user.setHashedPassword(hashedPassword);
+        user.setEmail(email);
         LOGGER.info("Start registration logic");
         try {
             userDao.insert(user);

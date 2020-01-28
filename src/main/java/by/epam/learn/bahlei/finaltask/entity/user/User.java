@@ -2,21 +2,17 @@ package by.epam.learn.bahlei.finaltask.entity.user;
 
 import by.epam.learn.bahlei.finaltask.entity.Entity;
 
+import java.math.BigDecimal;
+
 public class User implements Entity {
     private String login;
     private String hashedPassword;
     private String email;
     private int id;
     private int typeId;
-
+    private BigDecimal balance;
 
     public User() {
-    }
-
-    public User(String login, String hashedPassword, String email) {
-        this.login = login;
-        this.hashedPassword = hashedPassword;
-        this.email = email;
     }
 
     public String getLogin() {
@@ -57,5 +53,13 @@ public class User implements Entity {
 
     public void setTypeId(int typeId) {
         this.typeId = typeId;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }
