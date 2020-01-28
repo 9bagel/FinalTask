@@ -24,11 +24,11 @@ public class ShowServicePageCommand implements ActionCommand {
             HttpSession session = request.getSession();
 
             String serviceName = request.getParameter("service_name");
-            String language = String.valueOf(session.getAttribute("lang"));
+            String language = String.valueOf(session.getAttribute(Constants.LOCALE));
 
             services = serviceLogic.getServicesByTypeAndLanguage(serviceName, language);
 
-            request.setAttribute("services", services);
+            request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
             return new Response(Constants.SERVICE_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);

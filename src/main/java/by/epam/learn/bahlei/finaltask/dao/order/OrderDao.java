@@ -112,10 +112,10 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     public List<Order> getOrderWithNewStatus(int userId) throws DaoException {
-        String getOrderWithNewStatus = getOrderWithNewStatusQuery();
+        String orderWithNewStatusQuery = getOrderWithNewStatusQuery();
 
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getOrderWithNewStatus)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(orderWithNewStatusQuery)) {
 
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -128,4 +128,18 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
 
+    public void removeServiceFromBasket(int basketId, int serviceId) throws DaoException {
+        String deleteServiceFromBasketQuery = getDeleteServiceFromBasketQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteServiceFromBasketQuery)) {
+
+            preparedStatement.setInt(1, basketId);
+            preparedStatement.setInt(2, serviceId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Error in removeServiceFromBasket()", e));
+
+        }
+    }
 }

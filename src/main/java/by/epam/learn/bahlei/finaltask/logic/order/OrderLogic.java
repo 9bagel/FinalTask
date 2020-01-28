@@ -81,4 +81,20 @@ public class OrderLogic {
         }
         return order;
     }
+
+    public int getBasketOrderId(int userId) throws LogicException {
+        try {
+            return getOrderWithNewStatus(userId).getId();
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public void removeServiceFromBasket(int basketId, int serviceId) throws LogicException {
+        try {
+            orderDao.removeServiceFromBasket(basketId, serviceId);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
 }

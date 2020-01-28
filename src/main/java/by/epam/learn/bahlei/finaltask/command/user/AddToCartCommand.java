@@ -28,7 +28,7 @@ public class AddToCartCommand implements ActionCommand {
         } else {
             Integer userId = (Integer) session.getAttribute(Constants.ID);
             int serviceId = Integer.parseInt(request.getParameter(Constants.PARAMETER_SERVICE_ID));
-            String language = String.valueOf(session.getAttribute("lang"));
+            String language = String.valueOf(session.getAttribute(Constants.LOCALE));
 
             try {
                 orderLogic.addServiceToOrder(userId, serviceId, language);

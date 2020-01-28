@@ -2,6 +2,8 @@ package by.epam.learn.bahlei.finaltask.command.factory;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
+import by.epam.learn.bahlei.finaltask.command.order.RemoveFromBasketCommand;
+import by.epam.learn.bahlei.finaltask.command.order.ShowBasketPageCommand;
 import by.epam.learn.bahlei.finaltask.command.order.ShowSuccessPageCommand;
 import by.epam.learn.bahlei.finaltask.command.user.AddToCartCommand;
 import by.epam.learn.bahlei.finaltask.command.service.ShowServicePageCommand;
@@ -57,6 +59,12 @@ public enum CommandEnum {
     BASKET {
         {
             this.command = new ShowBasketPageCommand();
+        }
+    },
+
+    REMOVE_FROM_BASKET {
+        {
+            this.command = new RemoveFromBasketCommand();
         }
     },
 

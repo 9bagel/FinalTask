@@ -17,8 +17,11 @@ public class Constants {
     public static final String DATE = "date";
 
     public static final String SESSION_ERROR_ATTRIBUTE = "errorMessage";
+    public static final String SESSION_BASKET_ID = "basket_id";
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
     public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
+
+    public static final String ATTRIBUTE_SERVICES = "services";
 
     public static final String LOGIN_JSP = "/WEB-INF/pages/login.jsp";
     public static final String REGISTRATION_JSP = "/WEB-INF/pages/registration.jsp";
@@ -33,6 +36,8 @@ public class Constants {
     public static final String ERROR_LOGIN = "error.login";
 
     public static final String LOCALE = "lang";
+    public static final String REFERER = "referer";
+
 
     public static final String PRICE_COLUMN_NAME = "price";
     public static final String ID_COLUMN_NAME = "id";

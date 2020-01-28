@@ -44,5 +44,8 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
     protected String getOrderWithNewStatusQuery() {
         return "SELECT id, user_id, status_id, date FROM orders WHERE user_id = ? AND status_id = 1;";
     }
+    protected String getDeleteServiceFromBasketQuery() {
+        return "DELETE from ordered_services where order_id = ? AND service_id = ? LIMIT 1";
+    }
 
 }

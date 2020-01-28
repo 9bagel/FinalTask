@@ -1,4 +1,4 @@
-package by.epam.learn.bahlei.finaltask.command.user;
+package by.epam.learn.bahlei.finaltask.command.order;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
@@ -24,11 +24,13 @@ public class ShowBasketPageCommand implements ActionCommand {
             HttpSession session = request.getSession();
 
             int userId = (int) session.getAttribute(Constants.ID);
-            String language = String.valueOf(session.getAttribute("lang"));
+            String language = String.valueOf(session.getAttribute(Constants.LOCALE));
 
             services = orderLogic.getOrderedServices(userId, language);
+            int basketOrderId = orderLogic.getBasketOrderId(userId);
 
-            request.setAttribute("services", services);
+            request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
+            session.setAttribute(Constants.SESSION_BASKET_ID, basketOrderId);
             return new Response(Constants.BASKET_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);

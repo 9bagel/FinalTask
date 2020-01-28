@@ -12,23 +12,51 @@
     <div class="row">
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
         <div class="col-lg-9">
-            <c:forEach items="${services}" var="service">
-                <div class="card mt-4">
-                    <div class="card-body">
-                        <h3 class="card-title">${service.title}</h3>
-                        <h4><fmt:message bundle="${locale}" key="text.price"/>: ${service.price} <fmt:message bundle="${locale}" key="text.ruble"/></h4>
-                        <p class="card-text">${service.description}</p>
-                        <form method="get" action="controller">
-                            <input type="hidden" name="command" value="add_to_cart">
-                            <input type="hidden" name="service_id" value="${service.id}">
-                            <button type="submit" class="btn btn-primary" ><fmt:message bundle="${locale}" key="button.addToCart"/></button>
-                        </form>
-
-                        <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                        4.0 stars
-                    </div>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3 class="text-center"><fmt:message bundle="${locale}" key="text.basket"/></h3>
+                    <table class="table table-striped">
+                        <tbody>
+                        <c:set var="total" value="${0}"/>
+                        <c:forEach items="${services}" var="service" varStatus="loop">
+                            <c:set var="total" value="${total + service.price}" />
+                            <tr>
+                                <th scope="row">${loop.count}</th>
+                                <td>${service.title}</td>
+                                <td>${service.price} <fmt:message bundle="${locale}" key="text.ruble"/></td>
+                                <form method="POST" action="controller">
+                                    <input type="hidden" name="command" value="remove_from_basket">
+                                    <input type="hidden" name="service_id" value="${service.id}">
+                                    <td>
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            <fmt:message bundle="${locale}" key="button.remove"/>
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
-            </c:forEach>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td><fmt:message bundle="${locale}" key="text.total"/></td>
+                            <td>${total}<fmt:message bundle="${locale}" key="text.ruble"/></td>
+                            <td>
+                                <button type="submit" class="btn btn-success"><fmt:message bundle="${locale}" key="button.pay"/></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
         </div>
     </div>
 
