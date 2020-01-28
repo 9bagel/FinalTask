@@ -1,13 +1,21 @@
 package by.epam.learn.bahlei.finaltask.dao.order;
 
+import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
+import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
+import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
+import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
+import by.epam.learn.bahlei.finaltask.util.Constants;
+import jdk.vm.ci.services.Services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDao extends OrderDaoAbstract {
@@ -24,7 +32,20 @@ public class OrderDao extends OrderDaoAbstract {
 
     @Override
     protected List<Order> parseResultSet(ResultSet resultSet) throws DaoException {
-        return null;
+        Order order = new Order();
+        List<Order> orders = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                order.setUserId(resultSet.getInt(Constants.USER_ID));
+                order.setId(resultSet.getInt(Constants.ID));
+                order.setStatusId(resultSet.getInt(Constants.STATUS_ID));
+                order.setDate(resultSet.getDate(Constants.DATE));
+                orders.add(order);
+            }
+            return orders;
+        } catch (SQLException e) {
+            throw new DaoException("Exception in parseResultSet");
+        }
     }
 
     @Override
@@ -39,8 +60,72 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     @Override
+    public void insert(Order order) throws DaoException {
+        String insertQuery = getInsertQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+
+            prepareInsert(preparedStatement, order);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating order failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    order.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Creating order failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Error in insert method", e));
+
+        }
+    }
+
+    @Override
     protected void prepareUpdate(PreparedStatement preparedStatement, Order entity) throws DaoException {
 
     }
+
+    protected void prepareUpdate(PreparedStatement preparedStatement, Order entity, int serviceId) throws DaoException {
+
+    }
+
+    public void addOrderedService(int orderId, int serviceId) throws DaoException {
+        String addOrderedServiceQuery = getAddOrderedServiceQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(addOrderedServiceQuery)) {
+
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.setInt(2, serviceId);
+
+            preparedStatement.execute();
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Error in addOrderedService()", e));
+
+        }
+    }
+
+    public List<Order> getOrderWithNewStatus(int userId) throws DaoException {
+        String getOrderWithNewStatus = getOrderWithNewStatusQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderWithNewStatus)) {
+
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return parseResultSet(resultSet);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Error in getOrderIfExists()", e));
+
+        }
+    }
+
 
 }

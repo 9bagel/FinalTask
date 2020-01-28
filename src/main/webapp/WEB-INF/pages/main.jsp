@@ -87,7 +87,6 @@
 </c:if>
 
 <div class="container">
-
     <div class="row">
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
     </div>

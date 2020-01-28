@@ -1,4 +1,4 @@
-package by.epam.learn.bahlei.finaltask.command.service;
+package by.epam.learn.bahlei.finaltask.command.user;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
@@ -6,16 +6,16 @@ import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
-import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
+import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class ShowServicePageCommand implements ActionCommand {
+public class ShowBasketPageCommand implements ActionCommand {
     private LogicFactory logicFactory = LogicFactory.getInstance();
-    private ServiceLogic serviceLogic = logicFactory.getServiceLogic();
+    private OrderLogic orderLogic = logicFactory.getOrderLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
@@ -23,18 +23,15 @@ public class ShowServicePageCommand implements ActionCommand {
             List<Service> services;
             HttpSession session = request.getSession();
 
-            String serviceName = request.getParameter("service_name");
+            int userId = (int) session.getAttribute(Constants.ID);
             String language = String.valueOf(session.getAttribute("lang"));
 
-            services = serviceLogic.getServicesByTypeAndLanguage(serviceName, language);
+            services = orderLogic.getOrderedServices(userId, language);
 
             request.setAttribute("services", services);
-            return new Response(Constants.SERVICE_JSP, Response.ResponseType.FORWARD);
+            return new Response(Constants.BASKET_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
         }
-
-
     }
-
 }

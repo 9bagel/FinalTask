@@ -16,7 +16,7 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE services SET type_id = ?, title_en = ?, title_ru = ?, title_by = ?, description_en = ?, description_ru = ?, description_by = ?, price = ? WHERE id = ?";
+        return "UPDATE orders JOIN ordered_services ON orders.id = ordered_services.order_id SET orders.user_id = ?, orders.status_id = ?, ordered_services.service_id = ? WHERE orders.id = ?";
     }
 
     @Override
@@ -36,4 +36,13 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
     protected String getServiceByIdQuery() {
         return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE id = ?";
     }
+
+    protected String getAddOrderedServiceQuery() {
+        return "INSERT INTO ordered_services(order_id, service_id) VALUE(?, ?);";
+    }
+
+    protected String getOrderWithNewStatusQuery() {
+        return "SELECT id, user_id, status_id, date FROM orders WHERE user_id = ? AND status_id = 1;";
+    }
+
 }

@@ -18,9 +18,12 @@
             <ul class="navbar-nav ml-auto">
                 <c:choose>
                     <c:when test="${not empty sessionScope.login}">
-                        <h3 class="welcome">${sessionScope.login}, hello!</h3>
+                        <h3 class="welcome">${sessionScope.login}</h3>
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=logout">
                             <fmt:message bundle="${locale}" key="text.logout"/>
+                        </a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=basket">
+                            <fmt:message bundle="${locale}" key="text.basket"/>
                         </a>
                     </c:when>
                     <c:otherwise>

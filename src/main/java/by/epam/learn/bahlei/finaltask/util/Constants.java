@@ -10,19 +10,25 @@ public class Constants {
     public static final String DB_POOL = "db.poolSize";
 
     public static final String SESSION_USER_LOGIN = "login";
-    public static final String USER_ID = "id";
+    public static final String ID = "id";
     public static final String USER_ROLE_ID = "role_id";
+    public static final String USER_ID = "user_id";
+    public static final String STATUS_ID = "status_id";
+    public static final String DATE = "date";
 
     public static final String SESSION_ERROR_ATTRIBUTE = "errorMessage";
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
     public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
 
     public static final String LOGIN_JSP = "/WEB-INF/pages/login.jsp";
-    public static final String LOGIN_PAGE = "/controller/login";
     public static final String REGISTRATION_JSP = "/WEB-INF/pages/registration.jsp";
     public static final String MAIN_JSP = "/WEB-INF/pages/main.jsp";
     public static final String SERVICE_JSP = "/WEB-INF/pages/service.jsp";
-    public static final String ERROR_PAGE = "/WEB-INF/pages/errors/errorPage.jsp";
+    public static final String ERROR_JSP = "/WEB-INF/pages/errors/errorPage.jsp";
+    public static final String SUCCESS_JSP = "/WEB-INF/pages/success.jsp";
+    public static final String BASKET_JSP = "/WEB-INF/pages/basket.jsp";
+    public static final String LOGIN_PAGE = "/controller/login";
+    public static final String SUCCESS_PAGE = "/controller/success";
 
     public static final String ERROR_LOGIN = "error.login";
 

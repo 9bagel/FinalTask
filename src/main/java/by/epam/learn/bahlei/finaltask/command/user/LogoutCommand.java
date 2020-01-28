@@ -15,7 +15,7 @@ public class LogoutCommand implements ActionCommand {
         HttpSession session = request.getSession();
         session.removeAttribute(Constants.SESSION_USER_LOGIN);
         session.removeAttribute(Constants.USER_ROLE_ID);
-        session.removeAttribute(Constants.USER_ID);
+        session.removeAttribute(Constants.ID);
         return new Response(Constants.MAIN_JSP, Response.ResponseType.FORWARD);
     }
 }

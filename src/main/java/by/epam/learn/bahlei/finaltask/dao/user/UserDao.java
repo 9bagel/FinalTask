@@ -63,7 +63,7 @@ public class UserDao extends UserDaoAbstract {
                 user.setLogin(resultSet.getString(Constants.USER_LOGIN));
                 user.setHashedPassword(resultSet.getString(Constants.USER_Password));
                 user.setEmail(resultSet.getString(Constants.USER_EMAIL));
-                user.setId(resultSet.getInt(Constants.USER_ID));
+                user.setId(resultSet.getInt(Constants.ID));
                 user.setTypeId(resultSet.getInt(Constants.USER_ROLE_ID));
                 userList.add(user);
             }

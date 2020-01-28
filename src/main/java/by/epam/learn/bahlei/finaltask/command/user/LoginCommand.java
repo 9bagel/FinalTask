@@ -48,7 +48,7 @@ public class LoginCommand implements ActionCommand {
         }
 
         session.setAttribute(Constants.SESSION_USER_LOGIN, user.getLogin());
-        session.setAttribute(Constants.USER_ID, user.getId());
+        session.setAttribute(Constants.ID, user.getId());
         session.setAttribute(Constants.USER_ROLE_ID, user.getTypeId());
         path = request.getContextPath();
         return new Response(path, Response.ResponseType.REDIRECT);
