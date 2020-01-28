@@ -1,4 +1,4 @@
-package by.epam.learn.bahlei.finaltask.command.user;
+package by.epam.learn.bahlei.finaltask.command.order;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class AddToBasketCommand implements ActionCommand {
-
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private OrderLogic orderLogic = logicFactory.getOrderLogic();
 
@@ -32,14 +31,14 @@ public class AddToBasketCommand implements ActionCommand {
 
             try {
                 orderLogic.addServiceToOrder(userId, serviceId, language);
+                return new Response(path + Constants.SUCCESS_PAGE, Response.ResponseType.REDIRECT);
             } catch (LogicException e) {
-                e.printStackTrace();
+                return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
             } catch (ServiceException e) {
                 session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.SERVICE_NOT_FOUND_MESSAGE);
                 return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
             }
         }
 
-        return new Response(path + Constants.SUCCESS_PAGE, Response.ResponseType.REDIRECT);
     }
 }

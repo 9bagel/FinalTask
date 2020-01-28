@@ -14,18 +14,27 @@
         <div class="col-lg-9">
             <div class="card mt-4">
                 <div class="card-body">
-                    <h3 class="text-center"><fmt:message bundle="${locale}" key="text.balance"/></h3>
+                    <h3 class="text-center">
+                        <fmt:message bundle="${locale}" key="text.balance"/>
+                    </h3>
                     <table class="table table-striped">
                         <tbody>
                         <tr>
-                            <td><fmt:message bundle="${locale}" key="text.your_balance_is"/></td>
-                            <td>${sessionScope.balance}<fmt:message bundle="${locale}" key="text.ruble"/></td>
+                            <td>
+                                <fmt:message bundle="${locale}" key="text.your_balance_is"/>
+                            </td>
+                            <td>${sessionScope.balance}
+                                <fmt:message bundle="${locale}" key="text.ruble"/>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <br><h5 class="text-center"><fmt:message bundle="${locale}" key="text.deposit"/></h5>
+            <br>
+            <h5 class="text-center">
+                <fmt:message bundle="${locale}" key="text.deposit"/>
+            </h5>
 
 
             <div class="card mt-4">
@@ -33,11 +42,21 @@
                     <table class="table table-striped">
                         <tbody>
                         <tr>
-                            <td><fmt:message bundle="${locale}" key="text.enter_deposit_amount"/></td>
                             <td>
-                                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" pattern="[0-9]{,3}">
+                                <fmt:message bundle="${locale}" key="text.enter_deposit_amount"/>
                             </td>
-                            <td> <button type="submit" class="btn btn-outline-success"><fmt:message bundle="${locale}" key="button.deposit"/></button></td>
+                            <form method="POST" action="controller">
+                                <input type="hidden" name="command" value="make_deposit">
+                                <td>
+                                    <input type="text" name="amount" class="form-control" aria-label="Small"
+                                           aria-describedby="inputGroup-sizing-sm" pattern="[0-9]{,3}">
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-outline-success">
+                                        <fmt:message bundle="${locale}" key="button.deposit"/>
+                                    </button>
+                                </td>
+                            </form>
                         </tr>
                         </tbody>
                     </table>

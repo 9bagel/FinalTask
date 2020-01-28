@@ -2,24 +2,24 @@ package by.epam.learn.bahlei.finaltask.logic.user;
 
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
-import by.epam.learn.bahlei.finaltask.dao.order.OrderDao;
-import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.entity.user.UserType;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
+import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.encryptor.BcryptUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.math.BigDecimal;
+import java.util.Optional;
 
 public class UserLogic {
     private static final Logger LOGGER = LogManager.getLogger(UserLogic.class);
     private static final UserLogic INSTANCE = new UserLogic();
     private DaoFactory daoFactory = DaoFactory.getInstance();
     private UserDao userDao = daoFactory.getUserDao();
-    private ServiceDao serviceDao = daoFactory.getServiceDao();
-    private OrderDao orderDao = daoFactory.getOrderDao();
 
     private UserLogic() {
     }
@@ -67,4 +67,25 @@ public class UserLogic {
         }
     }
 
+    public void makeDeposit(int userId, BigDecimal amount) throws LogicException {
+        try {
+            userDao.addBalance(userId, amount);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException("Exception in makeDeposit()", e));
+        }
+    }
+
+    public User getUserById(Integer userId) throws UserException, LogicException {
+        try {
+            Optional<User> user = userDao.getUserById(userId)
+                    .stream()
+                    .findFirst();
+            if (!user.isPresent()) {
+                throw LOGGER.throwing(new UserException(Constants.USER_NOT_FOUND_ERROR));
+            }
+            return user.get();
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException("Exception in makeDeposit()", e));
+        }
+    }
 }

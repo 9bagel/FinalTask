@@ -21,15 +21,21 @@ public abstract class UserDaoAbstract extends AbstractEntityDao<User> {
 
     @Override
     protected String getSelectAllQuery() {
-        return "SELECT id, email, login, password, role_id FROM users";
+        return "SELECT id, email, login, password, role_id, balance FROM users";
     }
 
     @Override
     protected String getSelectLimitQuery() {
-        return "SELECT id, email, login, password, role_id FROM users WHERE id > ? LIMIT ?";
+        return "SELECT id, email, login, password, role_id, balance FROM users WHERE id > ? LIMIT ?";
     }
 
     protected String getUserByLoginQuery() {
         return "SELECT * FROM users WHERE login = ?";
+    }
+    protected String getAddBalanceQuery() {
+        return "UPDATE users SET balance = balance + ? where id = ?";
+    }
+    protected String getUserByIdQuery() {
+        return "SELECT id, email, login, password, role_id, balance FROM users WHERE id = ?";
     }
 }

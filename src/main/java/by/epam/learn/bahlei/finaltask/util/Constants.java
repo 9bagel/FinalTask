@@ -16,11 +16,14 @@ public class Constants {
     public static final String USER_ID = "user_id";
     public static final String STATUS_ID = "status_id";
     public static final String DATE = "date";
+    public static final String AMOUNT = "amount";
 
     public static final String SESSION_ERROR_ATTRIBUTE = "errorMessage";
     public static final String SESSION_BASKET_ID = "basket_id";
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
     public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
+    public static final String USER_NOT_FOUND_ERROR = "text.user.not_found";
+    public static final String REFILL_ERROR = "text.refill_error";
 
     public static final String ATTRIBUTE_SERVICES = "services";
 

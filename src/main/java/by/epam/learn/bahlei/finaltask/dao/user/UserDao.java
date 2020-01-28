@@ -29,13 +29,12 @@ public class UserDao extends UserDaoAbstract {
     }
 
     public User getUserByLogin(String login) throws DaoException, UserException {
-        String query = getUserByLoginQuery();
+        String userByLoginQuery = getUserByLoginQuery();
         User user;
         List<User> userList;
 
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(userByLoginQuery)) {
 
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -98,6 +97,34 @@ public class UserDao extends UserDaoAbstract {
 
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in prepareUpdate in UserDao", e));
+        }
+    }
+
+    public void addBalance(int userId, BigDecimal amount) throws DaoException {
+        String addBalanceQuery = getAddBalanceQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(addBalanceQuery)) {
+
+            preparedStatement.setInt(1, amount.intValue());
+            preparedStatement.setInt(2, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Exception in addBalance method in UserDao", e));
+        }
+    }
+
+    public List<User> getUserById(Integer userId) throws DaoException {
+        String userByIdQuery = getUserByIdQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(userByIdQuery)) {
+
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return parseResultSet(resultSet);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Exception in getUserById method in UserDao", e));
         }
     }
 }
