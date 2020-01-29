@@ -11,7 +11,7 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO orders(user_id, status_id, date) VALUE(?, ?, ?);";
+        return "INSERT INTO orders(user_id, status_id) VALUE(?, ?);";
     }
 
     @Override
@@ -21,20 +21,12 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
 
     @Override
     protected String getSelectAllQuery() {
-        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services";
+        return "";
     }
 
     @Override
     protected String getSelectLimitQuery() {
-        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE id > ? LIMIT ?";
-    }
-
-    protected String getServicesByTypeIdQuery() {
-        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE type_id = ?";
-    }
-
-    protected String getServiceByIdQuery() {
-        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE id = ?";
+        return "";
     }
 
     protected String getAddOrderedServiceQuery() {
@@ -42,10 +34,13 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
     }
 
     protected String getOrderWithNewStatusQuery() {
-        return "SELECT id, user_id, status_id, date FROM orders WHERE user_id = ? AND status_id = 1;";
+        return "SELECT id, user_id, status_id FROM orders WHERE user_id = ? AND status_id = 1;";
     }
     protected String getDeleteServiceFromBasketQuery() {
         return "DELETE from ordered_services where order_id = ? AND service_id = ? LIMIT 1";
+    }
+    protected String getUpdateStatusQuery() {
+        return "UPDATE orders SET status_id = ? WHERE id = ?";
     }
 
 }

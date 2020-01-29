@@ -31,6 +31,7 @@ public class AddToBasketCommand implements ActionCommand {
 
             try {
                 orderLogic.addServiceToOrder(userId, serviceId, language);
+                session.setAttribute(Constants.SUCCESS_MESSAGE, Constants.SERVICE_ADDED_TO_BASKET);
                 return new Response(path + Constants.SUCCESS_PAGE, Response.ResponseType.REDIRECT);
             } catch (LogicException e) {
                 return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);

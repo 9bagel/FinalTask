@@ -15,7 +15,6 @@ import com.google.protobuf.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,7 +73,6 @@ public class OrderLogic {
             order = optionalOrder.get();
         } else {
             order = new Order();
-            order.setDate(new Date(System.currentTimeMillis()));
             order.setUserId(userId);
             order.setStatusId(OrderStatus.NEW.getId());
             orderDao.insert(order);

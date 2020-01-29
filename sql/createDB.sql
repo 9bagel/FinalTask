@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS orders (
     id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     status_id INT DEFAULT(1) NOT NULL,
-    date DATE NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (status_id) REFERENCES order_statuses (id)
@@ -43,9 +42,12 @@ CREATE TABLE IF NOT EXISTS receipt_statuses (
 CREATE TABLE IF NOT EXISTS receipts (
     id INT NOT NULL AUTO_INCREMENT,
     status_id INT DEFAULT(1) NOT NULL,
-    sum INT NOT NULL DEFAULT 0,
+    total INT NOT NULL DEFAULT 0,
+    order_id INT NOT NULL,
+    date DATE NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (status_id) REFERENCES receipt_statuses (id)
+    FOREIGN KEY (status_id) REFERENCES receipt_statuses (id),
+    FOREIGN KEY (order_id) REFERENCES orders (id)
 );
 
 CREATE TABLE IF NOT EXISTS service_types (

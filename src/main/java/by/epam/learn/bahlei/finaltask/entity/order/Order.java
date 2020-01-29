@@ -3,7 +3,6 @@ package by.epam.learn.bahlei.finaltask.entity.order;
 import by.epam.learn.bahlei.finaltask.entity.Entity;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ public class Order implements Entity {
     private int id;
     private int userId;
     private int statusId;
-    private Date date;
 
     private List<Service> services = new ArrayList<>();
 
@@ -42,15 +40,7 @@ public class Order implements Entity {
         this.statusId = statusId;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void addService(Service service){
+    public void addService(Service service) {
         services.add(service);
     }
 

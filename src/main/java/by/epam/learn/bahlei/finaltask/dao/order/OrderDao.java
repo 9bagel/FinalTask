@@ -3,11 +3,9 @@ package by.epam.learn.bahlei.finaltask.dao.order;
 import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
-import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
-import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
+import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import jdk.vm.ci.services.Services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,7 +37,6 @@ public class OrderDao extends OrderDaoAbstract {
                 order.setUserId(resultSet.getInt(Constants.USER_ID));
                 order.setId(resultSet.getInt(Constants.ID));
                 order.setStatusId(resultSet.getInt(Constants.STATUS_ID));
-                order.setDate(resultSet.getDate(Constants.DATE));
                 orders.add(order);
             }
             return orders;
@@ -53,7 +50,6 @@ public class OrderDao extends OrderDaoAbstract {
         try {
             preparedStatement.setInt(1, order.getUserId());
             preparedStatement.setInt(2, order.getStatusId());
-            preparedStatement.setDate(3, order.getDate());
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in prepareInsert in OrderDao", e));
         }
@@ -139,6 +135,19 @@ public class OrderDao extends OrderDaoAbstract {
             preparedStatement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException("Error in removeServiceFromBasket()", e));
+
+        }
+    }
+
+    public void updateStatus(ProxyConnection connection, int order_id, OrderStatus orderStatus) throws DaoException {
+        String updateStatusQuery = getUpdateStatusQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateStatusQuery)) {
+
+            preparedStatement.setInt(1, orderStatus.getId());
+            preparedStatement.setInt(2, order_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in updateStatus()", e));
 
         }
     }

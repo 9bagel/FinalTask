@@ -15,10 +15,10 @@
         <div class="col-lg-9">
             <div class="card mt-4">
                     <div class="alert alert-success" role="alert">
-                        <fmt:message bundle="${locale}" key="text.success"/>
+                        <fmt:message bundle="${locale}" key="${sessionScope.successMessage}"/>
                     </div>
                 <img src="${pageContext.request.contextPath}/resources/img/success.png"/>
-                <c:remove var="errorMessage" scope="session"/>
+                <c:remove var="successMessage" scope="session"/>
             </div>
         </div>
     </div>

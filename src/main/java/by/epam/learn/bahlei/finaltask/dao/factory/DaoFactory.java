@@ -1,6 +1,7 @@
 package by.epam.learn.bahlei.finaltask.dao.factory;
 
 import by.epam.learn.bahlei.finaltask.dao.order.OrderDao;
+import by.epam.learn.bahlei.finaltask.dao.receipt.ReceiptDao;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 
@@ -24,5 +25,9 @@ public class DaoFactory {
 
     public OrderDao getOrderDao() {
         return OrderDao.getInstance();
+    }
+
+    public ReceiptDao getReceiptDao() {
+        return ReceiptDao.getInstance();
     }
 }

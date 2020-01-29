@@ -22,10 +22,16 @@ public class Constants {
     public static final String SESSION_BASKET_ID = "basket_id";
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
     public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
+    public static final String SERVICE_ADDED_TO_BASKET = "text.service.success";
+    public static final String CREATE_RECEIPT_ERROR = "text.receipt.error";
+    public static final String EMPTY_CART_ERROR = "text.empty_cart.error";
     public static final String USER_NOT_FOUND_ERROR = "text.user.not_found";
     public static final String REFILL_ERROR = "text.refill_error";
+    public static final String RECEIPT_CREATED_MESSAGE = "text.receipt.success";
 
+    public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String ATTRIBUTE_SERVICES = "services";
+    public static final String TOTAL = "total";
 
     public static final String LOGIN_JSP = "/WEB-INF/pages/login.jsp";
     public static final String BALANCE_JSP = "/WEB-INF/pages/balance.jsp";

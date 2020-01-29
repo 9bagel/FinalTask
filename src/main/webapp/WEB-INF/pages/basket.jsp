@@ -48,9 +48,18 @@
                             <th scope="row"></th>
                             <td><fmt:message bundle="${locale}" key="text.total"/></td>
                             <td>${total}<fmt:message bundle="${locale}" key="text.ruble"/></td>
+                            <c:set var="total" value="${total}" scope="session"  />
+                            <form method="POST" action="controller">
+                                <input type="hidden" name="command" value="make_receipt">
                             <td>
-                                <button type="submit" class="btn btn-success"><fmt:message bundle="${locale}" key="button.pay"/></button>
+                                <input id="datetime" name="date" type="datetime-local" placeholder="<fmt:message bundle="${locale}" key="text.select_date_time"/>" required>
                             </td>
+                            <td>
+                                <button type="submit" class="btn btn-success">
+                                    <fmt:message bundle="${locale}" key="button.make_receipt"/>
+                                </button>
+                            </td>
+                            </form>
                         </tr>
                         </tbody>
                     </table>
