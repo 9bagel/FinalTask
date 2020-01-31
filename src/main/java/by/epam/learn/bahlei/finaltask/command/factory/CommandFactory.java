@@ -1,17 +1,21 @@
 package by.epam.learn.bahlei.finaltask.command.factory;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
-import by.epam.learn.bahlei.finaltask.command.EmptyCommand;
+import by.epam.learn.bahlei.finaltask.command.ShowMainPageCommand;
+import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
+import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.util.UrlEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class CommandFactory {
     private static final String COMMAND = "command";
+    private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
-    public ActionCommand defineCommand(HttpServletRequest request) {
-
-        ActionCommand command = new EmptyCommand();
+    public ActionCommand defineCommand(HttpServletRequest request) throws CommandException {
+        ActionCommand command = new ShowMainPageCommand();
         String action = request.getParameter(COMMAND);
         String pathInfo = request.getPathInfo();
 
@@ -22,11 +26,12 @@ public class CommandFactory {
                 action = UrlEncoder.getPath(pathInfo);
             }
         }
-
-        CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
-        command = commandEnum.getCurrentCommand();
-
-        return command;
+        try {
+            CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
+            command = commandEnum.getCurrentCommand();
+            return command;
+        } catch (IllegalArgumentException e) {
+            throw LOGGER.throwing(new CommandException(e));
+        }
     }
-
 }

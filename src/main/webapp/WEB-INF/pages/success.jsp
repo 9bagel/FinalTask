@@ -17,7 +17,9 @@
                     <div class="alert alert-success" role="alert">
                         <fmt:message bundle="${locale}" key="${sessionScope.successMessage}"/>
                     </div>
-                <img src="${pageContext.request.contextPath}/resources/img/success.png"/>
+                <div class="d-flex justify-content-center">
+                <img src="${pageContext.request.contextPath}/resources/img/success.png" style="width: 50%; height: 50%;"/>
+                </div>
                 <c:remove var="successMessage" scope="session"/>
             </div>
         </div>

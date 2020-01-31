@@ -8,10 +8,13 @@ import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.util.LanguageUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class ServiceLogic {
+    private static final Logger LOGGER = LogManager.getLogger(ServiceLogic.class);
     private static final ServiceLogic INSTANCE = new ServiceLogic();
     private DaoFactory daoFactory = DaoFactory.getInstance();
     private ServiceDao serviceDao = daoFactory.getServiceDao();
@@ -30,9 +33,27 @@ public class ServiceLogic {
 
             return serviceDao.getServicesByTypeAndLanguage(serviceTypeDto, languageTypeDto);
         } catch (DaoException e) {
-            throw new LogicException();
+            throw LOGGER.throwing(new LogicException(e));
         }
     }
 
 
+    public List<Service> getAllServices(String language) throws LogicException {
+        LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
+        try {
+            return serviceDao.getAll(languageTypeDto);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public List<Service> getOrderedServicesByOrderId(int orderId, String language) throws LogicException {
+        LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
+
+        try {
+            return serviceDao.getOrderedServices(orderId, languageTypeDto);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
 }

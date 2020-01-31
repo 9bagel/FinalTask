@@ -30,10 +30,10 @@ public class OrderDao extends OrderDaoAbstract {
 
     @Override
     protected List<Order> parseResultSet(ResultSet resultSet) throws DaoException {
-        Order order = new Order();
         List<Order> orders = new ArrayList<>();
         try {
             while (resultSet.next()) {
+                Order order = new Order();
                 order.setUserId(resultSet.getInt(Constants.USER_ID));
                 order.setId(resultSet.getInt(Constants.ID));
                 order.setStatusId(resultSet.getInt(Constants.STATUS_ID));

@@ -118,4 +118,20 @@ public class ServiceDao extends ServiceDaoAbstract {
             throw LOGGER.throwing(new DaoException("Error in getOrderedServices()", e));
         }
     }
+
+    public List<Service> getAll(LanguageTypeDto languageTypeDto) throws DaoException {
+        String selectAllQuery = getSelectAllQuery();
+        List<Service> services;
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectAllQuery);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            services = parseResultSet(resultSet, languageTypeDto);
+
+            return services;
+        } catch (ConnectionPoolException | SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in getAll method", e));
+        }
+    }
 }

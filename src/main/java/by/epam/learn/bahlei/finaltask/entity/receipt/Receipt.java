@@ -3,29 +3,30 @@ package by.epam.learn.bahlei.finaltask.entity.receipt;
 import by.epam.learn.bahlei.finaltask.entity.Entity;
 
 public class Receipt implements Entity {
-    private int user_id;
-    private int status_id;
+    private int id;
+    private int userId;
+    private int statusId;
     private int total;
-    private int order_id;
+    private int orderId;
     private String date;
 
     public Receipt() {
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getStatus_id() {
-        return status_id;
+    public int getStatusId() {
+        return statusId;
     }
 
-    public void setStatus_id(int status_id) {
-        this.status_id = status_id;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
     public int getTotal() {
@@ -36,12 +37,12 @@ public class Receipt implements Entity {
         this.total = total;
     }
 
-    public int getOrder_id() {
-        return order_id;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public String getDate() {
@@ -50,5 +51,13 @@ public class Receipt implements Entity {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

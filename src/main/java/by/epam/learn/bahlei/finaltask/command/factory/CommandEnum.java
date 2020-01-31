@@ -1,6 +1,7 @@
 package by.epam.learn.bahlei.finaltask.command.factory;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
+import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
 import by.epam.learn.bahlei.finaltask.command.order.*;
 import by.epam.learn.bahlei.finaltask.command.service.ShowServicePageCommand;
@@ -85,6 +86,23 @@ public enum CommandEnum {
     MAKE_RECEIPT {
         {
             this.command = new MakeReceiptCommand();
+        }
+    },
+
+    ERROR {
+        {
+            this.command = new ShowErrorPageCommand();
+        }
+    },
+    ORDERS {
+        {
+            this.command = new ShowOrdersCommand();
+        }
+    },
+
+    ORDER_DETAILS {
+        {
+            this.command = new OrderDetailsCommand();
         }
     },
 

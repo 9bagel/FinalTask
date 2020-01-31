@@ -1,9 +1,12 @@
 package by.epam.learn.bahlei.finaltask.controller;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
-import by.epam.learn.bahlei.finaltask.command.factory.CommandFactory;
 import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
+import by.epam.learn.bahlei.finaltask.command.factory.CommandFactory;
+import by.epam.learn.bahlei.finaltask.util.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,8 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/controller","/controller/*"})
+@WebServlet(urlPatterns = {"/controller", "/controller/*"})
 public class Controller extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,8 +32,8 @@ public class Controller extends HttpServlet {
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CommandFactory commandFactory = new CommandFactory();
-        ActionCommand command = commandFactory.defineCommand(request);
         try {
+            ActionCommand command = commandFactory.defineCommand(request);
             Response commandResponse = command.execute(request);
 
             switch (commandResponse.getType()) {
@@ -42,7 +46,9 @@ public class Controller extends HttpServlet {
                     break;
             }
         } catch (CommandException e) {
-            //TODO
+            LOGGER.error(e);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.ERROR_JSP);
+            dispatcher.forward(request, response);
         }
     }
 }

@@ -31,7 +31,9 @@ public class Constants {
 
     public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String ATTRIBUTE_SERVICES = "services";
+    public static final String ATTRIBUTE_RECEIPTS = "receipts";
     public static final String TOTAL = "total";
+    public static final String ORDER_ID = "order_id";
 
     public static final String LOGIN_JSP = "/WEB-INF/pages/login.jsp";
     public static final String BALANCE_JSP = "/WEB-INF/pages/balance.jsp";
@@ -41,6 +43,8 @@ public class Constants {
     public static final String ERROR_JSP = "/WEB-INF/pages/errors/errorPage.jsp";
     public static final String SUCCESS_JSP = "/WEB-INF/pages/success.jsp";
     public static final String BASKET_JSP = "/WEB-INF/pages/basket.jsp";
+    public static final String RECEIPTS_JSP = "/WEB-INF/pages/receipts.jsp";
+    public static final String DETAILS_JSP = "/WEB-INF/pages/details.jsp";
     public static final String LOGIN_PAGE = "/controller/login";
     public static final String SUCCESS_PAGE = "/controller/success";
 

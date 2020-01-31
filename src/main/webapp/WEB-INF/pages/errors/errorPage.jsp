@@ -19,7 +19,9 @@
                         <fmt:message bundle="${locale}" key="${sessionScope.errorMessage}"/>
                     </div>
                 </c:if>
-                <img src="${pageContext.request.contextPath}/resources/img/error.jpg"/>
+                <div class="d-flex justify-content-center">
+                <img src="${pageContext.request.contextPath}/resources/img/error.jpg" style="width: 50%; height: 50%;"/>
+                </div>
                 <c:remove var="errorMessage" scope="session"/>
             </div>
         </div>

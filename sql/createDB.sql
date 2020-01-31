@@ -41,13 +41,15 @@ CREATE TABLE IF NOT EXISTS receipt_statuses (
 
 CREATE TABLE IF NOT EXISTS receipts (
     id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
     status_id INT DEFAULT(1) NOT NULL,
     total INT NOT NULL DEFAULT 0,
     order_id INT NOT NULL,
     date DATE NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (status_id) REFERENCES receipt_statuses (id),
-    FOREIGN KEY (order_id) REFERENCES orders (id)
+    FOREIGN KEY (order_id) REFERENCES orders (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE IF NOT EXISTS service_types (

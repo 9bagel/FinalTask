@@ -12,7 +12,7 @@ public abstract class ReceiptDaoAbstract extends AbstractEntityDao<Receipt> {
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO receipts(status_id, total, order_id, date) VALUES(?,?,?,?)";
+        return "INSERT INTO receipts(status_id, total, order_id, date, user_id) VALUES(?,?,?,?,?)";
     }
 
     @Override
@@ -28,5 +28,9 @@ public abstract class ReceiptDaoAbstract extends AbstractEntityDao<Receipt> {
     @Override
     protected String getSelectLimitQuery() {
         return null;
+    }
+
+    protected String getByUserIdQuery() {
+        return "SELECT id, user_id, status_id, total, order_id, date FROM receipts where user_id = ?";
     }
 }

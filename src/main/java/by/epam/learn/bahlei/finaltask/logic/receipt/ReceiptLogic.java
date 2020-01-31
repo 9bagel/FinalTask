@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ReceiptLogic {
     private static final Logger LOGGER = LogManager.getLogger(ReceiptLogic.class);
@@ -35,7 +36,7 @@ public class ReceiptLogic {
             connection = ConnectionPool.getInstance().getConnection();
             connection.setAutoCommit(false);
             receiptDao.insert(connection, receipt);
-            orderDao.updateStatus(connection, receipt.getOrder_id(), OrderStatus.IN_PROGRESS);
+            orderDao.updateStatus(connection, receipt.getOrderId(), OrderStatus.IN_PROGRESS);
             connection.commit();
             connection.setAutoCommit(true);
         } catch (ConnectionPoolException | SQLException | DaoException e) {
@@ -51,6 +52,18 @@ public class ReceiptLogic {
             if (connection != null) {
                 connection.close();
             }
+        }
+    }
+
+    public List<Receipt> getReceiptsByUserId(int userId) throws LogicException {
+        try {
+            List<Receipt> receipts = receiptDao.getByUserId(userId);
+            if (receipts.isEmpty()) {
+                throw LOGGER.throwing(new LogicException());
+            }
+            return receipts;
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
         }
     }
 }
