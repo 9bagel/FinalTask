@@ -23,7 +23,7 @@
                             <td>
                                 <fmt:message bundle="${locale}" key="text.your_balance_is"/>
                             </td>
-                            <td>${sessionScope.balance}
+                            <td>${sessionScope.user.balance}&nbsp
                                 <fmt:message bundle="${locale}" key="text.ruble"/>
                             </td>
                         </tr>

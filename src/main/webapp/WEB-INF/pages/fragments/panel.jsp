@@ -5,8 +5,8 @@
     <fmt:message bundle="${locale}" key="text.panel"/>
 </h4>
 <div class="list-group">
-    <a href="${pageContext.request.contextPath}/controller?command=basket" class="list-group-item">
-        <fmt:message bundle="${locale}" key="text.basket"/>
+    <a href="${pageContext.request.contextPath}/controller?command=shopping_cart" class="list-group-item">
+        <fmt:message bundle="${locale}" key="text.shopping_cart"/>
     </a>
     <a href="${pageContext.request.contextPath}/controller?command=balance" class="list-group-item">
         <fmt:message bundle="${locale}" key="text.balance"/>

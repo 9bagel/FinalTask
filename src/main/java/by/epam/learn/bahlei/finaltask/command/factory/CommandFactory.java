@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.ShowMainPageCommand;
 import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
+import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.UrlEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,12 +12,11 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 public class CommandFactory {
-    private static final String COMMAND = "command";
     private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
     public ActionCommand defineCommand(HttpServletRequest request) throws CommandException {
         ActionCommand command = new ShowMainPageCommand();
-        String action = request.getParameter(COMMAND);
+        String action = request.getParameter(Constants.COMMAND);
         String pathInfo = request.getPathInfo();
 
         if (action == null || action.isEmpty()) {

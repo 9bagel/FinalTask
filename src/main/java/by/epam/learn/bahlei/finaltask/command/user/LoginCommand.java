@@ -25,15 +25,11 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        String path;
         User user;
-
-        //Extracting login and password from request
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         HttpSession session = request.getSession();
 
-        //Check if user exists in database and password correct
         try {
             user = userLogic.login(login, password);
         } catch (LogicException e) {
@@ -43,14 +39,10 @@ public class LoginCommand implements ActionCommand {
 
             LOGGER.info("User does not exists");
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ERROR_LOGIN);
-            path = request.getContextPath() + Constants.LOGIN_PAGE;
-            return new Response(path, Response.ResponseType.REDIRECT);
+            return new Response(request.getContextPath() + Constants.LOGIN_PAGE, Response.ResponseType.REDIRECT);
         }
 
-        session.setAttribute(Constants.SESSION_USER_LOGIN, user.getLogin());
-        session.setAttribute(Constants.ID, user.getId());
-        session.setAttribute(Constants.USER_ROLE_ID, user.getTypeId());
-        path = request.getContextPath();
-        return new Response(path, Response.ResponseType.REDIRECT);
+        session.setAttribute(Constants.USER, user);
+        return new Response(request.getContextPath(), Response.ResponseType.REDIRECT);
     }
 }

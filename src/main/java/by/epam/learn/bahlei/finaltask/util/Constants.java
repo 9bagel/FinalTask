@@ -9,7 +9,10 @@ public class Constants {
     public static final String DB_USER = "db.user";
     public static final String DB_POOL = "db.poolSize";
 
-    public static final String SESSION_USER_LOGIN = "login";
+    public static final String COMMAND = "command";
+
+    public static final String SHOPPING_CART = "shopping_cart";
+    public static final String USER = "user";
     public static final String ID = "id";
     public static final String USER_ROLE_ID = "role_id";
     public static final String USER_BALANCE = "balance";
@@ -19,10 +22,11 @@ public class Constants {
     public static final String AMOUNT = "amount";
 
     public static final String SESSION_ERROR_ATTRIBUTE = "errorMessage";
+    public static final String SESSION_SUCCESS_ATTRIBUTE = "successMessage";
     public static final String SESSION_BASKET_ID = "basket_id";
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
     public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
-    public static final String SERVICE_ADDED_TO_BASKET = "text.service.success";
+    public static final String SERVICE_ADDED_TO_SHOPPING_CART = "text.shopping_cart.add.success";
     public static final String CREATE_RECEIPT_ERROR = "text.receipt.error";
     public static final String EMPTY_CART_ERROR = "text.empty_cart.error";
     public static final String USER_NOT_FOUND_ERROR = "text.user.not_found";
@@ -42,7 +46,7 @@ public class Constants {
     public static final String SERVICE_JSP = "/WEB-INF/pages/service.jsp";
     public static final String ERROR_JSP = "/WEB-INF/pages/errors/errorPage.jsp";
     public static final String SUCCESS_JSP = "/WEB-INF/pages/success.jsp";
-    public static final String BASKET_JSP = "/WEB-INF/pages/basket.jsp";
+    public static final String SHOPPING_CART_JSP = "/WEB-INF/pages/shoppingCart.jsp";
     public static final String RECEIPTS_JSP = "/WEB-INF/pages/receipts.jsp";
     public static final String DETAILS_JSP = "/WEB-INF/pages/details.jsp";
     public static final String LOGIN_PAGE = "/controller/login";
@@ -70,5 +74,5 @@ public class Constants {
     public static final String USER_Password = "password";
     public static final String USER_EMAIL = "email";
 
-    public static final String PARAMETER_SERVICE_ID = "service_id";
+    public static final String SERVICE_ID = "service_id";
 }

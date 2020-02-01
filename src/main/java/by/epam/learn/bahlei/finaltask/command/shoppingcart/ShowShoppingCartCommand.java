@@ -1,4 +1,4 @@
-package by.epam.learn.bahlei.finaltask.command.order;
+package by.epam.learn.bahlei.finaltask.command.shoppingcart;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
@@ -7,15 +7,19 @@ import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
+import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
+import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import by.epam.learn.bahlei.finaltask.util.shoppingcart.ShoppingCartUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class ShowBasketPageCommand implements ActionCommand {
+public class ShowShoppingCartCommand implements ActionCommand {
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private OrderLogic orderLogic = logicFactory.getOrderLogic();
+    private ServiceLogic serviceLogic = logicFactory.getServiceLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
@@ -23,15 +27,15 @@ public class ShowBasketPageCommand implements ActionCommand {
             List<Service> services;
             HttpSession session = request.getSession();
 
-            int userId = (int) session.getAttribute(Constants.ID);
             String language = String.valueOf(session.getAttribute(Constants.LOCALE));
+            ShoppingCart shoppingCart = ShoppingCartUtil.getShoppingCart(session);
 
-            services = orderLogic.getOrderedServices(userId, language);
-            int basketOrderId = orderLogic.getBasketOrderId(userId);
+            List<Integer> serviceIds = shoppingCart.getServiceIds();
+
+            services = serviceLogic.getServicesByIdsAndLanguage(serviceIds, language);
 
             request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
-            session.setAttribute(Constants.SESSION_BASKET_ID, basketOrderId);
-            return new Response(Constants.BASKET_JSP, Response.ResponseType.FORWARD);
+            return new Response(Constants.SHOPPING_CART_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
         }

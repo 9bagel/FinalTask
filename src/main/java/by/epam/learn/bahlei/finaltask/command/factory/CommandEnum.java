@@ -5,6 +5,9 @@ import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
 import by.epam.learn.bahlei.finaltask.command.order.*;
 import by.epam.learn.bahlei.finaltask.command.service.ShowServicePageCommand;
+import by.epam.learn.bahlei.finaltask.command.shoppingcart.AddServiceToCartCommand;
+import by.epam.learn.bahlei.finaltask.command.shoppingcart.RemoveServiceFromShoppingCartCommand;
+import by.epam.learn.bahlei.finaltask.command.shoppingcart.ShowShoppingCartCommand;
 import by.epam.learn.bahlei.finaltask.command.user.*;
 
 public enum CommandEnum {
@@ -50,13 +53,13 @@ public enum CommandEnum {
     },
     ADD_TO_CART {
         {
-            this.command = new AddToBasketCommand();
+            this.command = new AddServiceToCartCommand();
         }
     },
 
-    BASKET {
+    SHOPPING_CART {
         {
-            this.command = new ShowBasketPageCommand();
+            this.command = new ShowShoppingCartCommand();
         }
     },
 
@@ -71,9 +74,9 @@ public enum CommandEnum {
         }
     },
 
-    REMOVE_FROM_BASKET {
+    REMOVE_FROM_SHOPPING_CART {
         {
-            this.command = new RemoveFromBasketCommand();
+            this.command = new RemoveServiceFromShoppingCartCommand();
         }
     },
 

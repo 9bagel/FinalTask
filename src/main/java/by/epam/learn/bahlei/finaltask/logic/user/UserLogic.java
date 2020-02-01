@@ -67,9 +67,10 @@ public class UserLogic {
         }
     }
 
-    public void makeDeposit(int userId, BigDecimal amount) throws LogicException {
+    public void makeDeposit(User user, BigDecimal amount) throws LogicException {
         try {
-            userDao.addBalance(userId, amount);
+            user.setBalance(user.getBalance().add(amount));
+            userDao.addBalance(user.getId(), amount);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException("Exception in makeDeposit()", e));
         }

@@ -29,16 +29,11 @@ public class PayCommand implements ActionCommand {
         String language = String.valueOf(session.getAttribute(Constants.LOCALE));
         List<Service> services = new ArrayList<>();
 
-        int userId = (int) session.getAttribute(Constants.ID);
-
+        User user = (User) session.getAttribute(Constants.USER);
         try {
-            User user = userLogic.getUserById(userId);
             BigDecimal balance = user.getBalance();
 
-            services = orderLogic.getOrderedServices(userId, language);
-        } catch (UserException e) {
-            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e);
-            return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
+            services = orderLogic.getOrderedServices(user.getId(), language);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         }

@@ -5,6 +5,7 @@ import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.entity.receipt.Receipt;
 import by.epam.learn.bahlei.finaltask.entity.receipt.ReceiptStatus;
+import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
@@ -24,10 +25,10 @@ public class MakeReceiptCommand implements ActionCommand {
         HttpSession session = request.getSession();
 
         try {
-            int userId = (int) session.getAttribute(Constants.ID);
+            User user = (User) session.getAttribute(Constants.USER);
             String language = String.valueOf(session.getAttribute(Constants.LOCALE));
 
-            if (orderLogic.getOrderedServices(userId, language).isEmpty()){
+            if (orderLogic.getOrderedServices(user.getId(), language).isEmpty()) {
                 session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.EMPTY_CART_ERROR);
                 return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
             }
@@ -44,7 +45,8 @@ public class MakeReceiptCommand implements ActionCommand {
 
     private Receipt createNewReceipt(HttpServletRequest request, HttpSession session) {
         Receipt receipt = new Receipt();
-        receipt.setUserId((int) session.getAttribute(Constants.ID));
+        User user = (User) session.getAttribute(Constants.USER);
+        receipt.setUserId(user.getId());
         receipt.setOrderId((int) session.getAttribute(Constants.SESSION_BASKET_ID));
         receipt.setDate(request.getParameter(Constants.DATE));
         receipt.setTotal(Integer.parseInt(session.getAttribute(Constants.TOTAL).toString()));

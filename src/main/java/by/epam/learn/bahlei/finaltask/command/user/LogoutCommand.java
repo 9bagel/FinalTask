@@ -13,9 +13,7 @@ public class LogoutCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        session.removeAttribute(Constants.SESSION_USER_LOGIN);
-        session.removeAttribute(Constants.USER_ROLE_ID);
-        session.removeAttribute(Constants.ID);
+        session.removeAttribute(Constants.USER);
         return new Response(Constants.MAIN_JSP, Response.ResponseType.FORWARD);
     }
 }

@@ -26,9 +26,9 @@
                         <tr>
                             <td>#${receipt.id}</td>
                             <td>${receipt.date}</td>
-                            <td>${receipt.total} <fmt:message bundle="${locale}" key="text.ruble"/></td>
+                            <td>${receipt.total} &nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
                             <td>
-                            <form method="POST" action="controller">
+                            <form method="GET" action="controller">
                             <input type="hidden" name="command" value="order_details">
                             <input type="hidden" name="order_id" value="${receipt.orderId}">
                                 <button type="submit" class="btn btn-outline-success"><fmt:message bundle="${locale}" key="text.order_details"/></button>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="col-lg-3">
-    <c:if test="${not empty sessionScope.login}">
+    <c:if test="${not empty sessionScope.user}">
         <c:import url="/WEB-INF/pages/fragments/panel.jsp"/>
     </c:if>
     <h1 class="my-4"><fmt:message bundle="${locale}" key="text.services"/></h1>

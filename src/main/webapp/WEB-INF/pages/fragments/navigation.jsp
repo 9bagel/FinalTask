@@ -17,8 +17,8 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <c:choose>
-                    <c:when test="${not empty sessionScope.login}">
-                        <h3 class="welcome">${sessionScope.login}</h3>
+                    <c:when test="${not empty sessionScope.user}">
+                        <h3 class="welcome">${sessionScope.user.login}</h3>
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=logout">
                             <fmt:message bundle="${locale}" key="text.logout"/>
                         </a>

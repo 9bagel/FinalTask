@@ -4,9 +4,6 @@ public class Response {
     private String path;
     private ResponseType type;
 
-    private static final String REDIRECT = "redirect";
-    private static final String FORWARD = "forward";
-
     public Response(String path, ResponseType type) {
         this.path = path;
         this.type = type;

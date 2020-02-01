@@ -14,7 +14,7 @@
         <div class="col-lg-9">
             <div class="card mt-4">
                 <div class="card-body">
-                    <h3 class="text-center"><fmt:message bundle="${locale}" key="text.basket"/></h3>
+                    <h3 class="text-center"><fmt:message bundle="${locale}" key="text.shopping_cart"/></h3>
                     <table class="table table-striped">
                         <tbody>
                         <c:set var="total" value="${0}"/>
@@ -23,9 +23,9 @@
                             <tr>
                                 <th scope="row">${loop.count}</th>
                                 <td>${service.title}</td>
-                                <td>${service.price} <fmt:message bundle="${locale}" key="text.ruble"/></td>
+                                <td>${service.price} &nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
                                 <form method="POST" action="controller">
-                                    <input type="hidden" name="command" value="remove_from_basket">
+                                    <input type="hidden" name="command" value="remove_from_shopping_cart">
                                     <input type="hidden" name="service_id" value="${service.id}">
                                     <td>
                                         <button type="submit" class="btn btn-outline-danger">
@@ -47,7 +47,7 @@
                         <tr>
                             <th scope="row"></th>
                             <td><fmt:message bundle="${locale}" key="text.total"/></td>
-                            <td>${total}<fmt:message bundle="${locale}" key="text.ruble"/></td>
+                            <td>${total}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
                             <c:set var="total" value="${total}" scope="session"  />
                             <form method="POST" action="controller">
                                 <input type="hidden" name="command" value="make_receipt">

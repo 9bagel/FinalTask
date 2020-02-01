@@ -134,4 +134,34 @@ public class ServiceDao extends ServiceDaoAbstract {
             throw LOGGER.throwing(new DaoException("Error in getAll method", e));
         }
     }
+
+    public boolean isServiceExists(int serviceId) throws DaoException {
+        String selectServiceByIdQuery = getSelectServiceByIdQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectServiceByIdQuery)) {
+
+            preparedStatement.setInt(1, serviceId);
+
+            return preparedStatement.executeQuery().next();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in isServiceExists() in ServiceDao", e));
+        }
+    }
+
+    public List<Service> getServicesByIdsAndLanguage(List<Integer> serviceIds, LanguageTypeDto languageTypeDto) throws DaoException {
+        List<Service> services = new ArrayList<>();
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getServiceByIdQuery())) {
+
+            for (Integer serviceId : serviceIds) {
+                preparedStatement.setInt(1, serviceId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                services.add(parseResultSet(resultSet, languageTypeDto).get(0));
+            }
+            return services;
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Error in getServicesByIdsAndLanguage() in ServiceDao", e));
+        }
+    }
 }
