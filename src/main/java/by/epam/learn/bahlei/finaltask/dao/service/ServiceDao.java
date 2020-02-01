@@ -80,21 +80,6 @@ public class ServiceDao extends ServiceDaoAbstract {
 
     }
 
-    public List<Service> getServiceByIdAndLanguageType(int serviceId, LanguageTypeDto languageTypeDto) throws DaoException {
-
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getServiceByIdQuery())) {
-
-            preparedStatement.setInt(1, serviceId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            return parseResultSet(resultSet, languageTypeDto);
-        } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException();
-        }
-
-    }
-
     public List<Service> getOrderedServices(int orderId, LanguageTypeDto languageTypeDto) throws DaoException {
         String getOrderedServices = getOrderedServicesQuery();
 

@@ -15,7 +15,7 @@
         <div class="col-lg-9">
                 <div class="card mt-4">
                     <div class="card-body">
-                        <h3 class="text-center"><fmt:message bundle="${locale}" key="text.order"/>&nbsp#${order.id}</h3>
+                        <h3 class="text-center"><fmt:message bundle="${locale}" key="text.order"/>&nbsp#${order.id}&nbsp(<fmt:message bundle="${locale}" key="${order.orderStatus.name}"/>)</h3>
                         <table class="table table-striped">
                             <tbody>
                             <tr>
@@ -32,7 +32,7 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                        <p class="float-right"><fmt:message bundle="${locale}" key="text.total"/>${order.total}:&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></p>
+                        <p class="float-right"><fmt:message bundle="${locale}" key="text.total"/>:&nbsp${order.total}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></p>
                         <h5 class="col"><fmt:message bundle="${locale}" key="text.order.date"/>:&nbsp<fmt:formatDate type="both" value="${order.date}" /></h5>
                         <div class="float-left">
                             <form class="float-left" action="controller" method="post">

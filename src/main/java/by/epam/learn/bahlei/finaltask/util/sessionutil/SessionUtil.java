@@ -41,7 +41,7 @@ public class SessionUtil {
         Order order = new Order();
         order.setUserId(getUser(session).getId());
         order.setTotal((BigDecimal) session.getAttribute(Constants.TOTAL));
-        order.setStatusId(OrderStatus.NEW.getId());
+        order.setOrderStatus(OrderStatus.NEW);
         order.setDate(getDate(request));
         return order;
     }

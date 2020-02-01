@@ -79,4 +79,10 @@ public class Constants {
 
     public static final String SERVICE_ID = "service_id";
     public static final String ORDER = "order";
+
+    public static final String ORDER_STATUS_NEW = "text.order.status.new";
+    public static final String ORDER_STATUS_IN_PROGRESS = "text.order.status.in_progress";
+    public static final String ORDER_STATUS_COMPLETED = "text.order.status.completed";
+    public static final String ORDER_STATUS_CANCEL = "text.order.status.canceled";
+    public static final String ORDER_STATUS_PAYED = "text.order.status.payed";
 }

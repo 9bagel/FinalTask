@@ -36,7 +36,7 @@ public class OrderDao extends OrderDaoAbstract {
                 Order order = new Order();
                 order.setUserId(resultSet.getInt(Constants.USER_ID));
                 order.setId(resultSet.getInt(Constants.ID));
-                order.setStatusId(resultSet.getInt(Constants.STATUS_ID));
+                order.setOrderStatus(OrderStatus.getOrderStatusById(resultSet.getInt(Constants.STATUS_ID)));
                 order.setTotal(resultSet.getBigDecimal(Constants.TOTAL));
                 order.setDate(resultSet.getTimestamp(Constants.DATE));
                 orders.add(order);
@@ -51,7 +51,7 @@ public class OrderDao extends OrderDaoAbstract {
     protected void prepareInsert(PreparedStatement preparedStatement, Order order) throws DaoException {
         try {
             preparedStatement.setInt(1, order.getUserId());
-            preparedStatement.setInt(2, order.getStatusId());
+            preparedStatement.setInt(2, order.getOrderStatus().getId());
             preparedStatement.setBigDecimal(3, order.getTotal());
             preparedStatement.setTimestamp(4, order.getDate());
 
@@ -119,23 +119,6 @@ public class OrderDao extends OrderDaoAbstract {
 
     }
 
-    public void addOrderedService(int orderId, int serviceId) throws DaoException {
-        String addOrderedServiceQuery = getAddOrderedServiceQuery();
-
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(addOrderedServiceQuery)) {
-
-            preparedStatement.setInt(1, orderId);
-            preparedStatement.setInt(2, serviceId);
-
-            preparedStatement.execute();
-
-        } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException("Error in addOrderedService()", e));
-
-        }
-    }
-
     public List<Order> getOrderWithNewStatus(int userId) throws DaoException {
         String orderWithNewStatusQuery = getOrderWithNewStatusQuery();
 
@@ -152,22 +135,6 @@ public class OrderDao extends OrderDaoAbstract {
         }
     }
 
-
-    public void removeServiceFromBasket(int basketId, int serviceId) throws DaoException {
-        String deleteServiceFromBasketQuery = getDeleteServiceFromBasketQuery();
-
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteServiceFromBasketQuery)) {
-
-            preparedStatement.setInt(1, basketId);
-            preparedStatement.setInt(2, serviceId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException("Error in removeServiceFromBasket()", e));
-
-        }
-    }
-
     public void updateStatus(ProxyConnection connection, int order_id, OrderStatus orderStatus) throws DaoException {
         String updateStatusQuery = getUpdateStatusQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateStatusQuery)) {
@@ -179,10 +146,6 @@ public class OrderDao extends OrderDaoAbstract {
             throw LOGGER.throwing(new DaoException("Error in updateStatus()", e));
 
         }
-    }
-
-    public void createOrder(List<Integer> serviceIds, int userId) {
-
     }
 
     public void addServicesFromShoppingCart(ProxyConnection connection, List<Integer> serviceIds, int orderId) throws DaoException {

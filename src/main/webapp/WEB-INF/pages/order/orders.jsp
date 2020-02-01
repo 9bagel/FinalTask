@@ -20,6 +20,7 @@
                             <th><fmt:message bundle="${locale}" key="text.order.id"/></th>
                             <th><fmt:message bundle="${locale}" key="text.order.date"/></th>
                             <th><fmt:message bundle="${locale}" key="text.price"/></th>
+                            <th><fmt:message bundle="${locale}" key="text.status"/></th>
                             <th><fmt:message bundle="${locale}" key="text.details"/></th>
                         </tr>
                         <c:forEach items="${orders}" var="order">
@@ -27,6 +28,8 @@
                             <td>#${order.id}</td>
                             <td><fmt:formatDate type="both" value="${order.date}" /></td>
                             <td>${order.total} &nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
+                            <td><fmt:message bundle="${locale}" key="${order.orderStatus.name}"/></td>
+                            <c:if test="${order.orderStatus.id != 5}">
                             <td>
                             <form method="GET" action="controller">
                             <input type="hidden" name="command" value="order_details">
@@ -34,6 +37,7 @@
                                 <button type="submit" class="btn btn-outline-success"><fmt:message bundle="${locale}" key="text.order_details"/></button>
                             </form>
                             </td>
+                            </c:if>
                         </tr>
                         </c:forEach>
                         </tbody>

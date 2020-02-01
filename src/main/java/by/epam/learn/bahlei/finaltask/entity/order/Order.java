@@ -11,7 +11,7 @@ import java.util.List;
 public class Order implements Entity {
     private int id;
     private int userId;
-    private int statusId;
+    private OrderStatus orderStatus;
     private BigDecimal total;
     private Timestamp date;
 
@@ -36,12 +36,12 @@ public class Order implements Entity {
         this.userId = userId;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public void addService(Service service) {

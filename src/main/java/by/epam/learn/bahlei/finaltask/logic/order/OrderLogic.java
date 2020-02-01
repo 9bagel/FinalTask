@@ -13,13 +13,12 @@ import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
-import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.LanguageUtil;
-import com.google.protobuf.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,27 +34,6 @@ public class OrderLogic {
 
     public static OrderLogic getInstance() {
         return INSTANCE;
-    }
-
-    public void addServiceToOrder(int userId, int serviceId, String language) throws LogicException, ServiceException {
-        LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
-        Order order;
-        try {
-            Optional<Service> optionalService = serviceDao.getServiceByIdAndLanguageType(serviceId, languageTypeDto)
-                    .stream()
-                    .findFirst();
-            if (!optionalService.isPresent()) {
-                throw LOGGER.throwing(new ServiceException(Constants.SERVICE_NOT_FOUND_MESSAGE));
-            } else {
-                order = getOrderWithNewStatus(userId);
-
-                orderDao.addOrderedService(order.getId(), serviceId);
-                order.addService(optionalService.get());
-            }
-        } catch (DaoException e) {
-            throw LOGGER.throwing(new LogicException(e));
-        }
-
     }
 
     public List<Service> getOrderedServices(int userId, String language) throws LogicException {
@@ -79,26 +57,10 @@ public class OrderLogic {
         } else {
             order = new Order();
             order.setUserId(userId);
-            order.setStatusId(OrderStatus.NEW.getId());
+            order.setOrderStatus(OrderStatus.NEW);
             orderDao.insert(order);
         }
         return order;
-    }
-
-    public int getBasketOrderId(int userId) throws LogicException {
-        try {
-            return getOrderWithNewStatus(userId).getId();
-        } catch (DaoException e) {
-            throw LOGGER.throwing(new LogicException(e));
-        }
-    }
-
-    public void removeServiceFromBasket(int basketId, int serviceId) throws LogicException {
-        try {
-            orderDao.removeServiceFromBasket(basketId, serviceId);
-        } catch (DaoException e) {
-            throw LOGGER.throwing(new LogicException(e));
-        }
     }
 
     public void createOrder(List<Integer> serviceIds, Order order) throws LogicException {
@@ -135,6 +97,7 @@ public class OrderLogic {
             if (orders.isEmpty()) {
                 throw LOGGER.throwing(new LogicException());
             }
+            Collections.reverse(orders);
             return orders;
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
