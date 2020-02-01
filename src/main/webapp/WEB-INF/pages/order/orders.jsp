@@ -17,20 +17,20 @@
                     <table class="table table-striped">
                         <tbody>
                         <tr>
-                            <th><fmt:message bundle="${locale}" key="text.receipt_id"/></th>
-                            <th><fmt:message bundle="${locale}" key="text.receipt_date"/></th>
+                            <th><fmt:message bundle="${locale}" key="text.order.id"/></th>
+                            <th><fmt:message bundle="${locale}" key="text.order.date"/></th>
                             <th><fmt:message bundle="${locale}" key="text.price"/></th>
                             <th><fmt:message bundle="${locale}" key="text.details"/></th>
                         </tr>
-                        <c:forEach items="${receipts}" var="receipt">
+                        <c:forEach items="${orders}" var="order">
                         <tr>
-                            <td>#${receipt.id}</td>
-                            <td>${receipt.date}</td>
-                            <td>${receipt.total} &nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
+                            <td>#${order.id}</td>
+                            <td><fmt:formatDate type="both" value="${order.date}" /></td>
+                            <td>${order.total} &nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
                             <td>
                             <form method="GET" action="controller">
                             <input type="hidden" name="command" value="order_details">
-                            <input type="hidden" name="order_id" value="${receipt.orderId}">
+                            <input type="hidden" name="order_id" value="${order.id}">
                                 <button type="submit" class="btn btn-outline-success"><fmt:message bundle="${locale}" key="text.order_details"/></button>
                             </form>
                             </td>

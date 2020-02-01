@@ -30,12 +30,13 @@ public class Constants {
     public static final String CREATE_RECEIPT_ERROR = "text.receipt.error";
     public static final String EMPTY_CART_ERROR = "text.empty_cart.error";
     public static final String USER_NOT_FOUND_ERROR = "text.user.not_found";
+    public static final String ORDER_NOT_FOUND = "text.order.not_found";
     public static final String REFILL_ERROR = "text.refill_error";
     public static final String ORDER_CREATED_MESSAGE = "text.order.success";
 
     public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String ATTRIBUTE_SERVICES = "services";
-    public static final String ATTRIBUTE_RECEIPTS = "receipts";
+    public static final String ATTRIBUTE_ORDERS = "orders";
     public static final String TOTAL = "total";
     public static final String ORDER_ID = "order_id";
 
@@ -47,8 +48,8 @@ public class Constants {
     public static final String ERROR_JSP = "/WEB-INF/pages/errors/errorPage.jsp";
     public static final String SUCCESS_JSP = "/WEB-INF/pages/success.jsp";
     public static final String SHOPPING_CART_JSP = "/WEB-INF/pages/shoppingCart/shoppingCart.jsp";
-    public static final String RECEIPTS_JSP = "/WEB-INF/pages/receipts.jsp";
-    public static final String DETAILS_JSP = "/WEB-INF/pages/details.jsp";
+    public static final String ORDERS_JSP = "/WEB-INF/pages/order/orders.jsp";
+    public static final String DETAILS_JSP = "/WEB-INF/pages/order/orderDetails.jsp";
 
 
     public static final String LOGIN_PAGE = "/controller/login";
@@ -77,4 +78,5 @@ public class Constants {
     public static final String USER_EMAIL = "email";
 
     public static final String SERVICE_ID = "service_id";
+    public static final String ORDER = "order";
 }

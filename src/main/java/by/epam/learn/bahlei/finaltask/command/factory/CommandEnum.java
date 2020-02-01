@@ -97,7 +97,8 @@ public enum CommandEnum {
             this.command = new ShowErrorPageCommand();
         }
     },
-    ORDERS {
+
+    SHOW_ORDERS {
         {
             this.command = new ShowOrdersCommand();
         }

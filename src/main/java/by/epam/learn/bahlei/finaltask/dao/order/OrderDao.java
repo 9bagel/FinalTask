@@ -5,7 +5,6 @@ import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolExc
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
-import by.epam.learn.bahlei.finaltask.entity.receipt.Receipt;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +37,8 @@ public class OrderDao extends OrderDaoAbstract {
                 order.setUserId(resultSet.getInt(Constants.USER_ID));
                 order.setId(resultSet.getInt(Constants.ID));
                 order.setStatusId(resultSet.getInt(Constants.STATUS_ID));
+                order.setTotal(resultSet.getBigDecimal(Constants.TOTAL));
+                order.setDate(resultSet.getTimestamp(Constants.DATE));
                 orders.add(order);
             }
             return orders;
@@ -214,6 +215,23 @@ public class OrderDao extends OrderDaoAbstract {
 
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in getOrdersByUserId()", e));
+        }
+
+    }
+
+    public List<Order> getOrderById(int orderId) throws DaoException {
+        String getOrderByIdQuery = getOrderByIdQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByIdQuery)) {
+            preparedStatement.setInt(1, orderId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return parseResultSet(resultSet);
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in getOrderById() in OrderDao", e));
         }
 
     }

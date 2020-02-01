@@ -8,10 +8,6 @@ INSERT into roles(name) values
 ("Customer");
 INSERT into users(login, password, email, role_id) VALUE("admin", "$2a$10$MMTEpzi7jqAyxtHxP9SYpOGZV7RAOlmkLKIlS4NhuC7YI.t60lhkS", "test@epam.com", 1);
 
-INSERT into receipt_statuses(name) values
-("Not paid"),
-("Paid");
-
 INSERT into service_types(name) values
 ("Haircut"),
 ("Paw care"),

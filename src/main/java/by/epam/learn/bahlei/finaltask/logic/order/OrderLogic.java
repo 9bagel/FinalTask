@@ -12,6 +12,7 @@ import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
+import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.LanguageUtil;
 import com.google.protobuf.ServiceException;
@@ -40,16 +41,16 @@ public class OrderLogic {
         LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
         Order order;
         try {
-            Optional<Service> service = serviceDao.getServiceByIdAndLanguageType(serviceId, languageTypeDto)
+            Optional<Service> optionalService = serviceDao.getServiceByIdAndLanguageType(serviceId, languageTypeDto)
                     .stream()
                     .findFirst();
-            if (!service.isPresent()) {
+            if (!optionalService.isPresent()) {
                 throw LOGGER.throwing(new ServiceException(Constants.SERVICE_NOT_FOUND_MESSAGE));
             } else {
                 order = getOrderWithNewStatus(userId);
 
                 orderDao.addOrderedService(order.getId(), serviceId);
-                order.addService(service.get());
+                order.addService(optionalService.get());
             }
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
@@ -135,6 +136,20 @@ public class OrderLogic {
                 throw LOGGER.throwing(new LogicException());
             }
             return orders;
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public Order getOrderById(int orderId) throws OrderException, LogicException {
+        try {
+            Optional<Order> optionalOrder = orderDao.getOrderById(orderId)
+                    .stream()
+                    .findFirst();
+            if (!optionalOrder.isPresent()) {
+                throw LOGGER.throwing(new OrderException());
+            }
+            return optionalOrder.get();
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }

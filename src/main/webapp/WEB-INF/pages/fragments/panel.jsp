@@ -11,7 +11,7 @@
     <a href="${pageContext.request.contextPath}/controller?command=balance" class="list-group-item">
         <fmt:message bundle="${locale}" key="text.balance"/>
     </a>
-    <a href="${pageContext.request.contextPath}/controller?command=orders" class="list-group-item">
+    <a href="${pageContext.request.contextPath}/controller?command=show_orders" class="list-group-item">
         <fmt:message bundle="${locale}" key="text.orders"/>
     </a>
 </div>
