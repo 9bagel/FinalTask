@@ -1,5 +1,8 @@
 package by.epam.learn.bahlei.finaltask.logic.order;
 
+import by.epam.learn.bahlei.finaltask.connectionpool.ConnectionPool;
+import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
+import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.order.OrderDao;
@@ -15,6 +18,7 @@ import com.google.protobuf.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +95,46 @@ public class OrderLogic {
     public void removeServiceFromBasket(int basketId, int serviceId) throws LogicException {
         try {
             orderDao.removeServiceFromBasket(basketId, serviceId);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public void createOrder(List<Integer> serviceIds, Order order) throws LogicException {
+        ProxyConnection connection = null;
+
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            connection.setAutoCommit(false);
+
+            orderDao.insert(connection, order);
+            orderDao.addServicesFromShoppingCart(connection, serviceIds, order.getId());
+
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (ConnectionPoolException | SQLException | DaoException e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw LOGGER.throwing(new LogicException(ex));
+                }
+            }
+            throw LOGGER.throwing(new LogicException(e));
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public List<Order> getOrdersByUserId(int userId) throws LogicException {
+        try {
+            List<Order> orders = orderDao.getOrdersByUserId(userId);
+            if (orders.isEmpty()) {
+                throw LOGGER.throwing(new LogicException());
+            }
+            return orders;
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }

@@ -2,12 +2,14 @@ package by.epam.learn.bahlei.finaltask.entity.service;
 
 import by.epam.learn.bahlei.finaltask.entity.Entity;
 
+import java.math.BigDecimal;
+
 public class Service implements Entity {
     private int id;
     private int typeId;
     private String title;
     private String description;
-    private int price;
+    private BigDecimal price;
 
     public Service() {
     }
@@ -44,11 +46,11 @@ public class Service implements Entity {
         this.description = description;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

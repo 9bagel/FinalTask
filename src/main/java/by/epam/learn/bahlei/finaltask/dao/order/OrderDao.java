@@ -5,6 +5,7 @@ import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolExc
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
+import by.epam.learn.bahlei.finaltask.entity.receipt.Receipt;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,6 +51,9 @@ public class OrderDao extends OrderDaoAbstract {
         try {
             preparedStatement.setInt(1, order.getUserId());
             preparedStatement.setInt(2, order.getStatusId());
+            preparedStatement.setBigDecimal(3, order.getTotal());
+            preparedStatement.setTimestamp(4, order.getDate());
+
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in prepareInsert in OrderDao", e));
         }
@@ -76,7 +80,31 @@ public class OrderDao extends OrderDaoAbstract {
                 }
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException("Error in insert method", e));
+            throw LOGGER.throwing(new DaoException("Error in insert() in OrderDao", e));
+
+        }
+    }
+
+    public void insert(ProxyConnection connection, Order order) throws DaoException {
+        String insertQuery = getInsertQuery();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+
+            prepareInsert(preparedStatement, order);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating order failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    order.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Creating order failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in insert() in OrderDao", e));
 
         }
     }
@@ -150,5 +178,43 @@ public class OrderDao extends OrderDaoAbstract {
             throw LOGGER.throwing(new DaoException("Error in updateStatus()", e));
 
         }
+    }
+
+    public void createOrder(List<Integer> serviceIds, int userId) {
+
+    }
+
+    public void addServicesFromShoppingCart(ProxyConnection connection, List<Integer> serviceIds, int orderId) throws DaoException {
+        String addOrderedServiceQuery = getAddOrderedServiceQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(addOrderedServiceQuery)) {
+
+            for (Integer serviceId : serviceIds) {
+                preparedStatement.setInt(1, orderId);
+                preparedStatement.setInt(2, serviceId);
+                preparedStatement.addBatch();
+            }
+
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in insert() in OrderDao", e));
+
+        }
+    }
+
+    public List<Order> getOrdersByUserId(int userId) throws DaoException {
+        String getOrderByUserIdQuery = getOrderByUserIdQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByUserIdQuery)) {
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return parseResultSet(resultSet);
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in getOrdersByUserId()", e));
+        }
+
     }
 }

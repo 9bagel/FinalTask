@@ -86,9 +86,9 @@ public enum CommandEnum {
         }
     },
 
-    MAKE_RECEIPT {
+    CREATE_ORDER {
         {
-            this.command = new MakeReceiptCommand();
+            this.command = new CreateOrderCommand();
         }
     },
 

@@ -39,20 +39,11 @@ public class ServiceDao extends ServiceDaoAbstract {
             while (resultSet.next()) {
                 Service service = new Service();
 
-                String title = resultSet.getString(languageType.getTitleColumnName());
-
-                String description = resultSet.getString(languageType.getDescriptionColumnName());
-
-                int typeId = resultSet.getInt(Constants.TYPE_ID);
-
-                int price = resultSet.getInt(Constants.PRICE_COLUMN_NAME);
-                int id = resultSet.getInt(Constants.ID_COLUMN_NAME);
-
-                service.setId(id);
-                service.setTitle(title);
-                service.setDescription(description);
-                service.setTypeId(typeId);
-                service.setPrice(price);
+                service.setId(resultSet.getInt(Constants.ID_COLUMN_NAME));
+                service.setTitle(resultSet.getString(languageType.getTitleColumnName()));
+                service.setDescription(resultSet.getString(languageType.getDescriptionColumnName()));
+                service.setTypeId(resultSet.getInt(Constants.TYPE_ID));
+                service.setPrice(resultSet.getBigDecimal(Constants.PRICE_COLUMN_NAME));
 
                 serviceList.add(service);
             }

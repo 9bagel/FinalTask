@@ -11,7 +11,7 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO orders(user_id, status_id) VALUE(?, ?);";
+        return "INSERT INTO orders(user_id, status_id, total, date) VALUE(?, ?, ?, ?)";
     }
 
     @Override
@@ -41,6 +41,10 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
     }
     protected String getUpdateStatusQuery() {
         return "UPDATE orders SET status_id = ? WHERE id = ?";
+    }
+
+    protected String getOrderByUserIdQuery() {
+        return "SELECT id, user_id, status_id FROM orders where user_id = ?";
     }
 
 }

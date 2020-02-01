@@ -50,9 +50,9 @@
                             <td>${total}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
                             <c:set var="total" value="${total}" scope="session"  />
                             <form method="POST" action="controller">
-                                <input type="hidden" name="command" value="make_receipt">
+                                <input type="hidden" name="command" value="create_order">
                             <td>
-                                <input id="datetime" name="date" type="datetime-local" placeholder="<fmt:message bundle="${locale}" key="text.select_date_time"/>" required>
+                                <input id="date" type="text" class="form-control" name ="date"  placeholder="<fmt:message bundle="${locale}" key="text.select_date_time"/>" required>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-success">
@@ -68,7 +68,10 @@
             </div>
         </div>
     </div>
-
+    <script type="text/javascript">
+                                    $(function () {
+                                    $('#date').datetimepicker();});
+                                 </script>
 </div>
 </body>
 </html>

@@ -10,7 +10,7 @@ import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import by.epam.learn.bahlei.finaltask.util.shoppingcart.ShoppingCartUtil;
+import by.epam.learn.bahlei.finaltask.util.sessionutil.SessionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,7 +28,7 @@ public class ShowShoppingCartCommand implements ActionCommand {
             HttpSession session = request.getSession();
 
             String language = String.valueOf(session.getAttribute(Constants.LOCALE));
-            ShoppingCart shoppingCart = ShoppingCartUtil.getShoppingCart(session);
+            ShoppingCart shoppingCart = SessionUtil.getShoppingCart(session);
 
             List<Integer> serviceIds = shoppingCart.getServiceIds();
 

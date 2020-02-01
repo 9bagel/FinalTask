@@ -54,16 +54,4 @@ public class ReceiptLogic {
             }
         }
     }
-
-    public List<Receipt> getReceiptsByUserId(int userId) throws LogicException {
-        try {
-            List<Receipt> receipts = receiptDao.getByUserId(userId);
-            if (receipts.isEmpty()) {
-                throw LOGGER.throwing(new LogicException());
-            }
-            return receipts;
-        } catch (DaoException e) {
-            throw LOGGER.throwing(new LogicException(e));
-        }
-    }
 }
