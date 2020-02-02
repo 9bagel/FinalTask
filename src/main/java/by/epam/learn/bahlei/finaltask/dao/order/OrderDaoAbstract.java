@@ -49,5 +49,8 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
     protected String getOrderByIdQuery() {
         return "SELECT id, user_id, status_id, date, total FROM orders where id = ?";
     }
+    protected String getOrderByUserIdAndOrderIdQuery() {
+        return "SELECT id, user_id, status_id, date, total FROM orders where user_id = ? AND id = ?";
+    }
 
 }

@@ -7,13 +7,11 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.order.OrderDao;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
-import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
-import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
-import by.epam.learn.bahlei.finaltask.util.LanguageUtil;
+import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,33 +32,6 @@ public class OrderLogic {
 
     public static OrderLogic getInstance() {
         return INSTANCE;
-    }
-
-    public List<Service> getOrderedServices(int userId, String language) throws LogicException {
-        LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
-        try {
-            Order order = getOrderWithNewStatus(userId);
-            return serviceDao.getOrderedServices(order.getId(), languageTypeDto);
-        } catch (DaoException e) {
-            throw LOGGER.throwing(new LogicException(e));
-        }
-    }
-
-    private Order getOrderWithNewStatus(int userId) throws DaoException {
-        Order order;
-        Optional<Order> optionalOrder = orderDao.getOrderWithNewStatus(userId)
-                .stream()
-                .findFirst();
-
-        if (optionalOrder.isPresent()) {
-            order = optionalOrder.get();
-        } else {
-            order = new Order();
-            order.setUserId(userId);
-            order.setOrderStatus(OrderStatus.NEW);
-            orderDao.insert(order);
-        }
-        return order;
     }
 
     public void createOrder(List<Integer> serviceIds, Order order) throws LogicException {
@@ -113,6 +84,20 @@ public class OrderLogic {
                 throw LOGGER.throwing(new OrderException());
             }
             return optionalOrder.get();
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public void cancelOrder(int userId, int orderId) throws OrderException, LogicException {
+        try {
+            Optional<Order> optionalOrder = orderDao.getOrderByUserIdAndOrderId(userId, orderId)
+                    .stream()
+                    .findFirst();
+            if (!optionalOrder.isPresent()) {
+                throw LOGGER.throwing(new OrderException(Constants.ORDER_NOT_FOUND));
+            }
+            orderDao.updateStatus(orderId, OrderStatus.CANCELED.getId());
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }

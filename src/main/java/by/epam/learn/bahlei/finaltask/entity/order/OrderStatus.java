@@ -10,7 +10,7 @@ public enum OrderStatus {
     IN_PROGRESS(2, Constants.ORDER_STATUS_IN_PROGRESS),
     COMPLETED(3, Constants.ORDER_STATUS_COMPLETED),
     PAYED(4, Constants.ORDER_STATUS_PAYED),
-    CANCEL(5, Constants.ORDER_STATUS_CANCEL);
+    CANCELED(5, Constants.ORDER_STATUS_CANCELED);
 
     private static final Map<Integer, OrderStatus> map;
     private final int id;

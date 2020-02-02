@@ -91,6 +91,11 @@ public enum CommandEnum {
             this.command = new CreateOrderCommand();
         }
     },
+    CANCEL_ORDER {
+        {
+            this.command = new CancelOrderCommand();
+        }
+    },
 
     ERROR {
         {

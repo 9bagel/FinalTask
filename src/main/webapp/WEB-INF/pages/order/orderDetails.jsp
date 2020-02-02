@@ -35,9 +35,9 @@
                         <p class="float-right"><fmt:message bundle="${locale}" key="text.total"/>:&nbsp${order.total}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></p>
                         <h5 class="col"><fmt:message bundle="${locale}" key="text.order.date"/>:&nbsp<fmt:formatDate type="both" value="${order.date}" /></h5>
                         <div class="float-left">
-                            <form class="float-left" action="controller" method="post">
+                            <form class="float-left" action="controller" method="POST">
                                 <input type="hidden" name="command" value="cancel_order">
-                                <input type="hidden" name="order_id" value="1">
+                                <input type="hidden" name="order_id" value="${order.id}">
                                 <input type="submit" class="btn btn-danger" style="margin-right: 10px;" value="<fmt:message bundle="${locale}" key="button.cancel"/>" >
                             </form>
                             <form class="float-left" action="controller" method="post">

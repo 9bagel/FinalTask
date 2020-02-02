@@ -35,7 +35,7 @@ public class CreateOrderCommand implements ActionCommand {
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_CREATED_MESSAGE);
             return new Response(request.getContextPath() + Constants.SUCCESS_PAGE, Response.ResponseType.REDIRECT);
         } catch (LogicException e) {
-            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.CREATE_RECEIPT_ERROR);
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.CREATE_ORDER_ERROR);
             return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         }
 

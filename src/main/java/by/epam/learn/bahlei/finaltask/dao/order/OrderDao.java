@@ -119,22 +119,6 @@ public class OrderDao extends OrderDaoAbstract {
 
     }
 
-    public List<Order> getOrderWithNewStatus(int userId) throws DaoException {
-        String orderWithNewStatusQuery = getOrderWithNewStatusQuery();
-
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(orderWithNewStatusQuery)) {
-
-            preparedStatement.setInt(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            return parseResultSet(resultSet);
-        } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException("Error in getOrderIfExists()", e));
-
-        }
-    }
-
     public void updateStatus(ProxyConnection connection, int order_id, OrderStatus orderStatus) throws DaoException {
         String updateStatusQuery = getUpdateStatusQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateStatusQuery)) {
@@ -145,6 +129,23 @@ public class OrderDao extends OrderDaoAbstract {
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in updateStatus()", e));
 
+        }
+    }
+
+    public void updateStatus(int orderId, int statusId) throws DaoException {
+        String updateStatusQuery = getUpdateStatusQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateStatusQuery)) {
+            preparedStatement.setInt(1, statusId);
+            preparedStatement.setInt(2, orderId);
+
+            if (preparedStatement.executeUpdate() == 0){
+                throw LOGGER.throwing(new DaoException("No rows were affected"));
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in updateStatus()", e));
         }
     }
 
@@ -197,5 +198,22 @@ public class OrderDao extends OrderDaoAbstract {
             throw LOGGER.throwing(new DaoException("Error in getOrderById() in OrderDao", e));
         }
 
+    }
+
+    public List<Order> getOrderByUserIdAndOrderId(int userId, int orderId) throws DaoException {
+        String getOrderByUserIdAndOrderIdQuery = getOrderByUserIdAndOrderIdQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByUserIdAndOrderIdQuery)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, orderId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return parseResultSet(resultSet);
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw LOGGER.throwing(new DaoException("Error in getOrderByUserIdAndOrderId() in OrderDao", e));
+        }
     }
 }

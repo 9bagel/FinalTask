@@ -27,7 +27,7 @@ public class Constants {
     public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
     public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
     public static final String SERVICE_ADDED_TO_SHOPPING_CART = "text.shopping_cart.add.success";
-    public static final String CREATE_RECEIPT_ERROR = "text.receipt.error";
+    public static final String CREATE_ORDER_ERROR = "text.order.create.error";
     public static final String EMPTY_CART_ERROR = "text.empty_cart.error";
     public static final String USER_NOT_FOUND_ERROR = "text.user.not_found";
     public static final String ORDER_NOT_FOUND = "text.order.not_found";
@@ -83,6 +83,8 @@ public class Constants {
     public static final String ORDER_STATUS_NEW = "text.order.status.new";
     public static final String ORDER_STATUS_IN_PROGRESS = "text.order.status.in_progress";
     public static final String ORDER_STATUS_COMPLETED = "text.order.status.completed";
-    public static final String ORDER_STATUS_CANCEL = "text.order.status.canceled";
+    public static final String ORDER_STATUS_CANCELED = "text.order.status.canceled";
     public static final String ORDER_STATUS_PAYED = "text.order.status.payed";
+    public static final String CANCEL_ORDER_ERROR = "text.order.cancel.error";
+    public static final String ORDER_CANCELED_MESSAGE = "text.order.cancelled.message";
 }
