@@ -87,4 +87,7 @@ public class Constants {
     public static final String ORDER_STATUS_PAYED = "text.order.status.payed";
     public static final String CANCEL_ORDER_ERROR = "text.order.cancel.error";
     public static final String ORDER_CANCELED_MESSAGE = "text.order.cancelled.message";
+    public static final String USER_NOT_ENOUGH_BALANCE = "text.user.not_enough_balance.error";
+    public static final String PAY_ORDER_ERROR = "text.order.pay.error";
+    public static final String ORDER_PAYED_MESSAGE = "text.order.payed.message";
 }

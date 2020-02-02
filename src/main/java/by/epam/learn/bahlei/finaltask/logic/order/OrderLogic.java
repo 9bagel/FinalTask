@@ -6,11 +6,13 @@ import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolExc
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.order.OrderDao;
-import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
+import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
+import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
+import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,8 +26,8 @@ public class OrderLogic {
     private static final Logger LOGGER = LogManager.getLogger(OrderLogic.class);
     private static final OrderLogic INSTANCE = new OrderLogic();
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private ServiceDao serviceDao = daoFactory.getServiceDao();
     private OrderDao orderDao = daoFactory.getOrderDao();
+    private UserDao userDao = daoFactory.getUserDao();
 
     private OrderLogic() {
     }
@@ -62,7 +64,7 @@ public class OrderLogic {
         }
     }
 
-    public List<Order> getOrdersByUserId(int userId) throws LogicException {
+    public List<Order> getAllOrdersByUserId(int userId) throws LogicException {
         try {
             List<Order> orders = orderDao.getOrdersByUserId(userId);
             if (orders.isEmpty()) {
@@ -91,15 +93,59 @@ public class OrderLogic {
 
     public void cancelOrder(int userId, int orderId) throws OrderException, LogicException {
         try {
-            Optional<Order> optionalOrder = orderDao.getOrderByUserIdAndOrderId(userId, orderId)
-                    .stream()
-                    .findFirst();
-            if (!optionalOrder.isPresent()) {
-                throw LOGGER.throwing(new OrderException(Constants.ORDER_NOT_FOUND));
-            }
+            getOrderIfExistsByUserIdAndOrderId(userId, orderId);
             orderDao.updateStatus(orderId, OrderStatus.CANCELED.getId());
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public void payOrder(int orderId, User user) throws UserException, OrderException, LogicException {
+
+        ProxyConnection connection = null;
+
+        try {
+            Order order = getOrderIfExistsByUserIdAndOrderId(user.getId(), orderId);
+            checkIfUserHasBalanceToPay(user, order);
+
+            connection = ConnectionPool.getInstance().getConnection();
+            connection.setAutoCommit(false);
+
+            userDao.subtractBalance(connection, user.getId(), order.getTotal());
+            orderDao.updateStatus(connection, orderId, OrderStatus.PAYED);
+            user.setBalance(user.getBalance().subtract(order.getTotal()));
+
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (ConnectionPoolException | SQLException | DaoException e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    throw LOGGER.throwing(new LogicException(ex));
+                }
+            }
+            throw LOGGER.throwing(new LogicException(e));
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    private Order getOrderIfExistsByUserIdAndOrderId(int userId, int orderId) throws OrderException, DaoException {
+        Optional<Order> optionalOrder = orderDao.getOrderByUserIdAndOrderId(userId, orderId)
+                .stream()
+                .findFirst();
+        if (!optionalOrder.isPresent()) {
+            throw LOGGER.throwing(new OrderException(Constants.ORDER_NOT_FOUND));
+        }
+        return optionalOrder.get();
+    }
+
+    private void checkIfUserHasBalanceToPay(User user, Order order) throws UserException {
+        if (user.getBalance().compareTo(order.getTotal()) < 0) {
+            throw LOGGER.throwing(new UserException(Constants.USER_NOT_ENOUGH_BALANCE));
         }
     }
 }

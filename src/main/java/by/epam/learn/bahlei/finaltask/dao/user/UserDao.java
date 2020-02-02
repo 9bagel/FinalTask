@@ -106,7 +106,7 @@ public class UserDao extends UserDaoAbstract {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(addBalanceQuery)) {
 
-            preparedStatement.setInt(1, amount.intValue());
+            preparedStatement.setBigDecimal(1, amount);
             preparedStatement.setInt(2, userId);
             preparedStatement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
@@ -114,7 +114,20 @@ public class UserDao extends UserDaoAbstract {
         }
     }
 
-    public List<User> getUserById(Integer userId) throws DaoException {
+    public void subtractBalance(ProxyConnection connection, int userId, BigDecimal amount) throws DaoException {
+        String subtractBalanceQuery = getSubtractBalanceQuery();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(subtractBalanceQuery)) {
+
+            preparedStatement.setBigDecimal(1, amount);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw LOGGER.throwing(new DaoException("Exception in subtractBalance method in UserDao", e));
+        }
+    }
+
+    public List<User> getUserById(int userId) throws DaoException {
         String userByIdQuery = getUserByIdQuery();
 
         try (ProxyConnection connection = connectionPool.getConnection();
@@ -124,6 +137,19 @@ public class UserDao extends UserDaoAbstract {
             ResultSet resultSet = preparedStatement.executeQuery();
             return parseResultSet(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException("Exception in getUserById method in UserDao", e));
+        }
+    }
+
+    public List<User> getUserById(ProxyConnection connection, int userId) throws DaoException {
+        String userByIdQuery = getUserByIdQuery();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(userByIdQuery)) {
+
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return parseResultSet(resultSet);
+        } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in getUserById method in UserDao", e));
         }
     }

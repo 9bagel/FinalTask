@@ -13,6 +13,7 @@
     <div class="row">
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
         <div class="col-lg-9">
+            <c:import url="/WEB-INF/pages/fragments/messages.jsp"/>
                 <div class="card mt-4">
                     <div class="card-body">
                         <h3 class="text-center"><fmt:message bundle="${locale}" key="text.order"/>&nbsp#${order.id}&nbsp(<fmt:message bundle="${locale}" key="${order.orderStatus.name}"/>)</h3>
@@ -42,7 +43,7 @@
                             </form>
                             <form class="float-left" action="controller" method="post">
                             <input type="hidden" name="command" value="pay_order">
-                            <input type="hidden" name="order_id" value="1">
+                            <input type="hidden" name="order_id" value="${order.id}">
                             <input type="submit" class="btn btn-success" value="<fmt:message bundle="${locale}" key="button.pay"/>" >
                             </form>
                         </div>

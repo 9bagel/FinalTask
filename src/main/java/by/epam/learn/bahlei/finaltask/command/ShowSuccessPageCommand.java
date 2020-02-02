@@ -1,7 +1,5 @@
-package by.epam.learn.bahlei.finaltask.command.order;
+package by.epam.learn.bahlei.finaltask.command;
 
-import by.epam.learn.bahlei.finaltask.command.ActionCommand;
-import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 

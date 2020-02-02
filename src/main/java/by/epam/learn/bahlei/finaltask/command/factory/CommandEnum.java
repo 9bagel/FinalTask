@@ -1,6 +1,7 @@
 package by.epam.learn.bahlei.finaltask.command.factory;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
+import by.epam.learn.bahlei.finaltask.command.ShowSuccessPageCommand;
 import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
 import by.epam.learn.bahlei.finaltask.command.order.*;
@@ -80,9 +81,9 @@ public enum CommandEnum {
         }
     },
 
-    PAY {
+    PAY_ORDER {
         {
-            this.command = new PayCommand();
+            this.command = new PayOrderCommand();
         }
     },
 
