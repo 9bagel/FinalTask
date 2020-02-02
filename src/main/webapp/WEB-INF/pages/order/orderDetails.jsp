@@ -35,7 +35,8 @@
                         </table>
                         <p class="float-right"><fmt:message bundle="${locale}" key="text.total"/>:&nbsp${order.total}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></p>
                         <h5 class="col"><fmt:message bundle="${locale}" key="text.order.date"/>:&nbsp<fmt:formatDate type="both" value="${order.date}" /></h5>
-                        <div class="float-left">
+                        <c:if test="${order.orderStatus.id == 1}">
+                            <div class="float-left">
                             <form class="float-left" action="controller" method="POST">
                                 <input type="hidden" name="command" value="cancel_order">
                                 <input type="hidden" name="order_id" value="${order.id}">
@@ -47,10 +48,16 @@
                             <input type="submit" class="btn btn-success" value="<fmt:message bundle="${locale}" key="button.pay"/>" >
                             </form>
                         </div>
+                        </c:if>
                     </div>
                 </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(function () {
+$('#date').datetimepicker();});
+</script>
 </body>
 </html>

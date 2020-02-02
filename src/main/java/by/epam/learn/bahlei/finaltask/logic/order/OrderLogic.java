@@ -148,4 +148,22 @@ public class OrderLogic {
             throw LOGGER.throwing(new UserException(Constants.USER_NOT_ENOUGH_BALANCE));
         }
     }
+
+    public List<Order> getAllOrders() throws LogicException {
+        try {
+            List<Order> orders = orderDao.getAll();
+            Collections.reverse(orders);
+            return orders;
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public void updateOrder(Order order) throws LogicException {
+        try {
+            orderDao.update(order);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
 }

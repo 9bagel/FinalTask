@@ -48,9 +48,9 @@
                             <th scope="row"></th>
                             <td><fmt:message bundle="${locale}" key="text.total"/></td>
                             <td>${total}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
-                            <c:set var="total" value="${total}" scope="session"  />
                             <form method="POST" action="controller">
                                 <input type="hidden" name="command" value="create_order">
+                                <input type="hidden" name="total" value="${total}">
                             <td>
                                 <input id="date" type="text" class="form-control" name ="date"  placeholder="<fmt:message bundle="${locale}" key="text.select_date_time"/>" required>
                             </td>

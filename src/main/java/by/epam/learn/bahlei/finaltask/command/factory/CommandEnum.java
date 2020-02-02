@@ -115,6 +115,17 @@ public enum CommandEnum {
             this.command = new OrderDetailsCommand();
         }
     },
+    MANAGE_ORDERS {
+        {
+            this.command = new ManageOrdersCommand();
+        }
+    },
+
+    UPDATE_ORDER {
+        {
+            this.command = new UpdateOrderCommand();
+        }
+    },
 
     SUCCESS {
         {

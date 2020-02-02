@@ -33,17 +33,36 @@ public class SessionUtil {
         return shoppingCart;
     }
 
+    public static void emptyShoppingCart(HttpSession session) {
+        session.removeAttribute(Constants.SHOPPING_CART);
+    }
+
     public static User getUser(HttpSession session) {
         return (User) session.getAttribute(Constants.USER);
     }
 
     public static Order getOrder(HttpSession session, HttpServletRequest request) throws LogicException {
         Order order = new Order();
+        order.setId(getOrderId(request));
         order.setUserId(getUser(session).getId());
-        order.setTotal((BigDecimal) session.getAttribute(Constants.TOTAL));
-        order.setOrderStatus(OrderStatus.NEW);
+        order.setTotal(new BigDecimal(request.getParameter(Constants.TOTAL)));
+        order.setOrderStatus(getOrderStatus(request));
         order.setDate(getDate(request));
         return order;
+    }
+
+    private static OrderStatus getOrderStatus(HttpServletRequest request) {
+        if (request.getParameter(Constants.STATUS_ID) == null) {
+            return OrderStatus.NEW;
+        }
+        return OrderStatus.getOrderStatusById(Integer.parseInt(request.getParameter(Constants.STATUS_ID)));
+    }
+
+    private static int getOrderId(HttpServletRequest request) {
+        if (request.getParameter(Constants.ORDER_ID) == null) {
+            return 0;
+        }
+        return Integer.parseInt(request.getParameter(Constants.ORDER_ID));
     }
 
     private static Timestamp getDate(HttpServletRequest request) throws LogicException {

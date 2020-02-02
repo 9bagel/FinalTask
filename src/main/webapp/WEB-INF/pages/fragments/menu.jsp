@@ -12,8 +12,7 @@
         <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=washing_drying" class="list-group-item"><fmt:message bundle="${locale}" key="service.washing_drying"/></a>
         <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=combing_out" class="list-group-item"><fmt:message bundle="${locale}" key="service.combing_out"/></a>
         <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=claw_trimming" class="list-group-item"><fmt:message bundle="${locale}" key="service.claw_trimming"/></a>
-
-        <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=ear_cleaning" class="list-group-item active"><fmt:message bundle="${locale}" key="service.ear_cleaning"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=ear_cleaning" class="list-group-item"><fmt:message bundle="${locale}" key="service.ear_cleaning"/></a>
         <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=eye_brushing" class="list-group-item"><fmt:message bundle="${locale}" key="service.eye_brushing"/></a>
         <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=spa" class="list-group-item"><fmt:message bundle="${locale}" key="service.spa"/></a>
         <a href="${pageContext.request.contextPath}/controller?command=service_list&service_name=teeth_cleaning" class="list-group-item"><fmt:message bundle="${locale}" key="service.teeth_cleaning"/></a>

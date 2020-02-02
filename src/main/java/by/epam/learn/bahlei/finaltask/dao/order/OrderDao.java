@@ -39,6 +39,7 @@ public class OrderDao extends OrderDaoAbstract {
                 order.setOrderStatus(OrderStatus.getOrderStatusById(resultSet.getInt(Constants.STATUS_ID)));
                 order.setTotal(resultSet.getBigDecimal(Constants.TOTAL));
                 order.setDate(resultSet.getTimestamp(Constants.DATE));
+
                 orders.add(order);
             }
             return orders;
@@ -57,6 +58,19 @@ public class OrderDao extends OrderDaoAbstract {
 
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in prepareInsert in OrderDao", e));
+        }
+    }
+
+    @Override
+    protected void prepareUpdate(PreparedStatement preparedStatement, Order order) throws DaoException {
+        try {
+            preparedStatement.setInt(1, order.getOrderStatus().getId());
+            preparedStatement.setBigDecimal(2, order.getTotal());
+            preparedStatement.setTimestamp(3, order.getDate());
+            preparedStatement.setInt(4, order.getId());
+
+        } catch (SQLException e) {
+            throw LOGGER.throwing(new DaoException("Exception in prepareUpdate in OrderDao", e));
         }
     }
 
@@ -110,15 +124,6 @@ public class OrderDao extends OrderDaoAbstract {
         }
     }
 
-    @Override
-    protected void prepareUpdate(PreparedStatement preparedStatement, Order entity) throws DaoException {
-
-    }
-
-    protected void prepareUpdate(PreparedStatement preparedStatement, Order entity, int serviceId) throws DaoException {
-
-    }
-
     public void updateStatus(ProxyConnection connection, int order_id, OrderStatus orderStatus) throws DaoException {
         String updateStatusQuery = getUpdateStatusQuery();
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateStatusQuery)) {
@@ -140,7 +145,7 @@ public class OrderDao extends OrderDaoAbstract {
             preparedStatement.setInt(1, statusId);
             preparedStatement.setInt(2, orderId);
 
-            if (preparedStatement.executeUpdate() == 0){
+            if (preparedStatement.executeUpdate() == 0) {
                 throw LOGGER.throwing(new DaoException("No rows were affected"));
             }
 

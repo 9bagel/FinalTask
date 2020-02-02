@@ -16,12 +16,12 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE orders JOIN ordered_services ON orders.id = ordered_services.order_id SET orders.user_id = ?, orders.status_id = ?, ordered_services.service_id = ? WHERE orders.id = ?";
+        return "UPDATE orders SET status_id = ?, total = ?, date = ? WHERE id = ?";
     }
 
     @Override
     protected String getSelectAllQuery() {
-        return "";
+        return "SELECT id, user_id, status_id, date, total FROM orders";
     }
 
     @Override

@@ -7,14 +7,13 @@ import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
-import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.sessionutil.SessionUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class CreateOrderCommand implements ActionCommand {
+public class UpdateOrderCommand implements ActionCommand {
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private OrderLogic orderLogic = logicFactory.getOrderLogic();
 
@@ -22,24 +21,14 @@ public class CreateOrderCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         try {
-            ShoppingCart shoppingCart = SessionUtil.getShoppingCart(session);
-
-            if (shoppingCart.getServiceIds().isEmpty()) {
-                session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.EMPTY_CART_ERROR);
-                return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
-            }
-
             Order order = SessionUtil.getOrder(session, request);
-            orderLogic.createOrder(shoppingCart.getServiceIds(), order);
-            SessionUtil.emptyShoppingCart(session);
+            orderLogic.updateOrder(order);
 
-            session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_CREATED_MESSAGE);
-            return new Response(request.getContextPath() + Constants.SUCCESS_PAGE, Response.ResponseType.REDIRECT);
+            session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_UPDATE_MESSAGE);
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         } catch (LogicException e) {
-            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.CREATE_ORDER_ERROR);
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ORDER_UPDATE_ERROR);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }
-
     }
-
 }
