@@ -16,7 +16,7 @@ public abstract class UserDaoAbstract extends AbstractEntityDao<User> {
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE users SET login = ?, password = ?, email = ?, role_id = ? WHERE id = ?";
+        return "UPDATE users SET login = ?, email = ?, role_id = ?, balance = ? WHERE id = ?";
     }
 
     @Override

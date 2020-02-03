@@ -10,7 +10,7 @@ import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import by.epam.learn.bahlei.finaltask.util.sessionutil.SessionUtil;
+import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,7 +22,7 @@ public class PayOrderCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        User user = SessionUtil.getUser(session);
+        User user = RequestUtil.getUser(session);
         int orderId = Integer.parseInt(request.getParameter(Constants.ORDER_ID));
 
         try {

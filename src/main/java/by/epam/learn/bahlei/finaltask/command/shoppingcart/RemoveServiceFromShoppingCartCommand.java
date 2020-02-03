@@ -5,7 +5,7 @@ import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import by.epam.learn.bahlei.finaltask.util.sessionutil.SessionUtil;
+import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +14,7 @@ public class RemoveServiceFromShoppingCartCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        ShoppingCart shoppingCart = SessionUtil.getShoppingCart(session);
+        ShoppingCart shoppingCart = RequestUtil.getShoppingCart(session);
 
         shoppingCart.removeService(Integer.valueOf(request.getParameter(Constants.SERVICE_ID)));
         session.setAttribute(Constants.SHOPPING_CART, shoppingCart);

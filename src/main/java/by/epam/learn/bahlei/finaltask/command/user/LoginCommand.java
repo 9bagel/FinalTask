@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements ActionCommand {
-    private static final String PARAM_NAME_LOGIN = "login";
-    private static final String PARAM_NAME_PASSWORD = "password";
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private UserLogic userLogic = logicFactory.getUserLogic();
 
@@ -25,24 +23,21 @@ public class LoginCommand implements ActionCommand {
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        User user;
-        String login = request.getParameter(PARAM_NAME_LOGIN);
-        String password = request.getParameter(PARAM_NAME_PASSWORD);
         HttpSession session = request.getSession();
+        String login = request.getParameter(Constants.USER_LOGIN);
+        String password = request.getParameter(Constants.USER_Password);
 
         try {
-            user = userLogic.login(login, password);
-        } catch (LogicException e) {
+            User user = userLogic.login(login, password);
 
+            session.setAttribute(Constants.USER, user);
+            return new Response(request.getContextPath(), Response.ResponseType.REDIRECT);
+        } catch (LogicException e) {
             throw LOGGER.throwing(new CommandException("LogicException in execute method in LoginCommand:", e));
         } catch (UserException e) {
-
             LOGGER.info("User does not exists");
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ERROR_LOGIN);
             return new Response(request.getContextPath() + Constants.LOGIN_PAGE, Response.ResponseType.REDIRECT);
         }
-
-        session.setAttribute(Constants.USER, user);
-        return new Response(request.getContextPath(), Response.ResponseType.REDIRECT);
     }
 }

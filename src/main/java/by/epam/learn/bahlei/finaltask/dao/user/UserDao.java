@@ -91,9 +91,9 @@ public class UserDao extends UserDaoAbstract {
     protected void prepareUpdate(PreparedStatement preparedStatement, User user) throws DaoException {
         try {
             preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getHashedPassword());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setInt(4, user.getUserRole().getId());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setInt(3, user.getUserRole().getId());
+            preparedStatement.setBigDecimal(4, user.getBalance());
             preparedStatement.setLong(5, user.getId());
 
         } catch (SQLException e) {

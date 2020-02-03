@@ -40,9 +40,9 @@
                         <td>
                             <input type="text" name="balance" class="col" value="${user.balance}" required></td>
                         <td>
-                            <input type="hidden" name="command" value="update_order">
-                            <input type="hidden" name="order_id" value="9">
-                            <button type="submit" class="btn btn-outline-success">Update</button>
+                            <input type="hidden" name="command" value="update_user">
+                            <input type="hidden" name="user_id" value="${user.id}">
+                            <button type="submit" class="btn btn-outline-success"><fmt:message bundle="${locale}" key="text.apply"/></button>
                         </td>
                         </form>
                     </tr>

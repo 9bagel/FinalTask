@@ -8,7 +8,7 @@ import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import by.epam.learn.bahlei.finaltask.util.sessionutil.SessionUtil;
+import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
 import com.google.protobuf.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class AddServiceToCartCommand implements ActionCommand {
             int serviceId = Integer.parseInt(request.getParameter(Constants.SERVICE_ID));
             serviceLogic.isServiceExists(serviceId);
 
-            ShoppingCart shoppingCart = SessionUtil.getShoppingCart(session);
+            ShoppingCart shoppingCart = RequestUtil.getShoppingCart(session);
             shoppingCart.addServiceId(serviceId);
             session.setAttribute(Constants.SHOPPING_CART, shoppingCart);
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.SERVICE_ADDED_TO_SHOPPING_CART);

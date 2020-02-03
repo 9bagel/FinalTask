@@ -9,7 +9,7 @@ import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import by.epam.learn.bahlei.finaltask.util.sessionutil.SessionUtil;
+import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,7 +23,7 @@ public class CancelOrderCommand implements ActionCommand {
         HttpSession session = request.getSession();
 
         int orderId = Integer.parseInt(request.getParameter(Constants.ORDER_ID));
-        User user = SessionUtil.getUser(session);
+        User user = RequestUtil.getUser(session);
 
         try {
             orderLogic.cancelOrder(user.getId(), orderId);

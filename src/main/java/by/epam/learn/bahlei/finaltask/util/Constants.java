@@ -98,4 +98,6 @@ public class Constants {
     public static final String USER_ROLE_ADMINISTRATOR = "text.user.type.administrator";
     public static final String USER_ROLE_CUSTOMER = "text.user.type.customer";
     public static final String MANAGE_ORDERS_ERROR = "text.order.manage.error";
+    public static final String UPDATE_USER_ERROR = "text.user.update.error";
+    public static final String USER_UPDATE_MESSAGE = "text.user.update.message";
 }

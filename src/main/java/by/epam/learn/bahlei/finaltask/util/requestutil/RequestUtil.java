@@ -1,8 +1,9 @@
-package by.epam.learn.bahlei.finaltask.util.sessionutil;
+package by.epam.learn.bahlei.finaltask.util.requestutil;
 
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
+import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
@@ -17,11 +18,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SessionUtil {
+public class RequestUtil {
     private static final String dateFormatPattern = "MM/dd/yyyy hh:mm";
-    private static final Logger LOGGER = LogManager.getLogger(SessionUtil.class);
+    private static final Logger LOGGER = LogManager.getLogger(RequestUtil.class);
 
-    private SessionUtil() {
+    private RequestUtil() {
     }
 
     public static ShoppingCart getShoppingCart(HttpSession session) {
@@ -41,7 +42,7 @@ public class SessionUtil {
         return (User) session.getAttribute(Constants.USER);
     }
 
-    public static Order getOrder(HttpSession session, HttpServletRequest request) throws LogicException {
+    public static Order parseOrder(HttpSession session, HttpServletRequest request) throws LogicException {
         Order order = new Order();
         order.setId(getOrderId(request));
         order.setUserId(getUser(session).getId());
@@ -74,5 +75,15 @@ public class SessionUtil {
         } catch (ParseException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
+    }
+
+    public static User parseUser(HttpServletRequest request) {
+        User user = new User();
+        user.setId(Integer.parseInt(request.getParameter(Constants.USER_ID)));
+        user.setLogin(request.getParameter(Constants.USER_LOGIN));
+        user.setEmail(request.getParameter(Constants.USER_EMAIL));
+        user.setUserRole(UserRole.getUserRoleById(Integer.parseInt(request.getParameter(Constants.USER_ROLE_ID))));
+        user.setBalance(new BigDecimal(request.getParameter(Constants.USER_BALANCE)));
+        return user;
     }
 }

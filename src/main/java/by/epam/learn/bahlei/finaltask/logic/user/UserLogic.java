@@ -98,4 +98,12 @@ public class UserLogic {
             throw LOGGER.throwing(new LogicException("Exception in getAll() in UserLogic", e));
         }
     }
+
+    public void updateUser(User user) throws LogicException {
+        try {
+            userDao.update(user);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException("Exception in updateUser()", e));
+        }
+    }
 }
