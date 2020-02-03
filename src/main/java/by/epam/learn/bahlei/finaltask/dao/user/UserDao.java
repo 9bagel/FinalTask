@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
+import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
@@ -64,7 +65,7 @@ public class UserDao extends UserDaoAbstract {
                 user.setHashedPassword(resultSet.getString(Constants.USER_Password));
                 user.setEmail(resultSet.getString(Constants.USER_EMAIL));
                 user.setId(resultSet.getInt(Constants.ID));
-                user.setTypeId(resultSet.getInt(Constants.USER_ROLE_ID));
+                user.setUserRole(UserRole.getUserRoleById(resultSet.getInt(Constants.USER_ROLE_ID)));
                 user.setBalance(BigDecimal.valueOf(resultSet.getInt(Constants.USER_BALANCE)));
                 userList.add(user);
             }
@@ -92,7 +93,7 @@ public class UserDao extends UserDaoAbstract {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getHashedPassword());
             preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setInt(4, user.getTypeId());
+            preparedStatement.setInt(4, user.getUserRole().getId());
             preparedStatement.setLong(5, user.getId());
 
         } catch (SQLException e) {

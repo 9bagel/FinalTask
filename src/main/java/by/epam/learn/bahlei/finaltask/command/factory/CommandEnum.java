@@ -126,6 +126,11 @@ public enum CommandEnum {
             this.command = new UpdateOrderCommand();
         }
     },
+    MANAGE_USERS {
+        {
+            this.command = new ManageUsersCommand();
+        }
+    },
 
     SUCCESS {
         {

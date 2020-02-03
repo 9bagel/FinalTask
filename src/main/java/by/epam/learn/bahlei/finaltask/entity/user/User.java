@@ -9,7 +9,7 @@ public class User implements Entity {
     private String hashedPassword;
     private String email;
     private int id;
-    private int typeId;
+    private UserRole userRole;
     private BigDecimal balance;
 
     public User() {
@@ -47,12 +47,12 @@ public class User implements Entity {
         this.id = id;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public BigDecimal getBalance() {

@@ -1,7 +1,9 @@
 insert into order_statuses(name) values
 ("New"),
 ("In progress"),
-("Completed");
+("Completed"),
+("Paid"),
+("Cancel");
 
 INSERT into roles(name) values
 ("Administrator"),

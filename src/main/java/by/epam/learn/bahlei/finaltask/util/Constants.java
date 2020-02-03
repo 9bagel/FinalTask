@@ -37,13 +37,15 @@ public class Constants {
     public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String ATTRIBUTE_SERVICES = "services";
     public static final String ATTRIBUTE_ORDERS = "orders";
+    public static final String ATTRIBUTE_USERS = "users";
     public static final String TOTAL = "total";
     public static final String ORDER_ID = "order_id";
 
     public static final String LOGIN_JSP = "/WEB-INF/pages/user/login.jsp";
     public static final String BALANCE_JSP = "/WEB-INF/pages/user/balance.jsp";
     public static final String REGISTRATION_JSP = "/WEB-INF/pages/user/registration.jsp";
-    public static final String EDIT_ORDERS_JSP = "/WEB-INF/pages/order/manageOrders.jsp";
+    public static final String MANAGE_ORDERS_JSP = "/WEB-INF/pages/admin/manageOrders.jsp";
+    public static final String MANAGE_USERS_JSP = "/WEB-INF/pages/admin/manageUsers.jsp";
     public static final String MAIN_JSP = "/WEB-INF/pages/main.jsp";
     public static final String SERVICE_JSP = "/WEB-INF/pages/service.jsp";
     public static final String ERROR_JSP = "/WEB-INF/pages/errors/errorPage.jsp";
@@ -85,7 +87,7 @@ public class Constants {
     public static final String ORDER_STATUS_IN_PROGRESS = "text.order.status.in_progress";
     public static final String ORDER_STATUS_COMPLETED = "text.order.status.completed";
     public static final String ORDER_STATUS_CANCELED = "text.order.status.canceled";
-    public static final String ORDER_STATUS_PAYED = "text.order.status.payed";
+    public static final String ORDER_STATUS_PAID = "text.order.status.paid";
     public static final String CANCEL_ORDER_ERROR = "text.order.cancel.error";
     public static final String ORDER_CANCELED_MESSAGE = "text.order.cancelled.message";
     public static final String USER_NOT_ENOUGH_BALANCE = "text.user.not_enough_balance.error";
@@ -93,4 +95,7 @@ public class Constants {
     public static final String ORDER_PAYED_MESSAGE = "text.order.payed.message";
     public static final String ORDER_UPDATE_ERROR = "text.order.update.error";
     public static final String ORDER_UPDATE_MESSAGE = "text.order.update.message";
+    public static final String USER_ROLE_ADMINISTRATOR = "text.user.type.administrator";
+    public static final String USER_ROLE_CUSTOMER = "text.user.type.customer";
+    public static final String MANAGE_ORDERS_ERROR = "text.order.manage.error";
 }

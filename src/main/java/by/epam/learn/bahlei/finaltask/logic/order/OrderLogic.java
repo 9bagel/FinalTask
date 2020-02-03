@@ -112,7 +112,7 @@ public class OrderLogic {
             connection.setAutoCommit(false);
 
             userDao.subtractBalance(connection, user.getId(), order.getTotal());
-            orderDao.updateStatus(connection, orderId, OrderStatus.PAYED);
+            orderDao.updateStatus(connection, orderId, OrderStatus.PAID);
             user.setBalance(user.getBalance().subtract(order.getTotal()));
 
             connection.commit();

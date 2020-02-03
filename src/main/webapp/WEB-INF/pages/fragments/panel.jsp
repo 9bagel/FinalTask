@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:if test="${user.typeId == 1}">
+<c:if test="${user.userRole.id == 1}">
     <h4 class="my-4">Admin panel</h4>
     <div class="list-group">
         <a href="/FinalTask/controller?command=manage_orders" class="list-group-item">Manage orders</a>

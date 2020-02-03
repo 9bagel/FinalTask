@@ -4,7 +4,7 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
-import by.epam.learn.bahlei.finaltask.entity.user.UserType;
+import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 public class UserLogic {
@@ -61,7 +62,7 @@ public class UserLogic {
 
     }
 
-    public void checkPermission(int userTypeId, UserType requiredType) throws LogicException {
+    public void checkPermission(int userTypeId, UserRole requiredType) throws LogicException {
         if (userTypeId != requiredType.getId()) {
             throw new LogicException("Not enough permissions");
         }
@@ -87,6 +88,14 @@ public class UserLogic {
             return user.get();
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException("Exception in makeDeposit()", e));
+        }
+    }
+
+    public List<User> getAll() throws LogicException {
+        try {
+            return userDao.getAll();
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException("Exception in getAll() in UserLogic", e));
         }
     }
 }
