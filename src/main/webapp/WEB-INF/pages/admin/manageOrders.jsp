@@ -37,7 +37,7 @@
                                 <option value="1"><fmt:message bundle="${locale}" key="text.order.status.new"/></option>
                                 <option value="2"><fmt:message bundle="${locale}" key="text.order.status.in_progress"/></option>
                                 <option value="3"><fmt:message bundle="${locale}" key="text.order.status.completed"/></option>
-                                <option value="4"><fmt:message bundle="${locale}" key="text.order.status.payed"/></option>
+                                <option value="4"><fmt:message bundle="${locale}" key="text.order.status.paid"/></option>
                                 <option value="5"><fmt:message bundle="${locale}" key="text.order.status.canceled"/></option>
                                 </select>
                             </td>

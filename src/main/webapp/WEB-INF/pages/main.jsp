@@ -18,7 +18,7 @@
                 <div class="card mt-4">
                     <div class="card-body">
                         <h3 class="card-title">${service.title}</h3>
-                        <h4><fmt:message bundle="${locale}" key="text.price"/>: ${service.price} <fmt:message bundle="${locale}" key="text.ruble"/></h4>
+                        <h4><fmt:message bundle="${locale}" key="text.price"/>: ${service.price}&nbsp <fmt:message bundle="${locale}" key="text.ruble"/></h4>
                         <p class="card-text">${service.description}</p>
                         <form method="get" action="controller">
                             <input type="hidden" name="command" value="add_to_cart">

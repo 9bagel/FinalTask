@@ -48,6 +48,7 @@ public class Constants {
     public static final String MANAGE_USERS_JSP = "/WEB-INF/pages/admin/manageUsers.jsp";
     public static final String MAIN_JSP = "/WEB-INF/pages/main.jsp";
     public static final String SERVICE_JSP = "/WEB-INF/pages/service.jsp";
+    public static final String ADD_SERVICE_JSP = "/WEB-INF/pages/service/addService.jsp";
     public static final String ERROR_JSP = "/WEB-INF/pages/errors/errorPage.jsp";
     public static final String SUCCESS_JSP = "/WEB-INF/pages/success.jsp";
     public static final String SHOPPING_CART_JSP = "/WEB-INF/pages/shoppingCart/shoppingCart.jsp";

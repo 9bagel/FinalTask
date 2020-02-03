@@ -42,7 +42,7 @@
                         <td>
                             <input type="hidden" name="command" value="update_user">
                             <input type="hidden" name="user_id" value="${user.id}">
-                            <button type="submit" class="btn btn-outline-success"><fmt:message bundle="${locale}" key="text.apply"/></button>
+                            <button type="submit" class="btn btn-outline-success"><fmt:message bundle="${locale}" key="text.update"/></button>
                         </td>
                         </form>
                     </tr>
