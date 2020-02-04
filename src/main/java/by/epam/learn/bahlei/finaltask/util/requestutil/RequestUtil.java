@@ -1,5 +1,6 @@
 package by.epam.learn.bahlei.finaltask.util.requestutil;
 
+import by.epam.learn.bahlei.finaltask.dto.service.ServiceDto;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
@@ -85,5 +86,21 @@ public class RequestUtil {
         user.setUserRole(UserRole.getUserRoleById(Integer.parseInt(request.getParameter(Constants.USER_ROLE_ID))));
         user.setBalance(new BigDecimal(request.getParameter(Constants.USER_BALANCE)));
         return user;
+    }
+
+    public static ServiceDto parseServiceDto(HttpServletRequest request) {
+        ServiceDto serviceDto = new ServiceDto();
+        serviceDto.setTitleEn(request.getParameter(Constants.TITLE_EN));
+        serviceDto.setTitleRu(request.getParameter(Constants.TITLE_RU));
+        serviceDto.setTitleBy(request.getParameter(Constants.TITLE_BY));
+
+        serviceDto.setDescriptionEn(request.getParameter(Constants.DESCRIPTION_EN));
+        serviceDto.setDescriptionRu(request.getParameter(Constants.DESCRIPTION_RU));
+        serviceDto.setDescriptionBy(request.getParameter(Constants.DESCRIPTION_BY));
+
+        serviceDto.setPrice(new BigDecimal(request.getParameter(Constants.PRICE)));
+        serviceDto.setTypeId(Integer.parseInt(request.getParameter(Constants.STATUS_ID)));
+
+        return serviceDto;
     }
 }

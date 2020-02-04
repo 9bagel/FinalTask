@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
+import by.epam.learn.bahlei.finaltask.dto.service.ServiceDto;
 import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.util.Constants;
@@ -43,7 +44,7 @@ public class ServiceDao extends ServiceDaoAbstract {
                 service.setTitle(resultSet.getString(languageType.getTitleColumnName()));
                 service.setDescription(resultSet.getString(languageType.getDescriptionColumnName()));
                 service.setTypeId(resultSet.getInt(Constants.TYPE_ID));
-                service.setPrice(resultSet.getBigDecimal(Constants.PRICE_COLUMN_NAME));
+                service.setPrice(resultSet.getBigDecimal(Constants.PRICE));
 
                 serviceList.add(service);
             }
@@ -57,6 +58,24 @@ public class ServiceDao extends ServiceDaoAbstract {
     @Override
     protected void prepareInsert(PreparedStatement preparedStatement, Service entity) throws DaoException {
 
+    }
+
+    protected void prepareInsert(PreparedStatement preparedStatement, ServiceDto serviceDto) throws DaoException {
+        try {
+            preparedStatement.setInt(1, serviceDto.getTypeId());
+
+            preparedStatement.setString(2, serviceDto.getTitleEn());
+            preparedStatement.setString(3, serviceDto.getTitleRu());
+            preparedStatement.setString(4, serviceDto.getTitleBy());
+
+            preparedStatement.setString(5, serviceDto.getDescriptionEn());
+            preparedStatement.setString(6, serviceDto.getDescriptionRu());
+            preparedStatement.setString(7, serviceDto.getDescriptionBy());
+
+            preparedStatement.setBigDecimal(8, serviceDto.getPrice());
+        } catch (SQLException e) {
+            throw LOGGER.throwing(new DaoException(e));
+        }
     }
 
     @Override
@@ -138,6 +157,19 @@ public class ServiceDao extends ServiceDaoAbstract {
             return services;
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException("Error in getServicesByIdsAndLanguage() in ServiceDao", e));
+        }
+    }
+
+    public void insert(ServiceDto serviceDto) throws DaoException {
+        String insertQuery = getInsertQuery();
+
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+            prepareInsert(preparedStatement, serviceDto);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException(e));
         }
     }
 }

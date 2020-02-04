@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
+import by.epam.learn.bahlei.finaltask.dto.service.ServiceDto;
 import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
@@ -75,6 +76,14 @@ public class ServiceLogic {
 
         try {
             return serviceDao.getServicesByIdsAndLanguage(serviceIds, languageTypeDto);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public void add(ServiceDto serviceDto) throws LogicException {
+        try {
+            serviceDao.insert(serviceDto);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }

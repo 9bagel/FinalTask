@@ -65,16 +65,16 @@ public class Constants {
     public static final String REFERER = "referer";
 
 
-    public static final String PRICE_COLUMN_NAME = "price";
+    public static final String PRICE = "price";
     public static final String ID_COLUMN_NAME = "id";
 
     //Services ================================================
-    public static final String TITLE_COLUMN_NAME_EN = "title_en";
-    public static final String TITLE_COLUMN_NAME_RU = "title_ru";
-    public static final String TITLE_COLUMN_NAME_BY = "title_by";
-    public static final String DESCRIPTION_COLUMN_NAME_EN = "description_en";
-    public static final String DESCRIPTION_COLUMN_NAME_RU = "description_ru";
-    public static final String DESCRIPTION_COLUMN_NAME_BY = "description_by";
+    public static final String TITLE_EN = "title_en";
+    public static final String TITLE_RU = "title_ru";
+    public static final String TITLE_BY = "title_by";
+    public static final String DESCRIPTION_EN = "description_en";
+    public static final String DESCRIPTION_RU = "description_ru";
+    public static final String DESCRIPTION_BY = "description_by";
     public static final String TYPE_ID = "type_id";
 
     public static final String USER_LOGIN = "login";
@@ -101,4 +101,6 @@ public class Constants {
     public static final String MANAGE_ORDERS_ERROR = "text.order.manage.error";
     public static final String UPDATE_USER_ERROR = "text.user.update.error";
     public static final String USER_UPDATE_MESSAGE = "text.user.update.message";
+    public static final String ADD_SERVICE_ERROR = "text.service.add.error";
+    public static final String ADD_SERVICE_MESSAGE = "text.service.add.message";
 }

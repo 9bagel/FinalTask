@@ -47,7 +47,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <input type="text" name="price" class="col-1 form-control" placeholder="Price" style="margin: 10px;">
+                    <input type="text" name="price" class="col-1 form-control" placeholder="<fmt:message bundle="${locale}" key="text.price"/>" style="margin: 10px;">
                     <div class="float-left">
                         <select class="custom-select" name="status_id" title="<fmt:message bundle="${locale}" key="text.service.select_type"/>">
                             <option value="1"><fmt:message bundle="${locale}" key="service.haircut"/></option>
