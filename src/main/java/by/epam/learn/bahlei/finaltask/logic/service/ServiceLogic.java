@@ -88,4 +88,12 @@ public class ServiceLogic {
             throw LOGGER.throwing(new LogicException(e));
         }
     }
+
+    public void deleteServiceById(int serviceId) throws LogicException {
+        try {
+            serviceDao.deleteServiceById(serviceId);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
 }

@@ -47,7 +47,7 @@ public class Constants {
     public static final String MANAGE_ORDERS_JSP = "/WEB-INF/pages/admin/manageOrders.jsp";
     public static final String MANAGE_USERS_JSP = "/WEB-INF/pages/admin/manageUsers.jsp";
     public static final String MAIN_JSP = "/WEB-INF/pages/main.jsp";
-    public static final String SERVICE_JSP = "/WEB-INF/pages/service.jsp";
+    public static final String SERVICE_JSP = "/WEB-INF/pages/service/services.jsp";
     public static final String ADD_SERVICE_JSP = "/WEB-INF/pages/service/addService.jsp";
     public static final String ERROR_JSP = "/WEB-INF/pages/errors/errorPage.jsp";
     public static final String SUCCESS_JSP = "/WEB-INF/pages/success.jsp";
@@ -89,7 +89,7 @@ public class Constants {
     public static final String ORDER_STATUS_COMPLETED = "text.order.status.completed";
     public static final String ORDER_STATUS_CANCELED = "text.order.status.canceled";
     public static final String ORDER_STATUS_PAID = "text.order.status.paid";
-    public static final String CANCEL_ORDER_ERROR = "text.order.cancel.error";
+    public static final String ORDER_CANCEL_ERROR = "text.order.cancel.error";
     public static final String ORDER_CANCELED_MESSAGE = "text.order.cancelled.message";
     public static final String USER_NOT_ENOUGH_BALANCE = "text.user.not_enough_balance.error";
     public static final String PAY_ORDER_ERROR = "text.order.pay.error";
@@ -99,8 +99,10 @@ public class Constants {
     public static final String USER_ROLE_ADMINISTRATOR = "text.user.type.administrator";
     public static final String USER_ROLE_CUSTOMER = "text.user.type.customer";
     public static final String MANAGE_ORDERS_ERROR = "text.order.manage.error";
-    public static final String UPDATE_USER_ERROR = "text.user.update.error";
+    public static final String USER_UPDATE_ERROR = "text.user.update.error";
     public static final String USER_UPDATE_MESSAGE = "text.user.update.message";
-    public static final String ADD_SERVICE_ERROR = "text.service.add.error";
-    public static final String ADD_SERVICE_MESSAGE = "text.service.add.message";
+    public static final String SERVICE_ADD_ERROR = "text.service.add.error";
+    public static final String SERVICE_ADD_MESSAGE = "text.service.add.message";
+    public static final String SERVICE_DELETE_ERROR = "text.service.delete.error";
+    public static final String SERVICE_DELETE_MESSAGE = "text.service.delete.message";
 }

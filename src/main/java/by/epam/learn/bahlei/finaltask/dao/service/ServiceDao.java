@@ -172,4 +172,14 @@ public class ServiceDao extends ServiceDaoAbstract {
             throw LOGGER.throwing(new DaoException(e));
         }
     }
+
+    public void deleteServiceById(int serviceId) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getDeleteQuery())) {
+            preparedStatement.setInt(1, serviceId);
+            preparedStatement.execute();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException(e));
+        }
+    }
 }

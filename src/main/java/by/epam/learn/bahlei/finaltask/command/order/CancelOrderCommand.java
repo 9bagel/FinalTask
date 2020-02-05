@@ -34,7 +34,7 @@ public class CancelOrderCommand implements ActionCommand {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
             return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
-            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.CANCEL_ORDER_ERROR);
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ORDER_CANCEL_ERROR);
             return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         }
     }

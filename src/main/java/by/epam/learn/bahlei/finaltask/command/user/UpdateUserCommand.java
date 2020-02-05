@@ -26,7 +26,7 @@ public class UpdateUserCommand implements ActionCommand {
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.USER_UPDATE_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         } catch (LogicException e) {
-            request.getSession().setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.UPDATE_USER_ERROR);
+            request.getSession().setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.USER_UPDATE_ERROR);
             return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         }
     }
