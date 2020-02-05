@@ -16,8 +16,9 @@
             <div class="card mt-4">
                 <div class="card-body">
                     <form method="POST" action="controller">
-                        <input type="hidden" name="command" value="add_service">
-                        <c:import url="/WEB-INF/pages/fragments/service/addServiceInput.jsp"/>
+                        <input type="hidden" name="command" value="update_service">
+                        <input type="hidden" name="service_id" value="${service.id}">
+                        <c:import url="/WEB-INF/pages/fragments/service/updateServiceInput.jsp"/>
                     </form>
                 </div>
             </div>

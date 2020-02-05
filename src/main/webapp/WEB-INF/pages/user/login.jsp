@@ -34,7 +34,7 @@
         <c:remove var="errorMessage" scope="session"/>
         <div class="row">
             <div class="col-md-12 form-group">
-                <button type="submit" class="btn btn-success"><fmt:message bundle="${locale}" key="button.send" /></button>
+                <button type="submit" class="btn btn-success"><fmt:message bundle="${locale}" key="text.send" /></button>
             </div>
         </div>
     </form>

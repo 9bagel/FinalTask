@@ -1,6 +1,7 @@
-package by.epam.learn.bahlei.finaltask.command;
+package by.epam.learn.bahlei.finaltask.command.service;
 
-
+import by.epam.learn.bahlei.finaltask.command.ActionCommand;
+import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
@@ -9,21 +10,20 @@ import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
-public class ShowMainPageCommand implements ActionCommand {
+public class ShowUpdateServicePageCommand implements ActionCommand {
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private ServiceLogic serviceLogic = logicFactory.getServiceLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        try {
-            List<Service> services;
-            services = serviceLogic.getAllServices();
+        int serviceId = Integer.parseInt(request.getParameter(Constants.SERVICE_ID));
 
-            request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
-            return new Response(Constants.MAIN_JSP, Response.ResponseType.FORWARD);
+        try {
+            Service service = serviceLogic.getServiceById(serviceId);
+
+            request.setAttribute(Constants.ATTRIBUTE_SERVICE, service);
+            return new Response(Constants.UPDATE_SERVICE_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
         }

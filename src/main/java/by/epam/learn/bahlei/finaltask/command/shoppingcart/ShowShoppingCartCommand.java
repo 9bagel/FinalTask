@@ -27,12 +27,11 @@ public class ShowShoppingCartCommand implements ActionCommand {
             List<Service> services;
             HttpSession session = request.getSession();
 
-            String language = String.valueOf(session.getAttribute(Constants.LOCALE));
             ShoppingCart shoppingCart = RequestUtil.getShoppingCart(session);
 
             List<Integer> serviceIds = shoppingCart.getServiceIds();
 
-            services = serviceLogic.getServicesByIdsAndLanguage(serviceIds, language);
+            services = serviceLogic.getServicesById(serviceIds);
 
             request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
             return new Response(Constants.SHOPPING_CART_JSP, Response.ResponseType.FORWARD);

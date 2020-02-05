@@ -5,10 +5,7 @@ import by.epam.learn.bahlei.finaltask.command.ShowSuccessPageCommand;
 import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
 import by.epam.learn.bahlei.finaltask.command.order.*;
-import by.epam.learn.bahlei.finaltask.command.service.AddServiceCommand;
-import by.epam.learn.bahlei.finaltask.command.service.DeleteServiceCommand;
-import by.epam.learn.bahlei.finaltask.command.service.ShowAddServicePageCommand;
-import by.epam.learn.bahlei.finaltask.command.service.ShowServicePageCommand;
+import by.epam.learn.bahlei.finaltask.command.service.*;
 import by.epam.learn.bahlei.finaltask.command.shoppingcart.AddServiceToCartCommand;
 import by.epam.learn.bahlei.finaltask.command.shoppingcart.RemoveServiceFromShoppingCartCommand;
 import by.epam.learn.bahlei.finaltask.command.shoppingcart.ShowShoppingCartCommand;
@@ -41,7 +38,7 @@ public enum CommandEnum {
 
     SERVICE_LIST {
         {
-            this.command = new ShowServicePageCommand();
+            this.command = new ShowServiceTypePageCommand();
         }
     },
 
@@ -157,6 +154,18 @@ public enum CommandEnum {
     DELETE_SERVICE {
         {
             this.command = new DeleteServiceCommand();
+        }
+    },
+
+    EDIT_SERVICE_PAGE {
+        {
+            this.command = new ShowUpdateServicePageCommand();
+        }
+    },
+
+    UPDATE_SERVICE {
+        {
+            this.command = new UpdateServiceCommand();
         }
     },
 

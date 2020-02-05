@@ -33,12 +33,6 @@ public abstract class OrderDaoAbstract extends AbstractEntityDao<Order> {
         return "INSERT INTO ordered_services(order_id, service_id) VALUE(?, ?);";
     }
 
-    protected String getOrderWithNewStatusQuery() {
-        return "SELECT id, user_id, status_id FROM orders WHERE user_id = ? AND status_id = 1;";
-    }
-    protected String getDeleteServiceFromBasketQuery() {
-        return "DELETE from ordered_services where order_id = ? AND service_id = ? LIMIT 1";
-    }
     protected String getUpdateStatusQuery() {
         return "UPDATE orders SET status_id = ? WHERE id = ?";
     }

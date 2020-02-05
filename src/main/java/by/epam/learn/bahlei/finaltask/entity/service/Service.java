@@ -6,10 +6,14 @@ import java.math.BigDecimal;
 
 public class Service implements Entity {
     private int id;
-    private int typeId;
-    private String title;
-    private String description;
+    private ServiceType serviceType;
     private BigDecimal price;
+    private String descriptionEn;
+    private String descriptionBy;
+    private String descriptionRu;
+    private String titleBy;
+    private String titleRu;
+    private String titleEn;
 
     public Service() {
     }
@@ -22,28 +26,12 @@ public class Service implements Entity {
         this.id = id;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public ServiceType getServiceType() {
+        return serviceType;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setServiceType(ServiceType serviceType) {
+        this.serviceType = serviceType;
     }
 
     public BigDecimal getPrice() {
@@ -52,5 +40,53 @@ public class Service implements Entity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getDescriptionEn() {
+        return descriptionEn;
+    }
+
+    public void setDescriptionEn(String descriptionEn) {
+        this.descriptionEn = descriptionEn;
+    }
+
+    public String getDescriptionBy() {
+        return descriptionBy;
+    }
+
+    public void setDescriptionBy(String descriptionBy) {
+        this.descriptionBy = descriptionBy;
+    }
+
+    public String getDescriptionRu() {
+        return descriptionRu;
+    }
+
+    public void setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+    }
+
+    public String getTitleBy() {
+        return titleBy;
+    }
+
+    public void setTitleBy(String titleBy) {
+        this.titleBy = titleBy;
+    }
+
+    public String getTitleRu() {
+        return titleRu;
+    }
+
+    public void setTitleRu(String titleRu) {
+        this.titleRu = titleRu;
+    }
+
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
     }
 }

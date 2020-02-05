@@ -3,10 +3,8 @@ package by.epam.learn.bahlei.finaltask.dao.service;
 import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
-import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
-import by.epam.learn.bahlei.finaltask.dto.service.ServiceDto;
-import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
+import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDao extends ServiceDaoAbstract {
-    private static final int TYPE_ID_INDEX = 1;
     private static final ServiceDao INSTANCE = new ServiceDao();
     private static final Logger LOGGER = LogManager.getLogger(ServiceDao.class);
 
@@ -29,122 +26,95 @@ public class ServiceDao extends ServiceDaoAbstract {
         return INSTANCE;
     }
 
+    @Override
     protected List<Service> parseResultSet(ResultSet resultSet) throws DaoException {
-        throw new DaoException("Operation not supported");
-    }
-
-    protected List<Service> parseResultSet(ResultSet resultSet, LanguageTypeDto languageType) throws DaoException {
-
-        List<Service> serviceList = new ArrayList<>();
+        List<Service> services = new ArrayList<>();
         try {
             while (resultSet.next()) {
                 Service service = new Service();
 
-                service.setId(resultSet.getInt(Constants.ID_COLUMN_NAME));
-                service.setTitle(resultSet.getString(languageType.getTitleColumnName()));
-                service.setDescription(resultSet.getString(languageType.getDescriptionColumnName()));
-                service.setTypeId(resultSet.getInt(Constants.TYPE_ID));
+                service.setId(resultSet.getInt(Constants.ID));
+
+                service.setTitleEn(resultSet.getString(Constants.TITLE_EN));
+                service.setTitleRu(resultSet.getString(Constants.TITLE_RU));
+                service.setTitleBy(resultSet.getString(Constants.TITLE_BY));
+
+                service.setDescriptionEn(resultSet.getString(Constants.DESCRIPTION_EN));
+                service.setDescriptionRu(resultSet.getString(Constants.DESCRIPTION_RU));
+                service.setDescriptionBy(resultSet.getString(Constants.DESCRIPTION_BY));
+
+                service.setServiceType(ServiceType.getById(resultSet.getInt(Constants.TYPE_ID)));
                 service.setPrice(resultSet.getBigDecimal(Constants.PRICE));
 
-                serviceList.add(service);
+                services.add(service);
             }
+            return services;
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in parseResultSet in ServiceDao", e));
         }
-
-        return serviceList;
     }
 
     @Override
-    protected void prepareInsert(PreparedStatement preparedStatement, Service entity) throws DaoException {
-
-    }
-
-    protected void prepareInsert(PreparedStatement preparedStatement, ServiceDto serviceDto) throws DaoException {
+    protected void prepareInsert(PreparedStatement preparedStatement, Service service) throws DaoException {
         try {
-            preparedStatement.setInt(1, serviceDto.getTypeId());
+            preparedStatement.setInt(1, service.getServiceType().getId());
 
-            preparedStatement.setString(2, serviceDto.getTitleEn());
-            preparedStatement.setString(3, serviceDto.getTitleRu());
-            preparedStatement.setString(4, serviceDto.getTitleBy());
+            preparedStatement.setString(2, service.getTitleEn());
+            preparedStatement.setString(3, service.getTitleRu());
+            preparedStatement.setString(4, service.getTitleBy());
 
-            preparedStatement.setString(5, serviceDto.getDescriptionEn());
-            preparedStatement.setString(6, serviceDto.getDescriptionRu());
-            preparedStatement.setString(7, serviceDto.getDescriptionBy());
+            preparedStatement.setString(5, service.getDescriptionEn());
+            preparedStatement.setString(6, service.getDescriptionRu());
+            preparedStatement.setString(7, service.getDescriptionBy());
 
-            preparedStatement.setBigDecimal(8, serviceDto.getPrice());
+            preparedStatement.setBigDecimal(8, service.getPrice());
         } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException(e));
         }
     }
 
     @Override
-    protected void prepareUpdate(PreparedStatement preparedStatement, Service entity) throws DaoException {
-
+    protected void prepareUpdate(PreparedStatement preparedStatement, Service service) throws DaoException {
+        try {
+            preparedStatement.setInt(1, service.getServiceType().getId());
+            preparedStatement.setString(2, service.getTitleEn());
+            preparedStatement.setString(3, service.getTitleRu());
+            preparedStatement.setString(4, service.getTitleBy());
+            preparedStatement.setString(5, service.getDescriptionEn());
+            preparedStatement.setString(6, service.getDescriptionRu());
+            preparedStatement.setString(7, service.getDescriptionBy());
+            preparedStatement.setBigDecimal(8, service.getPrice());
+            preparedStatement.setInt(9, service.getId());
+        } catch (SQLException e) {
+            throw LOGGER.throwing(new DaoException(e));
+        }
     }
 
-    public List<Service> getServicesByTypeAndLanguage(ServiceTypeDto serviceTypeDto, LanguageTypeDto languageTypeDto) throws DaoException {
-
+    public List<Service> getServicesByType(ServiceType serviceType) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServicesByTypeIdQuery())) {
 
-            int typeId = serviceTypeDto.getId();
-            preparedStatement.setInt(TYPE_ID_INDEX, typeId);
+            int typeId = serviceType.getId();
+            preparedStatement.setInt(1, typeId);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return parseResultSet(resultSet, languageTypeDto);
+            return parseResultSet(preparedStatement.executeQuery());
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException();
-        }
-
-    }
-
-    public List<Service> getOrderedServices(int orderId, LanguageTypeDto languageTypeDto) throws DaoException {
-        String getOrderedServices = getOrderedServicesQuery();
-
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getOrderedServices)) {
-
-            preparedStatement.setInt(1, orderId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            return parseResultSet(resultSet, languageTypeDto);
-        } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException("Error in getOrderedServices()", e));
-        }
-    }
-
-    public List<Service> getAll(LanguageTypeDto languageTypeDto) throws DaoException {
-        String selectAllQuery = getSelectAllQuery();
-        List<Service> services;
-
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectAllQuery);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            services = parseResultSet(resultSet, languageTypeDto);
-
-            return services;
-        } catch (ConnectionPoolException | SQLException e) {
-            throw LOGGER.throwing(new DaoException("Error in getAll method", e));
         }
     }
 
     public boolean isServiceExists(int serviceId) throws DaoException {
-        String selectServiceByIdQuery = getSelectServiceByIdQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectServiceByIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getSelectServiceByIdQuery())) {
 
             preparedStatement.setInt(1, serviceId);
-
             return preparedStatement.executeQuery().next();
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in isServiceExists() in ServiceDao", e));
         }
     }
 
-    public List<Service> getServicesByIdsAndLanguage(List<Integer> serviceIds, LanguageTypeDto languageTypeDto) throws DaoException {
+    public List<Service> getServicesById(List<Integer> serviceIds) throws DaoException {
         List<Service> services = new ArrayList<>();
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServiceByIdQuery())) {
@@ -152,7 +122,7 @@ public class ServiceDao extends ServiceDaoAbstract {
             for (Integer serviceId : serviceIds) {
                 preparedStatement.setInt(1, serviceId);
                 ResultSet resultSet = preparedStatement.executeQuery();
-                services.add(parseResultSet(resultSet, languageTypeDto).get(0));
+                services.add(parseResultSet(resultSet).get(0));
             }
             return services;
         } catch (SQLException | ConnectionPoolException e) {
@@ -160,24 +130,35 @@ public class ServiceDao extends ServiceDaoAbstract {
         }
     }
 
-    public void insert(ServiceDto serviceDto) throws DaoException {
-        String insertQuery = getInsertQuery();
-
+    public List<Service> getOrderedServices(int orderId) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderedServicesQuery())) {
 
-            prepareInsert(preparedStatement, serviceDto);
-            preparedStatement.executeUpdate();
+            preparedStatement.setInt(1, orderId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return parseResultSet(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException(e));
+            throw LOGGER.throwing(new DaoException("Error in getOrderedServices()", e));
         }
     }
 
     public void deleteServiceById(int serviceId) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getDeleteQuery())) {
+
             preparedStatement.setInt(1, serviceId);
             preparedStatement.execute();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException(e));
+        }
+    }
+
+    public Service getServiceById(int serviceId) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getServiceByIdQuery())) {
+            preparedStatement.setInt(1, serviceId);
+            return parseResultSet(preparedStatement.executeQuery()).get(0);
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException(e));
         }

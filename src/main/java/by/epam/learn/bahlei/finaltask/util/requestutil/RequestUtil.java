@@ -1,8 +1,9 @@
 package by.epam.learn.bahlei.finaltask.util.requestutil;
 
-import by.epam.learn.bahlei.finaltask.dto.service.ServiceDto;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
+import by.epam.learn.bahlei.finaltask.entity.service.Service;
+import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
@@ -88,19 +89,20 @@ public class RequestUtil {
         return user;
     }
 
-    public static ServiceDto parseServiceDto(HttpServletRequest request) {
-        ServiceDto serviceDto = new ServiceDto();
-        serviceDto.setTitleEn(request.getParameter(Constants.TITLE_EN));
-        serviceDto.setTitleRu(request.getParameter(Constants.TITLE_RU));
-        serviceDto.setTitleBy(request.getParameter(Constants.TITLE_BY));
+    public static Service parseService(HttpServletRequest request) {
+        Service service = new Service();
+        service.setTitleEn(request.getParameter(Constants.TITLE_EN));
+        service.setTitleRu(request.getParameter(Constants.TITLE_RU));
+        service.setTitleBy(request.getParameter(Constants.TITLE_BY));
 
-        serviceDto.setDescriptionEn(request.getParameter(Constants.DESCRIPTION_EN));
-        serviceDto.setDescriptionRu(request.getParameter(Constants.DESCRIPTION_RU));
-        serviceDto.setDescriptionBy(request.getParameter(Constants.DESCRIPTION_BY));
+        service.setDescriptionEn(request.getParameter(Constants.DESCRIPTION_EN));
+        service.setDescriptionRu(request.getParameter(Constants.DESCRIPTION_RU));
+        service.setDescriptionBy(request.getParameter(Constants.DESCRIPTION_BY));
 
-        serviceDto.setPrice(new BigDecimal(request.getParameter(Constants.PRICE)));
-        serviceDto.setTypeId(Integer.parseInt(request.getParameter(Constants.STATUS_ID)));
+        service.setPrice(new BigDecimal(request.getParameter(Constants.PRICE)));
+        service.setServiceType(ServiceType.getById(Integer.parseInt(request.getParameter(Constants.SERVICE_TYPE_ID))));
+        service.setId(Integer.parseInt(request.getParameter(Constants.SERVICE_ID)));
 
-        return serviceDto;
+        return service;
     }
 }

@@ -10,10 +10,9 @@ import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class ShowServicePageCommand implements ActionCommand {
+public class ShowServiceTypePageCommand implements ActionCommand {
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private ServiceLogic serviceLogic = logicFactory.getServiceLogic();
 
@@ -21,20 +20,14 @@ public class ShowServicePageCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         try {
             List<Service> services;
-            HttpSession session = request.getSession();
-
-            String serviceName = request.getParameter("service_name");
-            String language = String.valueOf(session.getAttribute(Constants.LOCALE));
-
-            services = serviceLogic.getServicesByTypeAndLanguage(serviceName, language);
+            String serviceTypeName = request.getParameter(Constants.SERVICE_TYPE);
+            services = serviceLogic.getServicesByTypeName(serviceTypeName);
 
             request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
             return new Response(Constants.SERVICE_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
         }
-
-
     }
 
 }

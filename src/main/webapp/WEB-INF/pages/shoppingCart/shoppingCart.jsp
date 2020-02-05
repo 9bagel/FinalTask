@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale" scope="application"/>
 <html>
@@ -22,14 +23,14 @@
                             <c:set var="total" value="${total + service.price}" />
                             <tr>
                                 <th scope="row">${loop.count}</th>
-                                <td>${service.title}</td>
+                                <td><ctg:serviceTitle service="${service}"/></td>
                                 <td>${service.price} &nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
                                 <form method="POST" action="controller">
                                     <input type="hidden" name="command" value="remove_from_shopping_cart">
                                     <input type="hidden" name="service_id" value="${service.id}">
                                     <td>
                                         <button type="submit" class="btn btn-outline-danger">
-                                            <fmt:message bundle="${locale}" key="button.remove"/>
+                                            <fmt:message bundle="${locale}" key="text.delete"/>
                                         </button>
                                     </td>
                                 </form>

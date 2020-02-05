@@ -66,7 +66,6 @@ public class Constants {
 
 
     public static final String PRICE = "price";
-    public static final String ID_COLUMN_NAME = "id";
 
     //Services ================================================
     public static final String TITLE_EN = "title_en";
@@ -105,4 +104,20 @@ public class Constants {
     public static final String SERVICE_ADD_MESSAGE = "text.service.add.message";
     public static final String SERVICE_DELETE_ERROR = "text.service.delete.error";
     public static final String SERVICE_DELETE_MESSAGE = "text.service.delete.message";
+    public static final String SERVICE_TYPE_ID = "service_type_id";
+    public static final String SERVICE_TYPE = "service_type";
+    public static final String ATTRIBUTE_SERVICE = "service";
+    public static final String UPDATE_SERVICE_JSP = "/WEB-INF/pages/service/updateService.jsp";
+    public static final String SERVICE_TYPE_HAIRCUT = "service.haircut";
+    public static final String SERVICE_TYPE_PAW_CARE = "service.paw_care";
+    public static final String SERVICE_TYPE_WASHING_DRYING = "service.washing_drying";
+    public static final String SERVICE_TYPE_COMBING_OUT = "service.combing_out";
+    public static final String SERVICE_TYPE_CLAW_TRIMMING = "service.claw_trimming";
+    public static final String SERVICE_TYPE_EAR_CLEANING = "service.ear_cleaning";
+    public static final String SERVICE_TYPE_EYE_BRUSHING = "service.eye_brushing";
+    public static final String SERVICE_TYPE_SPA = "service.spa";
+    public static final String SERVICE_TYPE_TEETH_CLEANING = "service.teeth_cleaning";
+    public static final String SERVICE_TYPE_TAXI = "service.taxi";
+    public static final String SERVICE_UPDATE_MESSAGE = "text.service.update.message";
+    public static final String SERVICE_UPDATE_ERROR = "text.service.update.error";
 }

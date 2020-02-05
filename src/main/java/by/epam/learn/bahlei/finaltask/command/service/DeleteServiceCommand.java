@@ -18,6 +18,7 @@ public class DeleteServiceCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         try {
             serviceLogic.deleteServiceById(Integer.parseInt(request.getParameter(Constants.SERVICE_ID)));
+
             request.getSession().setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE,Constants.SERVICE_DELETE_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         } catch (LogicException e) {

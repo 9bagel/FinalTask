@@ -3,19 +3,15 @@ package by.epam.learn.bahlei.finaltask.logic.service;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
-import by.epam.learn.bahlei.finaltask.dto.LanguageTypeDto;
-import by.epam.learn.bahlei.finaltask.dto.service.ServiceDto;
-import by.epam.learn.bahlei.finaltask.dto.service.ServiceTypeDto;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
+import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import by.epam.learn.bahlei.finaltask.util.LanguageUtil;
 import com.google.protobuf.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ServiceLogic {
     private static final Logger LOGGER = LogManager.getLogger(ServiceLogic.class);
@@ -30,32 +26,19 @@ public class ServiceLogic {
         return INSTANCE;
     }
 
-    public List<Service> getServicesByTypeAndLanguage(String serviceName, String language) throws LogicException {
+    public List<Service> getServicesByTypeName(String serviceTypeName) throws LogicException {
         try {
-            LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
-            ServiceTypeDto serviceTypeDto = ServiceTypeDto.valueOf(serviceName.toUpperCase());
-
-            return serviceDao.getServicesByTypeAndLanguage(serviceTypeDto, languageTypeDto);
+            ServiceType serviceType = ServiceType.valueOf(serviceTypeName.toUpperCase());
+            return serviceDao.getServicesByType(serviceType);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
     }
 
 
-    public List<Service> getAllServices(String language) throws LogicException {
-        LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
+    public List<Service> getAllServices() throws LogicException {
         try {
-            return serviceDao.getAll(languageTypeDto);
-        } catch (DaoException e) {
-            throw LOGGER.throwing(new LogicException(e));
-        }
-    }
-
-    public List<Service> getOrderedServicesByOrderId(int orderId, String language) throws LogicException {
-        LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
-
-        try {
-            return serviceDao.getOrderedServices(orderId, languageTypeDto);
+            return serviceDao.getAll();
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
@@ -71,19 +54,17 @@ public class ServiceLogic {
         }
     }
 
-    public List<Service> getServicesByIdsAndLanguage(List<Integer> serviceIds, String language) throws LogicException {
-        LanguageTypeDto languageTypeDto = LanguageUtil.getLanguageTypeByName(language);
-
+    public List<Service> getServicesById(List<Integer> serviceIds) throws LogicException {
         try {
-            return serviceDao.getServicesByIdsAndLanguage(serviceIds, languageTypeDto);
+            return serviceDao.getServicesById(serviceIds);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
     }
 
-    public void add(ServiceDto serviceDto) throws LogicException {
+    public void insert(Service service) throws LogicException {
         try {
-            serviceDao.insert(serviceDto);
+            serviceDao.insert(service);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
@@ -92,6 +73,30 @@ public class ServiceLogic {
     public void deleteServiceById(int serviceId) throws LogicException {
         try {
             serviceDao.deleteServiceById(serviceId);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public List<Service> getOrderedServicesByOrderId(int orderId) throws LogicException {
+        try {
+            return serviceDao.getOrderedServices(orderId);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public Service getServiceById(int serviceId) throws LogicException {
+        try {
+            return serviceDao.getServiceById(serviceId);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public void updateService(Service service) throws LogicException {
+        try {
+            serviceDao.update(service);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }

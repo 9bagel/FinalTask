@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale" scope="application"/>
 <html>
@@ -27,7 +28,7 @@
                             <c:forEach items="${services}" var="service" varStatus="loop">
                                 <tr>
                                     <td>#${loop.count}</td>
-                                    <td>${service.title}</td>
+                                    <td><ctg:serviceTitle service="${service}"/></td>
                                     <td>${service.price}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></td>
                                 </tr>
                             </c:forEach>

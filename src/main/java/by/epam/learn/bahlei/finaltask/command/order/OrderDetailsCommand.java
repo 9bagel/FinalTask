@@ -27,7 +27,7 @@ public class OrderDetailsCommand implements ActionCommand {
         int orderId = Integer.parseInt(request.getParameter(Constants.ORDER_ID));
         String language = String.valueOf(session.getAttribute(Constants.LOCALE));
         try {
-            List<Service> services = serviceLogic.getOrderedServicesByOrderId(orderId, language);
+            List<Service> services = serviceLogic.getOrderedServicesByOrderId(orderId);
             Order order = orderLogic.getOrderById(orderId);
             request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
             request.setAttribute(Constants.ORDER, order);

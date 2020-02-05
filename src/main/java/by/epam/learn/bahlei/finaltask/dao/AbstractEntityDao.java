@@ -79,7 +79,7 @@ public abstract class AbstractEntityDao<T extends Entity> implements Dao<T> {
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
 
             prepareUpdate(preparedStatement, entity);
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in update method", e));
