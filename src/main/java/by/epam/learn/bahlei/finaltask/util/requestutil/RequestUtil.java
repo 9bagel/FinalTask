@@ -1,5 +1,6 @@
 package by.epam.learn.bahlei.finaltask.util.requestutil;
 
+import by.epam.learn.bahlei.finaltask.entity.review.Review;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
@@ -46,11 +47,13 @@ public class RequestUtil {
 
     public static Order parseOrder(HttpSession session, HttpServletRequest request) throws LogicException {
         Order order = new Order();
+
         order.setId(getOrderId(request));
         order.setUserId(getUser(session).getId());
         order.setTotal(new BigDecimal(request.getParameter(Constants.TOTAL)));
         order.setOrderStatus(getOrderStatus(request));
         order.setDate(getDate(request));
+
         return order;
     }
 
@@ -81,16 +84,19 @@ public class RequestUtil {
 
     public static User parseUser(HttpServletRequest request) {
         User user = new User();
+
         user.setId(Integer.parseInt(request.getParameter(Constants.USER_ID)));
         user.setLogin(request.getParameter(Constants.USER_LOGIN));
         user.setEmail(request.getParameter(Constants.USER_EMAIL));
         user.setUserRole(UserRole.getUserRoleById(Integer.parseInt(request.getParameter(Constants.USER_ROLE_ID))));
         user.setBalance(new BigDecimal(request.getParameter(Constants.USER_BALANCE)));
+
         return user;
     }
 
     public static Service parseService(HttpServletRequest request) {
         Service service = new Service();
+
         service.setTitleEn(request.getParameter(Constants.TITLE_EN));
         service.setTitleRu(request.getParameter(Constants.TITLE_RU));
         service.setTitleBy(request.getParameter(Constants.TITLE_BY));
@@ -104,5 +110,15 @@ public class RequestUtil {
         service.setId(Integer.parseInt(request.getParameter(Constants.SERVICE_ID)));
 
         return service;
+    }
+
+    public static Review parseReview(HttpServletRequest request) {
+        Review review = new Review();
+
+        review.setOrderId(Integer.parseInt(request.getParameter(Constants.ORDER_ID)));
+        review.setUserId(getUser(request.getSession()).getId());
+        review.setMessage(request.getParameter(Constants.MESSAGE));
+
+        return review;
     }
 }

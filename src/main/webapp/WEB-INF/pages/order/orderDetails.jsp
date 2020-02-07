@@ -37,19 +37,29 @@
                         <p class="float-right"><fmt:message bundle="${locale}" key="text.total"/>:&nbsp${order.total}&nbsp<fmt:message bundle="${locale}" key="text.ruble"/></p>
                         <h5 class="col"><fmt:message bundle="${locale}" key="text.order.date"/>:&nbsp<fmt:formatDate type="both" value="${order.date}" /></h5>
                         <c:if test="${order.orderStatus.id == 1}">
-                            <div class="float-left">
-                            <form class="float-left" action="controller" method="POST">
-                                <input type="hidden" name="command" value="cancel_order">
-                                <input type="hidden" name="order_id" value="${order.id}">
-                                <input type="submit" class="btn btn-danger" style="margin-right: 10px;" value="<fmt:message bundle="${locale}" key="button.cancel"/>" >
-                            </form>
-                            <form class="float-left" action="controller" method="post">
-                            <input type="hidden" name="command" value="pay_order">
-                            <input type="hidden" name="order_id" value="${order.id}">
-                            <input type="submit" class="btn btn-success" value="<fmt:message bundle="${locale}" key="button.pay"/>" >
-                            </form>
-                        </div>
+                            <c:import url="/WEB-INF/pages/fragments/order/controlOrder.jsp"/>
                         </c:if>
+                        <div class="card card-outline-secondary my-4">
+                        <div class="card-header">
+                            <fmt:message bundle="${locale}" key="text.leave_review"/>
+                        </div>
+                            <c:choose>
+                                <c:when test="${not empty review}">
+                                    <div class="card-body">
+                                        <p>${review.message}</p>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:if test="${order.orderStatus.id == 3}">
+                        <form method="POST" action="controller">
+                            <input type="hidden" name="command" value="leave_review">
+                            <input type="hidden" name="order_id" value="${order.id}">
+                        <c:import url="/WEB-INF/pages/fragments/review/leaveReview.jsp"/>
+                        </form>
+                                    </c:if>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                 </div>
         </div>

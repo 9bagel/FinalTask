@@ -1,0 +1,10 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <!-- -verbose -debug -->
+    <weaver options="-showWeaveInfo">
+        <include within="by.epam.*" />
+    </weaver>
+    <aspects>
+        <aspect name="by.epam.learn.bahlei.finaltask.aspect.DaoLoggerAspect" />
+    </aspects>
+</aspectj>

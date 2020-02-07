@@ -1,6 +1,7 @@
 package by.epam.learn.bahlei.finaltask.logic.factory;
 
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
+import by.epam.learn.bahlei.finaltask.logic.review.ReviewLogic;
 import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.logic.user.UserLogic;
 
@@ -25,5 +26,9 @@ public class LogicFactory {
 
     public OrderLogic getOrderLogic() {
         return OrderLogic.getInstance();
+    }
+
+    public ReviewLogic getReviewLogic(){
+        return ReviewLogic.getInstance();
     }
 }

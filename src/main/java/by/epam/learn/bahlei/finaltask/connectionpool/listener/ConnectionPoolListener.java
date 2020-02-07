@@ -26,6 +26,6 @@ public class ConnectionPoolListener implements javax.servlet.ServletContextListe
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        connectionPool.closeAllConnections();
+        connectionPool.closeAllRealConnections();
     }
 }

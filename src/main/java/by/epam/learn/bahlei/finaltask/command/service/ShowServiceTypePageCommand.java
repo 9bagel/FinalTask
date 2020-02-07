@@ -23,7 +23,7 @@ public class ShowServiceTypePageCommand implements ActionCommand {
             String serviceTypeName = request.getParameter(Constants.SERVICE_TYPE);
             services = serviceLogic.getServicesByTypeName(serviceTypeName);
 
-            request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
+            request.setAttribute(Constants.SERVICES, services);
             return new Response(Constants.SERVICE_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);

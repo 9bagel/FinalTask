@@ -35,7 +35,7 @@ public class Constants {
     public static final String ORDER_CREATED_MESSAGE = "text.order.success";
 
     public static final String SUCCESS_MESSAGE = "successMessage";
-    public static final String ATTRIBUTE_SERVICES = "services";
+    public static final String SERVICES = "services";
     public static final String ATTRIBUTE_ORDERS = "orders";
     public static final String ATTRIBUTE_USERS = "users";
     public static final String TOTAL = "total";
@@ -120,4 +120,8 @@ public class Constants {
     public static final String SERVICE_TYPE_TAXI = "service.taxi";
     public static final String SERVICE_UPDATE_MESSAGE = "text.service.update.message";
     public static final String SERVICE_UPDATE_ERROR = "text.service.update.error";
+    public static final String MESSAGE = "message";
+    public static final String REVIEW_LEAVE_MESSAGE = "text.review.leave.message";
+    public static final String REVIEW_LEAVE_ERROR = "text.review.leave.error";
+    public static final String REVIEW = "review";
 }

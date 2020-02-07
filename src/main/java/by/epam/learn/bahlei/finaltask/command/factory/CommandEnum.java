@@ -5,6 +5,7 @@ import by.epam.learn.bahlei.finaltask.command.ShowSuccessPageCommand;
 import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
 import by.epam.learn.bahlei.finaltask.command.order.*;
+import by.epam.learn.bahlei.finaltask.command.review.LeaveReviewCommand;
 import by.epam.learn.bahlei.finaltask.command.service.*;
 import by.epam.learn.bahlei.finaltask.command.shoppingcart.AddServiceToCartCommand;
 import by.epam.learn.bahlei.finaltask.command.shoppingcart.RemoveServiceFromShoppingCartCommand;
@@ -166,6 +167,12 @@ public enum CommandEnum {
     UPDATE_SERVICE {
         {
             this.command = new UpdateServiceCommand();
+        }
+    },
+
+    LEAVE_REVIEW {
+        {
+            this.command = new LeaveReviewCommand();
         }
     },
 

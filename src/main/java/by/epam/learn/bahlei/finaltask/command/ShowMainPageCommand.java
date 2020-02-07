@@ -1,6 +1,5 @@
 package by.epam.learn.bahlei.finaltask.command;
 
-
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
@@ -9,7 +8,6 @@ import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class ShowMainPageCommand implements ActionCommand {
@@ -22,7 +20,7 @@ public class ShowMainPageCommand implements ActionCommand {
             List<Service> services;
             services = serviceLogic.getAllServices();
 
-            request.setAttribute(Constants.ATTRIBUTE_SERVICES, services);
+            request.setAttribute(Constants.SERVICES, services);
             return new Response(Constants.MAIN_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);

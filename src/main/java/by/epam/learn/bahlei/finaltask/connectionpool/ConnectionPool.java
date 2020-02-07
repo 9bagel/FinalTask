@@ -62,7 +62,7 @@ public class ConnectionPool {
         return connectionQueue.offer(connection);
     }
 
-    public void closeAllConnections() {
+    public void closeAllRealConnections() {
 
         for (ProxyConnection proxyConnection : connectionQueue) {
             try {
