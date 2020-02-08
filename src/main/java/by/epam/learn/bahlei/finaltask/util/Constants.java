@@ -124,4 +124,6 @@ public class Constants {
     public static final String REVIEW_LEAVE_MESSAGE = "text.review.leave.message";
     public static final String REVIEW_LEAVE_ERROR = "text.review.leave.error";
     public static final String REVIEW = "review";
+    public static final String LOGIN_INVALID = "text.login.invalid";
+    public static final String PASSWORD_INVALID = "text.password.invalid";
 }

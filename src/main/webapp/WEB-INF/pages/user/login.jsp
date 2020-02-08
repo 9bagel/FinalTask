@@ -31,13 +31,7 @@
                 </div>
             </div>
         </div>
-        <br/>
-        <c:if test="${not empty errorMessage}">
-            <div class="alert alert-danger" role="alert">
-                <fmt:message bundle="${locale}" key="${sessionScope.errorMessage}" />
-            </div>
-        </c:if>
-        <c:remove var="errorMessage" scope="session"/>
+        <c:import url="/WEB-INF/pages/fragments/messages.jsp"/>
         <div class="row">
             <div class="col-md-12 form-group">
                 <button type="submit" id="buttonSubmit" class="btn btn-success"><fmt:message bundle="${locale}" key="text.send" /></button>

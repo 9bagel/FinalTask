@@ -9,6 +9,8 @@ import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.encryptor.BcryptUtil;
+import by.epam.learn.bahlei.finaltask.util.validator.Validator;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidatorException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,11 +31,11 @@ public class UserLogic {
         return INSTANCE;
     }
 
-    public User login(String login, String password) throws LogicException, UserException {
-        User user;
-        LOGGER.info("Start login check");
+    public User login(String login, String password) throws LogicException, UserException, ValidatorException {
+        Validator.validateLogin(login);
+        Validator.validatePassword(password);
         try {
-            user = userDao.getUserByLogin(login);
+            User user = userDao.getUserByLogin(login);
             if (BcryptUtil.isPasswordCorrect(password, user.getHashedPassword())) {
                 return user;
             } else {

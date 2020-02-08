@@ -10,8 +10,7 @@ import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.user.UserLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.XssCleaner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidatorException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,8 +18,6 @@ import javax.servlet.http.HttpSession;
 public class LoginCommand implements ActionCommand {
     private LogicFactory logicFactory = LogicFactory.getInstance();
     private UserLogic userLogic = logicFactory.getUserLogic();
-
-    private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
@@ -33,12 +30,14 @@ public class LoginCommand implements ActionCommand {
 
             session.setAttribute(Constants.USER, user);
             return new Response(request.getContextPath(), Response.ResponseType.REDIRECT);
-        } catch (LogicException e) {
-            throw LOGGER.throwing(new CommandException("LogicException in execute method in LoginCommand:", e));
-        } catch (UserException e) {
-            LOGGER.info("User does not exists");
+
+        } catch (LogicException | UserException e) {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ERROR_LOGIN);
-            return new Response(request.getContextPath() + Constants.LOGIN_PAGE, Response.ResponseType.REDIRECT);
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
+
+        } catch (ValidatorException e) {
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.LOGIN_INVALID);
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }
     }
 }
