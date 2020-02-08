@@ -22,6 +22,7 @@ public class UpdateUserCommand implements ActionCommand {
         User user = RequestUtil.parseUser(request);
         try {
             userLogic.updateUser(user);
+            session.setAttribute(Constants.USER, user);
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.USER_UPDATE_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         } catch (LogicException e) {
