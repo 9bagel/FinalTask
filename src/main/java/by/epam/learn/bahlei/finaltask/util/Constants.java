@@ -59,7 +59,7 @@ public class Constants {
     public static final String LOGIN_PAGE = "/controller/login";
     public static final String SUCCESS_PAGE = "/controller/success";
 
-    public static final String ERROR_LOGIN = "error.login";
+    public static final String LOGIN_ERROR = "error.login";
 
     public static final String LOCALE = "lang";
     public static final String REFERER = "referer";

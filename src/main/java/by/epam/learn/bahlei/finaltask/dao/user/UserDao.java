@@ -29,29 +29,15 @@ public class UserDao extends UserDaoAbstract {
         return INSTANCE;
     }
 
-    public User getUserByLogin(String login) throws DaoException, UserException {
-        String userByLoginQuery = getUserByLoginQuery();
-        User user;
-        List<User> userList;
-
+    public List<User> getUserByLogin(String login) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(userByLoginQuery)) {
-
+             PreparedStatement preparedStatement = connection.prepareStatement(getUserByLoginQuery())) {
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            userList = parseResultSet(resultSet);
-            if (!userList.isEmpty()) {
-                user = userList.iterator().next();
-            } else {
-                throw LOGGER.throwing(new UserException("User doesn't exist"));
-            }
-
+            return parseResultSet(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException("Exception in getUserByLogin method in UserDao", e));
         }
-
-        return user;
     }
 
     @Override
@@ -138,19 +124,6 @@ public class UserDao extends UserDaoAbstract {
             ResultSet resultSet = preparedStatement.executeQuery();
             return parseResultSet(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException("Exception in getUserById method in UserDao", e));
-        }
-    }
-
-    public List<User> getUserById(ProxyConnection connection, int userId) throws DaoException {
-        String userByIdQuery = getUserByIdQuery();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(userByIdQuery)) {
-
-            preparedStatement.setInt(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return parseResultSet(resultSet);
-        } catch (SQLException e) {
             throw LOGGER.throwing(new DaoException("Exception in getUserById method in UserDao", e));
         }
     }

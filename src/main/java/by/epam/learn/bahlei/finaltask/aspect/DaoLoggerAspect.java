@@ -7,24 +7,16 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-import java.util.Arrays;
-
 @Aspect
 public class DaoLoggerAspect {
+    private final Logger LOGGER = LogManager.getLogger(this.getClass());
 
-    @Pointcut("call(public * by.epam.learn.bahlei.finaltask.dao..*.* (..))")
+    @Pointcut("call(public !static * by.epam.learn.bahlei.finaltask.dao..*.* (..))")
     public void anyPublicMethod() {
     }
 
     @Before("anyPublicMethod()")
     public void logMethod(JoinPoint joinPoint) {
-        Logger LOGGER = LogManager.getLogger(joinPoint.getTarget().getClass());
-        String message = joinPoint.getSignature().getName();
-        Object[] args = joinPoint.getArgs();
-        if (args.length > 0) {
-            message += " " + Arrays.toString(args);
-        }
-        LOGGER.info(message);
-        System.out.println(message);
+        LOGGER.info(String.format("Dao method %s() was called", joinPoint.getSignature().getName()));
     }
 }

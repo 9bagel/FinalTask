@@ -35,25 +35,29 @@ public class UserLogic {
         Validator.validateLogin(login);
         Validator.validatePassword(password);
         try {
-            User user = userDao.getUserByLogin(login);
-            if (BcryptUtil.isPasswordCorrect(password, user.getHashedPassword())) {
-                return user;
-            } else {
-                throw LOGGER.throwing(new UserException("Password is incorrect"));
+            Optional<User> optionalUser = userDao.getUserByLogin(login)
+                    .stream()
+                    .findFirst();
+            if (!optionalUser.isPresent()) {
+                throw LOGGER.throwing(new UserException(Constants.LOGIN_ERROR));
             }
+            User user = optionalUser.get();
+            if (!BcryptUtil.isPasswordCorrect(password, user.getHashedPassword())) {
+                throw LOGGER.throwing(new UserException(Constants.LOGIN_ERROR));
+            }
+            return user;
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException("Exception in checkLogin in LoginLogic.class", e));
         }
 
     }
 
-    public User registration(String login, String password, String email) throws LogicException, UserException {
+    public User register(String login, String password, String email) throws LogicException, UserException {
         String hashedPassword = BcryptUtil.generateHash(password);
         User user = new User();
         user.setLogin(login);
         user.setHashedPassword(hashedPassword);
         user.setEmail(email);
-        LOGGER.info("Start registration logic");
         try {
             userDao.insert(user);
         } catch (DaoException e) {
@@ -81,13 +85,13 @@ public class UserLogic {
 
     public User getUserById(Integer userId) throws UserException, LogicException {
         try {
-            Optional<User> user = userDao.getUserById(userId)
+            Optional<User> optionalUser = userDao.getUserById(userId)
                     .stream()
                     .findFirst();
-            if (!user.isPresent()) {
+            if (!optionalUser.isPresent()) {
                 throw LOGGER.throwing(new UserException(Constants.USER_NOT_FOUND_ERROR));
             }
-            return user.get();
+            return optionalUser.get();
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException("Exception in makeDeposit()", e));
         }

@@ -28,7 +28,7 @@ public class RegistrationCommand implements ActionCommand {
         String email = request.getParameter(PARAM_NAME_EMAIL);
 
         try {
-            userLogic.registration(login, password, email);
+            userLogic.register(login, password, email);
             path = request.getContextPath();
         } catch (LogicException e) {
             throw LOGGER.throwing(new CommandException("LogicException in Registration command:", e));

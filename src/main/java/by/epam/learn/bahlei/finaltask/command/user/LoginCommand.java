@@ -31,12 +31,12 @@ public class LoginCommand implements ActionCommand {
             session.setAttribute(Constants.USER, user);
             return new Response(request.getContextPath(), Response.ResponseType.REDIRECT);
 
-        } catch (LogicException | UserException e) {
-            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ERROR_LOGIN);
+        } catch (LogicException e) {
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.LOGIN_ERROR);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
 
-        } catch (ValidatorException e) {
-            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.LOGIN_INVALID);
+        } catch (ValidatorException | UserException e) {
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }
     }
