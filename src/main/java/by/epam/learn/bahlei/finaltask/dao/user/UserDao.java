@@ -5,7 +5,6 @@ import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolExc
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
-import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,15 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao extends UserDaoAbstract {
-
-    private static final UserDao INSTANCE = new UserDao();
     private static final Logger LOGGER = LogManager.getLogger(UserDao.class);
 
-    private UserDao() {
-    }
-
-    public static UserDao getInstance() {
-        return INSTANCE;
+    public UserDao() {
     }
 
     public List<User> getUserByLogin(String login) throws DaoException {

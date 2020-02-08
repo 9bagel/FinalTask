@@ -6,29 +6,37 @@ import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 
 public class DaoFactory {
-    private static final DaoFactory INSTANCE = new DaoFactory();
+    private static ServiceDao serviceDao;
+    private static OrderDao orderDao;
+    private static ReviewDao reviewDao;
+    private static UserDao userDao;
 
-    private DaoFactory() {
+    public static UserDao getUserDao() {
+        if (userDao == null) {
+            userDao = new UserDao();
+        }
+        return userDao;
     }
 
-    public static DaoFactory getInstance() {
-        return INSTANCE;
+    public static ServiceDao getServiceDao() {
+        if (serviceDao == null) {
+            serviceDao = new ServiceDao();
+        }
+        return serviceDao;
     }
 
-    public UserDao getUserDao(){
-        return UserDao.getInstance();
+    public static OrderDao getOrderDao() {
+        if (orderDao == null) {
+            orderDao = new OrderDao();
+        }
+        return orderDao;
     }
 
-    public ServiceDao getServiceDao(){
-        return ServiceDao.getInstance();
-    }
-
-    public OrderDao getOrderDao() {
-        return OrderDao.getInstance();
-    }
-
-    public ReviewDao getReviewDao(){
-        return ReviewDao.getInstance();
+    public static ReviewDao getReviewDao() {
+        if (reviewDao == null) {
+            reviewDao = new ReviewDao();
+        }
+        return reviewDao;
     }
 
 }

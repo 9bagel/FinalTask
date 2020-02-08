@@ -1,7 +1,6 @@
 package by.epam.learn.bahlei.finaltask.logic.service;
 
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
-import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
@@ -15,15 +14,10 @@ import java.util.List;
 
 public class ServiceLogic {
     private static final Logger LOGGER = LogManager.getLogger(ServiceLogic.class);
-    private static final ServiceLogic INSTANCE = new ServiceLogic();
-    private DaoFactory daoFactory = DaoFactory.getInstance();
-    private ServiceDao serviceDao = daoFactory.getServiceDao();
+    private final ServiceDao serviceDao;
 
-    private ServiceLogic() {
-    }
-
-    public static ServiceLogic getInstance() {
-        return INSTANCE;
+    public ServiceLogic(ServiceDao serviceDao) {
+        this.serviceDao = serviceDao;
     }
 
     public List<Service> getServicesByTypeName(String serviceTypeName) throws LogicException {

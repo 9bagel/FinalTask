@@ -17,16 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDao extends OrderDaoAbstract {
-
-    private static final OrderDao INSTANCE = new OrderDao();
     private static final Logger LOGGER = LogManager.getLogger(OrderDao.class);
-
-    private OrderDao() {
-    }
-
-    public static OrderDao getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     protected List<Order> parseResultSet(ResultSet resultSet) throws DaoException {

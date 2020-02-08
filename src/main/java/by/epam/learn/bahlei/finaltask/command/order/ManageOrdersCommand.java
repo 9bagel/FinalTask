@@ -14,8 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class ManageOrdersCommand implements ActionCommand {
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private OrderLogic orderLogic = logicFactory.getOrderLogic();
+    private OrderLogic orderLogic = LogicFactory.getOrderLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

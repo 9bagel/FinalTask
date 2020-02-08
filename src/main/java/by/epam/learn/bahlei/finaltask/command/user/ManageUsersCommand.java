@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ManageUsersCommand implements ActionCommand {
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private UserLogic userLogic = logicFactory.getUserLogic();
+    private UserLogic userLogic = LogicFactory.getUserLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

@@ -16,15 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDao extends ServiceDaoAbstract {
-    private static final ServiceDao INSTANCE = new ServiceDao();
     private static final Logger LOGGER = LogManager.getLogger(ServiceDao.class);
-
-    private ServiceDao() {
-    }
-
-    public static ServiceDao getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     protected List<Service> parseResultSet(ResultSet resultSet) throws DaoException {

@@ -1,7 +1,6 @@
 package by.epam.learn.bahlei.finaltask.logic.user;
 
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
-import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
@@ -20,15 +19,10 @@ import java.util.Optional;
 
 public class UserLogic {
     private static final Logger LOGGER = LogManager.getLogger(UserLogic.class);
-    private static final UserLogic INSTANCE = new UserLogic();
-    private DaoFactory daoFactory = DaoFactory.getInstance();
-    private UserDao userDao = daoFactory.getUserDao();
+    private final UserDao userDao;
 
-    private UserLogic() {
-    }
-
-    public static UserLogic getInstance() {
-        return INSTANCE;
+    public UserLogic(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     public User login(String login, String password) throws LogicException, UserException, ValidatorException {

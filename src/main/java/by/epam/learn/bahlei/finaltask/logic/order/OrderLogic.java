@@ -4,7 +4,6 @@ import by.epam.learn.bahlei.finaltask.connectionpool.ConnectionPool;
 import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
-import by.epam.learn.bahlei.finaltask.dao.factory.DaoFactory;
 import by.epam.learn.bahlei.finaltask.dao.order.OrderDao;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
@@ -24,16 +23,12 @@ import java.util.Optional;
 
 public class OrderLogic {
     private static final Logger LOGGER = LogManager.getLogger(OrderLogic.class);
-    private static final OrderLogic INSTANCE = new OrderLogic();
-    private DaoFactory daoFactory = DaoFactory.getInstance();
-    private OrderDao orderDao = daoFactory.getOrderDao();
-    private UserDao userDao = daoFactory.getUserDao();
+    private final OrderDao orderDao;
+    private final UserDao userDao;
 
-    private OrderLogic() {
-    }
-
-    public static OrderLogic getInstance() {
-        return INSTANCE;
+    public OrderLogic(OrderDao orderDao, UserDao userDao) {
+        this.orderDao = orderDao;
+        this.userDao = userDao;
     }
 
     public void createOrder(List<Integer> serviceIds, Order order) throws LogicException {

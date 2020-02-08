@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LeaveReviewCommand implements ActionCommand {
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private ReviewLogic reviewLogic = logicFactory.getReviewLogic();
+    private ReviewLogic reviewLogic = LogicFactory.getReviewLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

@@ -15,15 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewDao extends ReviewDaoAbstract {
-    private static final ReviewDao INSTANCE = new ReviewDao();
     private static final Logger LOGGER = LogManager.getLogger(ReviewDao.class);
-
-    private ReviewDao() {
-    }
-
-    public static ReviewDao getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     protected List<Review> parseResultSet(ResultSet resultSet) throws DaoException {

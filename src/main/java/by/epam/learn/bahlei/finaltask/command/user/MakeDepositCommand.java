@@ -14,8 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
 public class MakeDepositCommand implements ActionCommand {
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private UserLogic userLogic = logicFactory.getUserLogic();
+    private UserLogic userLogic = LogicFactory.getUserLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

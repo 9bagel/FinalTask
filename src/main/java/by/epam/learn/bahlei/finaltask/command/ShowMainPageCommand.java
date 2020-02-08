@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ShowMainPageCommand implements ActionCommand {
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private ServiceLogic serviceLogic = logicFactory.getServiceLogic();
+    private ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

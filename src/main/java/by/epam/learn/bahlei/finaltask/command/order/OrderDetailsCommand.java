@@ -8,7 +8,6 @@ import by.epam.learn.bahlei.finaltask.entity.review.Review;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
-import by.epam.learn.bahlei.finaltask.logic.exception.ReviewException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.logic.review.ReviewLogic;
@@ -20,10 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class OrderDetailsCommand implements ActionCommand {
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private ServiceLogic serviceLogic = logicFactory.getServiceLogic();
-    private OrderLogic orderLogic = logicFactory.getOrderLogic();
-    private ReviewLogic reviewLogic = logicFactory.getReviewLogic();
+    private ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
+    private OrderLogic orderLogic = LogicFactory.getOrderLogic();
+    private ReviewLogic reviewLogic = LogicFactory.getReviewLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

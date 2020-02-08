@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements ActionCommand {
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private UserLogic userLogic = logicFactory.getUserLogic();
+    private UserLogic userLogic = LogicFactory.getUserLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

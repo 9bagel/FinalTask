@@ -17,8 +17,7 @@ public class RegistrationCommand implements ActionCommand {
     private static final String PARAM_NAME_LOGIN = "login";
     private static final String PARAM_NAME_PASSWORD = "password";
     private static final String PARAM_NAME_EMAIL = "email";
-    private LogicFactory logicFactory = LogicFactory.getInstance();
-    private UserLogic userLogic = logicFactory.getUserLogic();
+    private UserLogic userLogic = LogicFactory.getUserLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
