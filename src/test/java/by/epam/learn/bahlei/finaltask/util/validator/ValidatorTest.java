@@ -13,7 +13,7 @@ public class ValidatorTest {
         Validator.validateLogin(invalidLogin, password);
     }
 
-    @Test(expectedExceptions = ValidationException.class)
+    @Test
     public void throwExceptionIfPasswordIncorrect() throws ValidationException {
         String invalidPassword = "1";
         String login = "login";
