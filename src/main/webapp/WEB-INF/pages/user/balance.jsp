@@ -35,8 +35,6 @@
             <h5 class="text-center">
                 <fmt:message bundle="${locale}" key="text.deposit"/>
             </h5>
-
-
             <div class="card mt-4">
                 <div class="card-body">
                     <table class="table table-striped">

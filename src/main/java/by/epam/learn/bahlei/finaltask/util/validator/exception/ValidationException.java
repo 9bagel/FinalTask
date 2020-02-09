@@ -1,14 +1,14 @@
 package by.epam.learn.bahlei.finaltask.util.validator.exception;
 
-public class ValidatorException extends Exception {
+public class ValidationException extends Exception {
     private static final long serialVersionUID = -8252272031811108157L;
 
 
-    public ValidatorException() {
+    public ValidationException() {
         super();
     }
 
-    public ValidatorException(String message) {
+    public ValidationException(String message) {
         super(message);
     }
 }

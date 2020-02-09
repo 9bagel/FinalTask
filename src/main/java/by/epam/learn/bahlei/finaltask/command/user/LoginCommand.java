@@ -10,7 +10,7 @@ import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.user.UserLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.XssCleaner;
-import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidatorException;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,8 +21,8 @@ public class LoginCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        String login = XssCleaner.clean(request.getParameter(Constants.USER_LOGIN));
-        String password = XssCleaner.clean(request.getParameter(Constants.USER_Password));
+        String login = XssCleaner.clean(request.getParameter(Constants.LOGIN));
+        String password = XssCleaner.clean(request.getParameter(Constants.Password));
 
         try {
             User user = userLogic.login(login, password);
@@ -34,7 +34,7 @@ public class LoginCommand implements ActionCommand {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.LOGIN_ERROR);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
 
-        } catch (ValidatorException | UserException e) {
+        } catch (ValidationException | UserException e) {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }

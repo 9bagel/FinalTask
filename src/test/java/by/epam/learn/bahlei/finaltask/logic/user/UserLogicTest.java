@@ -5,7 +5,7 @@ import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
-import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidatorException;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -35,19 +35,19 @@ public class UserLogicTest {
     }
 
     @Test(expectedExceptions = UserException.class)
-    public void userExceptionIfLoginNotPresentInDB() throws DaoException, ValidatorException, LogicException, UserException {
+    public void userExceptionIfLoginNotPresentInDB() throws DaoException, ValidationException, LogicException, UserException {
         Mockito.when(userDao.getUserByLogin("testLogin")).thenReturn(new ArrayList<>());
         userLogic.login("testLogin", "password");
     }
 
     @Test(expectedExceptions = LogicException.class)
-    public void logicExceptionIfErrorWithDB() throws DaoException, ValidatorException, LogicException, UserException {
+    public void logicExceptionIfErrorWithDB() throws DaoException, ValidationException, LogicException, UserException {
         Mockito.when(userDao.getUserByLogin(Mockito.anyString())).thenThrow(new DaoException());
         userLogic.login("login", "password");
     }
 
     @Test(expectedExceptions = UserException.class)
-    public void userExceptionIfWrongPassword() throws DaoException, ValidatorException, LogicException, UserException {
+    public void userExceptionIfWrongPassword() throws DaoException, ValidationException, LogicException, UserException {
         User user = new User();
         user.setHashedPassword("$2a$10$bBFzQwn6wPVaMhURo3X0I.eBezmv8nhbtiW3ib.xLkI.u6zrzRAiy"); //validPassword
         List<User> users = new ArrayList<>();
@@ -58,7 +58,7 @@ public class UserLogicTest {
     }
 
     @Test
-    public void okIfLoginAndPasswordCorrect() throws DaoException, ValidatorException, LogicException, UserException {
+    public void okIfLoginAndPasswordCorrect() throws DaoException, ValidationException, LogicException, UserException {
         User expectedUser = new User();
         expectedUser.setHashedPassword("$2a$10$bBFzQwn6wPVaMhURo3X0I.eBezmv8nhbtiW3ib.xLkI.u6zrzRAiy"); //validPassword
         List<User> users = new ArrayList<>();

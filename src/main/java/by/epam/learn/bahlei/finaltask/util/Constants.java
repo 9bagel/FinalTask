@@ -76,9 +76,9 @@ public class Constants {
     public static final String DESCRIPTION_BY = "description_by";
     public static final String TYPE_ID = "type_id";
 
-    public static final String USER_LOGIN = "login";
-    public static final String USER_Password = "password";
-    public static final String USER_EMAIL = "email";
+    public static final String LOGIN = "login";
+    public static final String Password = "password";
+    public static final String EMAIL = "email";
 
     public static final String SERVICE_ID = "service_id";
     public static final String ORDER = "order";
@@ -126,4 +126,10 @@ public class Constants {
     public static final String REVIEW = "review";
     public static final String LOGIN_INVALID = "text.login.invalid";
     public static final String PASSWORD_INVALID = "text.password.invalid";
+    public static final String PASSWORD_REPEAT = "passwordRepeat";
+    public static final String LOGIN_DATA_INVALID = "text.login.data.invalid";
+    public static final String REGISTRATION_DATA_INVALID = "text.registration.data.invalid";
+    public static final String LOGIN_TAKEN = "text.login.taken.error";
+    public static final String REGISTRATION_ERROR = "text.registration.error";
+    public static final String REGISTRATION_MESSAGE = "text.registration.message";
 }

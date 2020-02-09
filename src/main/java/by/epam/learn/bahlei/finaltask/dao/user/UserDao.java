@@ -3,9 +3,11 @@ package by.epam.learn.bahlei.finaltask.dao.user;
 import by.epam.learn.bahlei.finaltask.connectionpool.ProxyConnection;
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
+import by.epam.learn.bahlei.finaltask.dto.RegistrationDto;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import by.epam.learn.bahlei.finaltask.util.encryptor.BcryptUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,9 +43,9 @@ public class UserDao extends UserDaoAbstract {
         try {
             while (resultSet.next()) {
                 user = new User();
-                user.setLogin(resultSet.getString(Constants.USER_LOGIN));
-                user.setHashedPassword(resultSet.getString(Constants.USER_Password));
-                user.setEmail(resultSet.getString(Constants.USER_EMAIL));
+                user.setLogin(resultSet.getString(Constants.LOGIN));
+                user.setHashedPassword(resultSet.getString(Constants.Password));
+                user.setEmail(resultSet.getString(Constants.EMAIL));
                 user.setId(resultSet.getInt(Constants.ID));
                 user.setUserRole(UserRole.getUserRoleById(resultSet.getInt(Constants.USER_ROLE_ID)));
                 user.setBalance(BigDecimal.valueOf(resultSet.getInt(Constants.USER_BALANCE)));
@@ -101,6 +103,19 @@ public class UserDao extends UserDaoAbstract {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw logger.throwing(new DaoException("Exception in subtractBalance method in UserDao", e));
+        }
+    }
+
+    public void insert(RegistrationDto registrationDto) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getInsertQuery())) {
+
+            preparedStatement.setString(1, registrationDto.getLogin());
+            preparedStatement.setString(2, BcryptUtil.generateHash(registrationDto.getPassword()));
+            preparedStatement.setString(3, registrationDto.getEmail());
+            preparedStatement.execute();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw logger.throwing(new DaoException("Exception in insert method in UserDao", e));
         }
     }
 }

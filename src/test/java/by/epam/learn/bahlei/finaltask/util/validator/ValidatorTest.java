@@ -1,21 +1,23 @@
 package by.epam.learn.bahlei.finaltask.util.validator;
 
-import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidatorException;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 import org.testng.annotations.Test;
 
 public class ValidatorTest {
 
-    @Test(expectedExceptions = ValidatorException.class)
-    public void throwExceptionIfLoginIncorrect() throws ValidatorException {
+    @Test(expectedExceptions = ValidationException.class)
+    public void throwExceptionIfLoginIncorrect() throws ValidationException {
         String invalidLogin = "$fdfd$gfg";
+        String password = "password";
 
-        Validator.validateLogin(invalidLogin);
+        Validator.validateLogin(invalidLogin, password);
     }
 
-    @Test(expectedExceptions = ValidatorException.class)
-    public void throwExceptionIfPasswordIncorrect() throws ValidatorException {
-        String invalidPassword = "1234";
+    @Test(expectedExceptions = ValidationException.class)
+    public void throwExceptionIfPasswordIncorrect() throws ValidationException {
+        String invalidPassword = "1";
+        String login = "login";
 
-        Validator.validatePassword(invalidPassword);
+        Validator.validateLogin(login, invalidPassword);
     }
 }

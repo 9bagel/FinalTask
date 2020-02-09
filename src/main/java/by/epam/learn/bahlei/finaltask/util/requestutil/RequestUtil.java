@@ -1,8 +1,9 @@
 package by.epam.learn.bahlei.finaltask.util.requestutil;
 
-import by.epam.learn.bahlei.finaltask.entity.review.Review;
+import by.epam.learn.bahlei.finaltask.dto.RegistrationDto;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
+import by.epam.learn.bahlei.finaltask.entity.review.Review;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
@@ -10,6 +11,7 @@ import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import by.epam.learn.bahlei.finaltask.util.XssCleaner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,8 +88,8 @@ public class RequestUtil {
         User user = new User();
 
         user.setId(Integer.parseInt(request.getParameter(Constants.USER_ID)));
-        user.setLogin(request.getParameter(Constants.USER_LOGIN));
-        user.setEmail(request.getParameter(Constants.USER_EMAIL));
+        user.setLogin(request.getParameter(Constants.LOGIN));
+        user.setEmail(request.getParameter(Constants.EMAIL));
         user.setUserRole(UserRole.getUserRoleById(Integer.parseInt(request.getParameter(Constants.USER_ROLE_ID))));
         user.setBalance(new BigDecimal(request.getParameter(Constants.USER_BALANCE)));
 
@@ -120,5 +122,16 @@ public class RequestUtil {
         review.setMessage(request.getParameter(Constants.MESSAGE));
 
         return review;
+    }
+
+    public static RegistrationDto parseRegistrationDto(HttpServletRequest request) {
+        RegistrationDto registrationDto = new RegistrationDto();
+
+        registrationDto.setLogin(XssCleaner.clean(request.getParameter(Constants.LOGIN)));
+        registrationDto.setPassword(XssCleaner.clean(request.getParameter(Constants.Password)));
+        registrationDto.setEmail(XssCleaner.clean(request.getParameter(Constants.EMAIL)));
+        registrationDto.setRepeatPassword(XssCleaner.clean(request.getParameter(Constants.PASSWORD_REPEAT)));
+
+        return registrationDto;
     }
 }

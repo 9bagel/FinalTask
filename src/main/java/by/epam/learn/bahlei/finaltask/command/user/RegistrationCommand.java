@@ -3,39 +3,36 @@ package by.epam.learn.bahlei.finaltask.command.user;
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
+import by.epam.learn.bahlei.finaltask.dto.RegistrationDto;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
-import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.user.UserLogic;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.epam.learn.bahlei.finaltask.util.Constants;
+import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class RegistrationCommand implements ActionCommand {
-    private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
-    private static final String PARAM_NAME_LOGIN = "login";
-    private static final String PARAM_NAME_PASSWORD = "password";
-    private static final String PARAM_NAME_EMAIL = "email";
     private UserLogic userLogic = LogicFactory.getUserLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        String path;
-        String login = request.getParameter(PARAM_NAME_LOGIN);
-        String password = request.getParameter(PARAM_NAME_PASSWORD);
-        String email = request.getParameter(PARAM_NAME_EMAIL);
+        HttpSession session = request.getSession();
+        RegistrationDto registrationDto = RequestUtil.parseRegistrationDto(request);
 
         try {
-            userLogic.register(login, password, email);
-            path = request.getContextPath();
+            userLogic.register(registrationDto);
+
+            session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.REGISTRATION_MESSAGE);
+            return new Response(request.getContextPath(), Response.ResponseType.REDIRECT);
         } catch (LogicException e) {
-            throw LOGGER.throwing(new CommandException("LogicException in Registration command:", e));
-        } catch (UserException e) {
-            LOGGER.info("Unknown user tried to enter");
-            request.setAttribute("errorLoginPassMessage", "User name or password is incorrect");
-            path = request.getContextPath() + "/controller/registration";
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.REGISTRATION_ERROR);
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
+        } catch (ValidationException e) {
+            session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }
-        return new Response(path, Response.ResponseType.REDIRECT);
     }
 }

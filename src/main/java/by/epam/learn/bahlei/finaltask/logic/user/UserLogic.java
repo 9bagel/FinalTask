@@ -2,13 +2,14 @@ package by.epam.learn.bahlei.finaltask.logic.user;
 
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
+import by.epam.learn.bahlei.finaltask.dto.RegistrationDto;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.encryptor.BcryptUtil;
 import by.epam.learn.bahlei.finaltask.util.validator.Validator;
-import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidatorException;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,10 +25,9 @@ public class UserLogic {
         this.userDao = userDao;
     }
 
-    public User login(String login, String password) throws LogicException, UserException, ValidatorException {
-        Validator.validateLogin(login);
-        Validator.validatePassword(password);
+    public User login(String login, String password) throws LogicException, UserException, ValidationException {
         try {
+            Validator.validateLogin(login, password);
             Optional<User> optionalUser = userDao.getUserByLogin(login)
                     .stream()
                     .findFirst();
@@ -45,20 +45,19 @@ public class UserLogic {
 
     }
 
-    public User register(String login, String password, String email) throws LogicException, UserException {
-        String hashedPassword = BcryptUtil.generateHash(password);
-        User user = new User();
-        user.setLogin(login);
-        user.setHashedPassword(hashedPassword);
-        user.setEmail(email);
+    public void register(RegistrationDto registrationDto) throws LogicException, ValidationException {
         try {
-            userDao.insert(user);
+            Validator.validateRegistration(registrationDto);
+            Optional<User> optionalUser = userDao.getUserByLogin(registrationDto.getLogin())
+                    .stream()
+                    .findFirst();
+            if (optionalUser.isPresent()) {
+               throw new ValidationException(Constants.LOGIN_TAKEN);
+            }
+            userDao.insert(registrationDto);
         } catch (DaoException e) {
             throw logger.throwing(new LogicException("Exception register new user", e));
         }
-
-        return user;
-
     }
 
     public void makeDeposit(User user, BigDecimal amount) throws LogicException {

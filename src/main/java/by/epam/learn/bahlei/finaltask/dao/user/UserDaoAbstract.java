@@ -30,7 +30,7 @@ public abstract class UserDaoAbstract extends AbstractEntityDao<User> {
     }
 
     protected String getUserByLoginQuery() {
-        return "SELECT * FROM users WHERE login = ?";
+        return "SELECT id, email, login, password, role_id, balance FROM users WHERE login = ?";
     }
 
     protected String getAddBalanceQuery() {
