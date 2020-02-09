@@ -6,6 +6,7 @@
 <html>
 <c:import url="/WEB-INF/pages/fragments/header.jsp"/>
 <script src="${pageContext.request.contextPath}/resources/js/validator.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/login.js"></script>
 <body>
 <c:import url="/WEB-INF/pages/fragments/navigation.jsp"/>
 <div class="container">
@@ -41,13 +42,5 @@
 </div>
 </div>
 </div>
-<script>
-$("#login").keyup(function() {
-isLoginValid = validateInput($(this), $("#loginHintInvalid"), "^[A-Za-z0-9]{5,20}$");
-allowSubmit();});
-$("#password").keyup(function() {
-isPasswordValid = validateInput($(this), $("#passwordHintInvalid"), "^.{8,15}$");
-allowSubmit();});
-</script>
 </body>
 </html>

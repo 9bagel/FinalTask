@@ -10,15 +10,3 @@
 			return true;
 		}
 	}
-	function allowSubmit(){
-		if (isLoginValid && isPasswordValid) {
-			$("#buttonSubmit").attr("disabled", false);
-		}else{
-			$("#buttonSubmit").attr("disabled", true);
-		}
-	}
-	$(document).ready(function () {
-		$("#buttonSubmit").attr("disabled", true);
-		var isLoginValid = false;
-		var isPasswordValid = false;
-	});
