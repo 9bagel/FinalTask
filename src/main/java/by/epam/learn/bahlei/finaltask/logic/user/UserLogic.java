@@ -52,7 +52,7 @@ public class UserLogic {
                     .stream()
                     .findFirst();
             if (optionalUser.isPresent()) {
-               throw new ValidationException(Constants.LOGIN_TAKEN);
+                throw new ValidationException(Constants.LOGIN_TAKEN);
             }
             userDao.insert(registrationDto);
         } catch (DaoException e) {
@@ -60,8 +60,9 @@ public class UserLogic {
         }
     }
 
-    public void makeDeposit(User user, BigDecimal amount) throws LogicException {
+    public void makeDeposit(User user, BigDecimal amount) throws LogicException, ValidationException {
         try {
+            Validator.validateDeposit(amount);
             user.setBalance(user.getBalance().add(amount));
             userDao.addBalance(user.getId(), amount);
         } catch (DaoException e) {

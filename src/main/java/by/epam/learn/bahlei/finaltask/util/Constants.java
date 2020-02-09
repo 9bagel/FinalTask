@@ -132,4 +132,5 @@ public class Constants {
     public static final String LOGIN_TAKEN = "text.login.taken.error";
     public static final String REGISTRATION_ERROR = "text.registration.error";
     public static final String REGISTRATION_MESSAGE = "text.registration.message";
+    public static final String  REFILL_MESSAGE = "text.refill.message";
 }

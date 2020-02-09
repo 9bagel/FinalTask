@@ -8,6 +8,7 @@ import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.user.UserLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,15 +20,16 @@ public class MakeDepositCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(request.getParameter(Constants.AMOUNT)));
+        BigDecimal amount = new BigDecimal(request.getParameter(Constants.AMOUNT));
         User user = (User) session.getAttribute(Constants.USER);
         try {
             userLogic.makeDeposit(user, amount);
-            String lastUrl = request.getHeader(Constants.REFERER);
-            return new Response(lastUrl, Response.ResponseType.REDIRECT);
-        } catch (LogicException e) {
+
+            session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.REFILL_MESSAGE);
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
+        } catch (LogicException | ValidationException e) {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.REFILL_ERROR);
-            return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }
     }
 }

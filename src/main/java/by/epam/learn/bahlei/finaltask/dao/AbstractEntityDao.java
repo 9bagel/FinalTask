@@ -40,28 +40,19 @@ public abstract class AbstractEntityDao<T extends Entity> implements Dao<T> {
 
     @Override
     public List<T> getAll() throws DaoException {
-        String selectAllQuery = getSelectAllQuery();
-        List<T> entityList;
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectAllQuery);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getSelectAllQuery())) {
 
-            entityList = parseResultSet(resultSet);
-
+            return parseResultSet(preparedStatement.executeQuery());
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in getAll method", e));
-
         }
-        return entityList;
     }
 
     @Override
     public void insert(T entity) throws DaoException {
-        String insertQuery = getInsertQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getInsertQuery())) {
 
             prepareInsert(preparedStatement, entity);
             preparedStatement.execute();
@@ -73,14 +64,11 @@ public abstract class AbstractEntityDao<T extends Entity> implements Dao<T> {
 
     @Override
     public void update(T entity) throws DaoException {
-        String updateQuery = getUpdateQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getUpdateQuery())) {
 
             prepareUpdate(preparedStatement, entity);
             preparedStatement.executeUpdate();
-
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in update method", e));
         }
@@ -88,9 +76,8 @@ public abstract class AbstractEntityDao<T extends Entity> implements Dao<T> {
 
     @Override
     public void delete(T entity) throws DaoException {
-        String deleteQuery = getDeleteQuery();
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getDeleteQuery())) {
             preparedStatement.execute();
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException("Error in delete method", e));

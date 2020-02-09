@@ -19,6 +19,6 @@ public class Response {
 
     public enum ResponseType {
         REDIRECT,
-        FORWARD;
+        FORWARD
     }
 }

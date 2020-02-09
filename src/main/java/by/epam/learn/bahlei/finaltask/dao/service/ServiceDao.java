@@ -69,12 +69,15 @@ public class ServiceDao extends ServiceDaoAbstract {
     protected void prepareUpdate(PreparedStatement preparedStatement, Service service) throws DaoException {
         try {
             preparedStatement.setInt(1, service.getServiceType().getId());
+
             preparedStatement.setString(2, service.getTitleEn());
             preparedStatement.setString(3, service.getTitleRu());
             preparedStatement.setString(4, service.getTitleBy());
+
             preparedStatement.setString(5, service.getDescriptionEn());
             preparedStatement.setString(6, service.getDescriptionRu());
             preparedStatement.setString(7, service.getDescriptionBy());
+
             preparedStatement.setBigDecimal(8, service.getPrice());
             preparedStatement.setInt(9, service.getId());
         } catch (SQLException e) {

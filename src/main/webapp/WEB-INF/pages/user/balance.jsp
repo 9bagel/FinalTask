@@ -7,11 +7,13 @@
 <c:import url="/WEB-INF/pages/fragments/header.jsp"/>
 <body>
 <c:import url="/WEB-INF/pages/fragments/navigation.jsp"/>
-
+<script src="${pageContext.request.contextPath}/resources/js/validator.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/balance.js"></script>
 <div class="container">
     <div class="row">
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
         <div class="col-lg-9">
+            <c:import url="/WEB-INF/pages/fragments/messages.jsp"/>
             <div class="card mt-4">
                 <div class="card-body">
                     <h3 class="text-center">
@@ -43,11 +45,11 @@
                             <td>
                                 <fmt:message bundle="${locale}" key="text.enter_deposit_amount"/>
                             </td>
-                            <form method="POST" action="controller">
+                            <form method="POST" id="balanceForm" action="controller">
                                 <input type="hidden" name="command" value="make_deposit">
                                 <td>
-                                    <input type="text" name="amount" class="form-control" aria-label="Small"
-                                           aria-describedby="inputGroup-sizing-sm" pattern="[0-9]{,3}">
+                                    <input type="text" id="amount" name="amount" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                    <div id="balanceHintInvalid" class="hint-invalid invisible"><fmt:message bundle="${locale}" key="text.balance.hint" /></div>
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-outline-success">
@@ -58,13 +60,10 @@
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

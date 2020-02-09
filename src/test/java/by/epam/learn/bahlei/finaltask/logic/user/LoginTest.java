@@ -30,7 +30,7 @@ public class LoginTest {
     }
 
     @AfterMethod
-    public void afterClass() {
+    public void afterMethod() {
         userLogic = null;
     }
 

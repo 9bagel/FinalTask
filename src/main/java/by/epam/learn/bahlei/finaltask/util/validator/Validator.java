@@ -4,10 +4,13 @@ import by.epam.learn.bahlei.finaltask.dto.RegistrationDto;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 
+import java.math.BigDecimal;
+
 public class Validator {
     private static final String LOGIN_REGEX = "^[A-Za-z0-9]{5,20}$";
     private static final String PASSWORD_REGEX = "^.{8,15}$";
     private static final String EMAIL_REGEX = "\\w+@\\w+\\.\\w+";
+    private static final String AMOUNT_REGEX = "^[1-9][0-9]*$";
 
     public static void validateLogin(String login, String password) throws ValidationException {
         try {
@@ -35,5 +38,9 @@ public class Validator {
         } catch (ValidationException e) {
             throw new ValidationException(Constants.REGISTRATION_DATA_INVALID);
         }
+    }
+
+    public static void validateDeposit(BigDecimal amount) throws ValidationException {
+        matchString(amount.toString(), AMOUNT_REGEX);
     }
 }
