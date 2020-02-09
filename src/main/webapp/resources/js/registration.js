@@ -1,17 +1,27 @@
 	$(document).ready(function(){
 		var isLoginValid = false;
 		var isPasswordValid = false;
+		var isEmailValid = false;
+		var isPasswordRepeatValid = false;
+
 		$("#login").keyup(function() {
-			isLoginValid = validateInput($(this), $("#loginHintInvalid"), "^[A-Za-z0-9]{5,20}$");
+			isLoginValid = validateInput($("#login"), $("#loginHintInvalid"), "^[A-Za-z0-9]{5,20}$");
+		});
+		$("#email").keyup(function() {
+			isEmailValid = validateInput($("#email"), $("#emailHintInvalid"), "\\w+@\\w+\\.\\w+");
 		});
 		$("#password").keyup(function() {
-			isPasswordValid = validateInput($(this), $("#passwordHintInvalid"), "^.{8,15}$");
+			isPasswordValid = validateInput($("#password"), $("#passwordHintInvalid"), "^.{8,15}$");
 		});
 
-		$("#loginForm").submit(function(event){
+		$("#passwordRepeat").keyup(function() {
+        			isPasswordRepeatValid = validatePasswordRepeat($("#password"), $("#passwordRepeat"), $("#passwordRepeatHintInvalid"));
+        		});
+
+		$("#signUpForm").submit(function(event){
 			event.preventDefault();
-			if (isLoginValid && isPasswordValid) {
-				$("#loginForm").unbind('submit').submit();
+			if (isLoginValid && isPasswordValid && isEmailValid && isPasswordRepeatValid) {
+				$("#signUpForm").unbind('submit').submit();
 			}
 		});
 	});
