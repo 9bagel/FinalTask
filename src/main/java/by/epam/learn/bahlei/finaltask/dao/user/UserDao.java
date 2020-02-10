@@ -28,8 +28,7 @@ public class UserDao extends UserDaoAbstract {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getUserByLoginQuery())) {
             preparedStatement.setString(1, login);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return parseResultSet(resultSet);
+            return parseResultSet(preparedStatement.executeQuery());
         } catch (SQLException | ConnectionPoolException e) {
             throw logger.throwing(new DaoException("Exception in getUserByLogin method in UserDao", e));
         }
@@ -116,6 +115,16 @@ public class UserDao extends UserDaoAbstract {
             preparedStatement.execute();
         } catch (SQLException | ConnectionPoolException e) {
             throw logger.throwing(new DaoException("Exception in insert method in UserDao", e));
+        }
+    }
+
+    public boolean isUserExists(String login) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getUserByLoginQuery())) {
+            preparedStatement.setString(1, login);
+            return preparedStatement.executeQuery().next();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw logger.throwing(new DaoException("Exception in getUserByLogin method in UserDao", e));
         }
     }
 }

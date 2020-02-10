@@ -48,10 +48,8 @@ public class UserLogic {
     public void register(RegistrationDto registrationDto) throws LogicException, ValidationException {
         try {
             Validator.validateRegistration(registrationDto);
-            Optional<User> optionalUser = userDao.getUserByLogin(registrationDto.getLogin())
-                    .stream()
-                    .findFirst();
-            if (optionalUser.isPresent()) {
+
+            if (userDao.isUserExists(registrationDto.getLogin())) {
                 throw new ValidationException(Constants.LOGIN_TAKEN);
             }
             userDao.insert(registrationDto);

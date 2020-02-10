@@ -12,6 +12,7 @@ import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.XssCleaner;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -133,5 +134,13 @@ public class RequestUtil {
         registrationDto.setRepeatPassword(XssCleaner.clean(request.getParameter(Constants.PASSWORD_REPEAT)));
 
         return registrationDto;
+    }
+
+    public static int parseServiceId(HttpServletRequest request) throws LogicException {
+        String serviceIdString = request.getParameter(Constants.SERVICE_ID);
+        if (!StringUtils.isNumeric(serviceIdString)) {
+            throw new LogicException();
+        }
+        return Integer.parseInt(serviceIdString);
     }
 }

@@ -21,14 +21,13 @@
             <h3 class="card-title"><ctg:serviceTitle service="${service}"/></h3>
             <h4><fmt:message bundle="${locale}" key="text.price"/>: ${service.price}&nbsp <fmt:message bundle="${locale}" key="text.ruble"/></h4>
             <p class="card-text"><ctg:serviceDescription service="${service}"/></p>
+            <c:if test="${not empty user}">
             <form method="POST" action="controller">
                 <input type="hidden" name="command" value="add_to_cart">
                 <input type="hidden" name="service_id" value="${service.id}">
                 <button type="submit" class="btn btn-primary" ><fmt:message bundle="${locale}" key="button.addToCart"/></button>
             </form>
-
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            4.0 stars
+            </c:if>
         </div>
     </div>
 </c:forEach>

@@ -38,7 +38,7 @@ public class ServiceLogic {
         }
     }
 
-    public void isServiceExists(int serviceId) throws LogicException, ServiceException {
+    public void verifyServiceById(int serviceId) throws LogicException, ServiceException {
         try {
             if (!serviceDao.isServiceExists(serviceId)) {
                 throw LOGGER.throwing(new ServiceException(Constants.SERVICE_NOT_FOUND_MESSAGE));

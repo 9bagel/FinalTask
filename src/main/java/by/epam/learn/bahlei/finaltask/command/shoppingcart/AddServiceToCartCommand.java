@@ -21,20 +21,17 @@ public class AddServiceToCartCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         try {
-            int serviceId = Integer.parseInt(request.getParameter(Constants.SERVICE_ID));
-            serviceLogic.isServiceExists(serviceId);
-
+            int serviceId = RequestUtil.parseServiceId(request);
+            serviceLogic.verifyServiceById(serviceId);
             ShoppingCart shoppingCart = RequestUtil.getShoppingCart(session);
             shoppingCart.addServiceId(serviceId);
+
             session.setAttribute(Constants.SHOPPING_CART, shoppingCart);
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.SERVICE_ADDED_TO_SHOPPING_CART);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException |LogicException e) {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.SERVICE_NOT_FOUND_MESSAGE);
-            return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
-
-        } catch (LogicException e) {
-            return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
+            return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }
     }
 }

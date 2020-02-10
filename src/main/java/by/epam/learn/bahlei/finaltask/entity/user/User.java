@@ -3,6 +3,7 @@ package by.epam.learn.bahlei.finaltask.entity.user;
 import by.epam.learn.bahlei.finaltask.entity.Entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class User implements Entity {
     private String login;
@@ -61,5 +62,23 @@ public class User implements Entity {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(hashedPassword, user.hashedPassword) &&
+                Objects.equals(email, user.email) &&
+                userRole == user.userRole &&
+                Objects.equals(balance, user.balance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, hashedPassword, email, id, userRole, balance);
     }
 }

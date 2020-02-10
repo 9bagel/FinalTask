@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
+import com.google.protobuf.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -39,7 +40,7 @@ public class ServiceLogicTest {
     }
 
     @Test
-    public void okReturnServiceList() throws DaoException, LogicException {
+    public void okGetAllServices() throws DaoException, LogicException {
         List<Service> expectedServices = new ArrayList<>();
         expectedServices.add(new Service());
 
@@ -47,5 +48,11 @@ public class ServiceLogicTest {
         List<Service> actualServices = serviceLogic.getAllServices();
 
         Assert.assertEquals(actualServices, expectedServices);
+    }
+
+    @Test
+    public void okVerifyServiceById() throws DaoException, LogicException, ServiceException {
+        Mockito.when(serviceDao.isServiceExists(1)).thenReturn(true);
+        serviceLogic.verifyServiceById(1);
     }
 }
