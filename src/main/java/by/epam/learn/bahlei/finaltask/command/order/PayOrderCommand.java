@@ -21,10 +21,10 @@ public class PayOrderCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        User user = RequestUtil.getUser(session);
-        int orderId = Integer.parseInt(request.getParameter(Constants.ORDER_ID));
 
         try {
+            int orderId = RequestUtil.parseOrderId(request);
+            User user = RequestUtil.getUser(session);
             orderLogic.payOrder(orderId, user);
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_PAYED_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);

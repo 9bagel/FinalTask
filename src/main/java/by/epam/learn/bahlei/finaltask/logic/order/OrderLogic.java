@@ -31,7 +31,7 @@ public class OrderLogic {
         this.userDao = userDao;
     }
 
-    public void createOrder(List<Integer> serviceIds, Order order) throws LogicException {
+    public void createOrder(List<Integer> serviceList, Order order) throws LogicException {
         ProxyConnection connection = null;
 
         try {
@@ -39,7 +39,7 @@ public class OrderLogic {
             connection.setAutoCommit(false);
 
             orderDao.insert(connection, order);
-            orderDao.addServicesFromShoppingCart(connection, serviceIds, order.getId());
+            orderDao.addServicesFromShoppingCart(connection, serviceList, order.getId());
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -88,7 +88,7 @@ public class OrderLogic {
 
     public void cancelOrder(int userId, int orderId) throws OrderException, LogicException {
         try {
-            getOrderIfExistsByUserIdAndOrderId(userId, orderId);
+            getOrderByUserIdAndOrderId(userId, orderId);
             orderDao.updateStatus(orderId, OrderStatus.CANCELED.getId());
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
@@ -96,11 +96,10 @@ public class OrderLogic {
     }
 
     public void payOrder(int orderId, User user) throws UserException, OrderException, LogicException {
-
         ProxyConnection connection = null;
 
         try {
-            Order order = getOrderIfExistsByUserIdAndOrderId(user.getId(), orderId);
+            Order order = getOrderByUserIdAndOrderId(user.getId(), orderId);
             checkIfUserHasBalanceToPay(user, order);
 
             connection = ConnectionPool.getInstance().getConnection();
@@ -128,7 +127,7 @@ public class OrderLogic {
         }
     }
 
-    private Order getOrderIfExistsByUserIdAndOrderId(int userId, int orderId) throws OrderException, DaoException {
+    private Order getOrderByUserIdAndOrderId(int userId, int orderId) throws OrderException, DaoException {
         Optional<Order> optionalOrder = orderDao.getOrderByUserIdAndOrderId(userId, orderId)
                 .stream()
                 .findFirst();

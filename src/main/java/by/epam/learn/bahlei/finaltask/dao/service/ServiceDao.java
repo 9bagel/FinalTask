@@ -131,7 +131,6 @@ public class ServiceDao extends ServiceDaoAbstract {
 
             preparedStatement.setInt(1, orderId);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             return parseResultSet(resultSet);
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException("Error in getOrderedServices()", e));

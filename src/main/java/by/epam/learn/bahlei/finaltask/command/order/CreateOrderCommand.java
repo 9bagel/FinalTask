@@ -23,13 +23,13 @@ public class CreateOrderCommand implements ActionCommand {
         try {
             ShoppingCart shoppingCart = RequestUtil.getShoppingCart(session);
 
-            if (shoppingCart.getServiceIds().isEmpty()) {
+            if (shoppingCart.getServiceList().isEmpty()) {
                 session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.EMPTY_CART_ERROR);
                 return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
             }
 
-            Order order = RequestUtil.parseOrder(session, request);
-            orderLogic.createOrder(shoppingCart.getServiceIds(), order);
+            Order order = RequestUtil.parseNewOrder(request);
+            orderLogic.createOrder(shoppingCart.getServiceList(), order);
             RequestUtil.emptyShoppingCart(session);
 
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_CREATED_MESSAGE);

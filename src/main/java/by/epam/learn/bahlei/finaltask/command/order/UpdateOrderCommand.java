@@ -5,6 +5,7 @@ import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
+import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
@@ -25,7 +26,7 @@ public class UpdateOrderCommand implements ActionCommand {
 
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_UPDATE_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
-        } catch (LogicException e) {
+        } catch (LogicException | OrderException e) {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.ORDER_UPDATE_ERROR);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }

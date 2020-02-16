@@ -16,18 +16,18 @@ public class CommandFactory {
 
     public ActionCommand defineCommand(HttpServletRequest request) throws CommandException {
         ActionCommand command = new ShowMainPageCommand();
-        String action = request.getParameter(Constants.COMMAND);
+        String requestCommand = request.getParameter(Constants.COMMAND);
         String pathInfo = request.getPathInfo();
 
-        if (action == null || action.isEmpty()) {
+        if (requestCommand == null || requestCommand.isEmpty()) {
             if (pathInfo == null || pathInfo.isEmpty()) {
                 return command;
             } else {
-                action = UrlEncoder.getPath(pathInfo);
+                requestCommand = UrlEncoder.getPath(pathInfo);
             }
         }
         try {
-            CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
+            CommandEnum commandEnum = CommandEnum.valueOf(requestCommand.toUpperCase());
             command = commandEnum.getCurrentCommand();
             return command;
         } catch (IllegalArgumentException e) {

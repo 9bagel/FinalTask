@@ -26,7 +26,7 @@ public class ShowShoppingCartCommand implements ActionCommand {
 
             ShoppingCart shoppingCart = RequestUtil.getShoppingCart(session);
 
-            List<Integer> serviceIds = shoppingCart.getServiceIds();
+            List<Integer> serviceIds = shoppingCart.getServiceList();
 
             services = serviceLogic.getServicesById(serviceIds);
 

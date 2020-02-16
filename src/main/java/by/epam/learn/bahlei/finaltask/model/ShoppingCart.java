@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    List<Integer> serviceIds = new ArrayList<>();
+    List<Integer> services = new ArrayList<>();
 
     public void addServiceId(int serviceId) {
-        serviceIds.add(serviceId);
+        services.add(serviceId);
     }
 
     public void removeService(Integer serviceId) {
-        serviceIds.remove(serviceId);
+        services.remove(serviceId);
     }
 
-    public List<Integer> getServiceIds() {
-        return serviceIds;
+    public List<Integer> getServiceList() {
+        return services;
     }
 
     public int getCount() {
-        return serviceIds.size();
+        return services.size();
     }
 }

@@ -5,6 +5,7 @@ import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolExc
 import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.order.OrderStatus;
+import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +26,7 @@ public class OrderDao extends OrderDaoAbstract {
         try {
             while (resultSet.next()) {
                 Order order = new Order();
+
                 order.setUserId(resultSet.getInt(Constants.USER_ID));
                 order.setId(resultSet.getInt(Constants.ID));
                 order.setOrderStatus(OrderStatus.getOrderStatusById(resultSet.getInt(Constants.STATUS_ID)));
@@ -36,6 +38,8 @@ public class OrderDao extends OrderDaoAbstract {
             return orders;
         } catch (SQLException e) {
             throw new DaoException("Exception in parseResultSet");
+        } catch (OrderException e) {
+            throw LOGGER.throwing(new DaoException(e));
         }
     }
 
@@ -67,11 +71,8 @@ public class OrderDao extends OrderDaoAbstract {
 
     @Override
     public void insert(Order order) throws DaoException {
-        String insertQuery = getInsertQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-
+             PreparedStatement preparedStatement = connection.prepareStatement(getInsertQuery(), Statement.RETURN_GENERATED_KEYS)) {
             prepareInsert(preparedStatement, order);
 
             int affectedRows = preparedStatement.executeUpdate();
@@ -92,16 +93,14 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     public void insert(ProxyConnection connection, Order order) throws DaoException {
-        String insertQuery = getInsertQuery();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getInsertQuery(), Statement.RETURN_GENERATED_KEYS)) {
             prepareInsert(preparedStatement, order);
-
             int affectedRows = preparedStatement.executeUpdate();
+
             if (affectedRows == 0) {
                 throw new SQLException("Creating order failed, no rows affected.");
             }
+
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     order.setId(generatedKeys.getInt(1));
@@ -116,9 +115,7 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     public void updateStatus(ProxyConnection connection, int order_id, OrderStatus orderStatus) throws DaoException {
-        String updateStatusQuery = getUpdateStatusQuery();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateStatusQuery)) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getUpdateStatusQuery())) {
             preparedStatement.setInt(1, orderStatus.getId());
             preparedStatement.setInt(2, order_id);
             preparedStatement.executeUpdate();
@@ -129,26 +126,21 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     public void updateStatus(int orderId, int statusId) throws DaoException {
-        String updateStatusQuery = getUpdateStatusQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateStatusQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getUpdateStatusQuery())) {
             preparedStatement.setInt(1, statusId);
             preparedStatement.setInt(2, orderId);
 
             if (preparedStatement.executeUpdate() == 0) {
                 throw LOGGER.throwing(new DaoException("No rows were affected"));
             }
-
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in updateStatus()", e));
         }
     }
 
     public void addServicesFromShoppingCart(ProxyConnection connection, List<Integer> serviceIds, int orderId) throws DaoException {
-        String addOrderedServiceQuery = getAddOrderedServiceQuery();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(addOrderedServiceQuery)) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getAddOrderedServiceQuery())) {
             for (Integer serviceId : serviceIds) {
                 preparedStatement.setInt(1, orderId);
                 preparedStatement.setInt(2, serviceId);
@@ -163,16 +155,13 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     public List<Order> getOrdersByUserId(int userId) throws DaoException {
-        String getOrderByUserIdQuery = getOrderByUserIdQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByUserIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByUserIdQuery())) {
             preparedStatement.setInt(1, userId);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            return parseResultSet(resultSet);
-
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in getOrdersByUserId()", e));
         }
@@ -180,16 +169,13 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     public List<Order> getOrderById(int orderId) throws DaoException {
-        String getOrderByIdQuery = getOrderByIdQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByIdQuery())) {
             preparedStatement.setInt(1, orderId);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            return parseResultSet(resultSet);
-
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in getOrderById() in OrderDao", e));
         }
@@ -197,17 +183,14 @@ public class OrderDao extends OrderDaoAbstract {
     }
 
     public List<Order> getOrderByUserIdAndOrderId(int userId, int orderId) throws DaoException {
-        String getOrderByUserIdAndOrderIdQuery = getOrderByUserIdAndOrderIdQuery();
-
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByUserIdAndOrderIdQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(getOrderByUserIdAndOrderIdQuery())) {
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, orderId);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            return parseResultSet(resultSet);
-
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in getOrderByUserIdAndOrderId() in OrderDao", e));
         }

@@ -19,9 +19,9 @@ public class LeaveReviewCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        Review review = RequestUtil.parseReview(request);
 
         try {
+            Review review = RequestUtil.parseReview(request);
             reviewLogic.addReview(review);
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.REVIEW_LEAVE_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);

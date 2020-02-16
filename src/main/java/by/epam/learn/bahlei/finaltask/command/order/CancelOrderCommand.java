@@ -20,11 +20,9 @@ public class CancelOrderCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-
-        int orderId = Integer.parseInt(request.getParameter(Constants.ORDER_ID));
-        User user = RequestUtil.getUser(session);
-
         try {
+            User user = RequestUtil.getUser(session);
+            int orderId = RequestUtil.parseOrderId(request);
             orderLogic.cancelOrder(user.getId(), orderId);
 
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_CANCELED_MESSAGE);

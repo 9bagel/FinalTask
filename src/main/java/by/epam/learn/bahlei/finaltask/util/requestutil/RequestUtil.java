@@ -9,10 +9,11 @@ import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
+import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.XssCleaner;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,34 +45,41 @@ public class RequestUtil {
         session.removeAttribute(Constants.SHOPPING_CART);
     }
 
-    public static User getUser(HttpSession session) {
-        return (User) session.getAttribute(Constants.USER);
+    public static User getUser(HttpSession session) throws LogicException {
+        User user = (User) session.getAttribute(Constants.USER);
+
+        if (user == null) {
+            throw new LogicException();
+        }
+        return user;
     }
 
-    public static Order parseOrder(HttpSession session, HttpServletRequest request) throws LogicException {
+    public static Order parseOrder(HttpSession session, HttpServletRequest request) throws LogicException, OrderException {
         Order order = new Order();
 
-        order.setId(getOrderId(request));
+        order.setId(parseOrderId(request));
         order.setUserId(getUser(session).getId());
-        order.setTotal(new BigDecimal(request.getParameter(Constants.TOTAL)));
+        order.setTotal(parseBigDecimal(request, Constants.TOTAL));
         order.setOrderStatus(getOrderStatus(request));
         order.setDate(getDate(request));
 
         return order;
     }
 
-    private static OrderStatus getOrderStatus(HttpServletRequest request) {
-        if (request.getParameter(Constants.STATUS_ID) == null) {
-            return OrderStatus.NEW;
-        }
-        return OrderStatus.getOrderStatusById(Integer.parseInt(request.getParameter(Constants.STATUS_ID)));
+    public static Order parseNewOrder(HttpServletRequest request) throws LogicException {
+        Order order = new Order();
+
+        order.setId(parseOrderId(request));
+        order.setUserId(getUser(request.getSession()).getId());
+        order.setTotal(parseBigDecimal(request, Constants.TOTAL));
+        order.setOrderStatus(OrderStatus.NEW);
+        order.setDate(getDate(request));
+
+        return order;
     }
 
-    private static int getOrderId(HttpServletRequest request) {
-        if (request.getParameter(Constants.ORDER_ID) == null) {
-            return 0;
-        }
-        return Integer.parseInt(request.getParameter(Constants.ORDER_ID));
+    private static OrderStatus getOrderStatus(HttpServletRequest request) throws LogicException, OrderException {
+        return OrderStatus.getOrderStatusById(parseInteger(request, Constants.STATUS_ID));
     }
 
     private static Timestamp getDate(HttpServletRequest request) throws LogicException {
@@ -115,7 +123,7 @@ public class RequestUtil {
         return service;
     }
 
-    public static Review parseReview(HttpServletRequest request) {
+    public static Review parseReview(HttpServletRequest request) throws LogicException {
         Review review = new Review();
 
         review.setOrderId(Integer.parseInt(request.getParameter(Constants.ORDER_ID)));
@@ -137,10 +145,28 @@ public class RequestUtil {
     }
 
     public static int parseServiceId(HttpServletRequest request) throws LogicException {
-        String serviceIdString = request.getParameter(Constants.SERVICE_ID);
-        if (!StringUtils.isNumeric(serviceIdString)) {
+        return parseInteger(request, Constants.SERVICE_ID);
+    }
+
+    public static int parseOrderId(HttpServletRequest request) throws LogicException {
+        return parseInteger(request, Constants.ORDER_ID);
+    }
+
+    private static int parseInteger(HttpServletRequest request, String parameterName) throws LogicException {
+        String stringParameterValue = request.getParameter(parameterName);
+
+        if (!NumberUtils.isParsable(stringParameterValue)) {
             throw new LogicException();
         }
-        return Integer.parseInt(serviceIdString);
+        return Integer.parseInt(stringParameterValue);
+    }
+
+    private static BigDecimal parseBigDecimal(HttpServletRequest request, String parameterName) throws LogicException {
+        String stringParameterValue = request.getParameter(parameterName);
+
+        if (NumberUtils.isParsable(stringParameterValue)) {
+            throw new LogicException();
+        }
+        return new BigDecimal(stringParameterValue);
     }
 }

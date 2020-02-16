@@ -1,5 +1,6 @@
 package by.epam.learn.bahlei.finaltask.entity.order;
 
+import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 
 import java.util.HashMap;
@@ -36,7 +37,11 @@ public enum OrderStatus {
         return name;
     }
 
-    public static OrderStatus getOrderStatusById(int orderId) {
-        return map.get(orderId);
+    public static OrderStatus getOrderStatusById(int orderId) throws OrderException {
+        OrderStatus orderStatus = map.get(orderId);
+        if (orderStatus == null) {
+            throw new OrderException();
+        }
+        return orderStatus;
     }
 }
