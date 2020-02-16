@@ -54,11 +54,11 @@ public class RequestUtil {
         return user;
     }
 
-    public static Order parseOrder(HttpSession session, HttpServletRequest request) throws LogicException, OrderException {
+    public static Order parseOrder(HttpServletRequest request) throws LogicException, OrderException {
         Order order = new Order();
 
         order.setId(parseOrderId(request));
-        order.setUserId(getUser(session).getId());
+        order.setUserId(getUser(request.getSession()).getId());
         order.setTotal(parseBigDecimal(request, Constants.TOTAL));
         order.setOrderStatus(getOrderStatus(request));
         order.setDate(getDate(request));
@@ -69,7 +69,6 @@ public class RequestUtil {
     public static Order parseNewOrder(HttpServletRequest request) throws LogicException {
         Order order = new Order();
 
-        order.setId(parseOrderId(request));
         order.setUserId(getUser(request.getSession()).getId());
         order.setTotal(parseBigDecimal(request, Constants.TOTAL));
         order.setOrderStatus(OrderStatus.NEW);
@@ -93,32 +92,32 @@ public class RequestUtil {
         }
     }
 
-    public static User parseUser(HttpServletRequest request) {
+    public static User parseUser(HttpServletRequest request) throws LogicException {
         User user = new User();
 
-        user.setId(Integer.parseInt(request.getParameter(Constants.USER_ID)));
-        user.setLogin(request.getParameter(Constants.LOGIN));
-        user.setEmail(request.getParameter(Constants.EMAIL));
-        user.setUserRole(UserRole.getUserRoleById(Integer.parseInt(request.getParameter(Constants.USER_ROLE_ID))));
-        user.setBalance(new BigDecimal(request.getParameter(Constants.USER_BALANCE)));
+        user.setId(parseInteger(request, Constants.USER_ID));
+        user.setLogin(XssCleaner.clean(request.getParameter(Constants.LOGIN)));
+        user.setEmail(XssCleaner.clean(request.getParameter(Constants.EMAIL)));
+        user.setUserRole(UserRole.getUserRoleById(parseInteger(request, Constants.USER_ROLE_ID)));
+        user.setBalance(parseBigDecimal(request, Constants.USER_BALANCE));
 
         return user;
     }
 
-    public static Service parseService(HttpServletRequest request) {
+    public static Service parseService(HttpServletRequest request) throws LogicException {
         Service service = new Service();
 
-        service.setTitleEn(request.getParameter(Constants.TITLE_EN));
-        service.setTitleRu(request.getParameter(Constants.TITLE_RU));
-        service.setTitleBy(request.getParameter(Constants.TITLE_BY));
+        service.setTitleEn(XssCleaner.clean(request.getParameter(Constants.TITLE_EN)));
+        service.setTitleRu(XssCleaner.clean(request.getParameter(Constants.TITLE_RU)));
+        service.setTitleBy(XssCleaner.clean(request.getParameter(Constants.TITLE_BY)));
 
-        service.setDescriptionEn(request.getParameter(Constants.DESCRIPTION_EN));
-        service.setDescriptionRu(request.getParameter(Constants.DESCRIPTION_RU));
-        service.setDescriptionBy(request.getParameter(Constants.DESCRIPTION_BY));
+        service.setDescriptionEn(XssCleaner.clean(request.getParameter(Constants.DESCRIPTION_EN)));
+        service.setDescriptionRu(XssCleaner.clean(request.getParameter(Constants.DESCRIPTION_RU)));
+        service.setDescriptionBy(XssCleaner.clean(request.getParameter(Constants.DESCRIPTION_BY)));
 
-        service.setPrice(new BigDecimal(request.getParameter(Constants.PRICE)));
-        service.setServiceType(ServiceType.getById(Integer.parseInt(request.getParameter(Constants.SERVICE_TYPE_ID))));
-        service.setId(Integer.parseInt(request.getParameter(Constants.SERVICE_ID)));
+        service.setPrice(parseBigDecimal(request, Constants.PRICE));
+        service.setServiceType(ServiceType.getById(parseServiceId(request)));
+        service.setId(parseInteger(request, Constants.SERVICE_ID));
 
         return service;
     }
@@ -126,9 +125,9 @@ public class RequestUtil {
     public static Review parseReview(HttpServletRequest request) throws LogicException {
         Review review = new Review();
 
-        review.setOrderId(Integer.parseInt(request.getParameter(Constants.ORDER_ID)));
+        review.setOrderId(parseOrderId(request));
         review.setUserId(getUser(request.getSession()).getId());
-        review.setMessage(request.getParameter(Constants.MESSAGE));
+        review.setMessage(XssCleaner.clean(request.getParameter(Constants.MESSAGE)));
 
         return review;
     }
@@ -164,7 +163,7 @@ public class RequestUtil {
     private static BigDecimal parseBigDecimal(HttpServletRequest request, String parameterName) throws LogicException {
         String stringParameterValue = request.getParameter(parameterName);
 
-        if (NumberUtils.isParsable(stringParameterValue)) {
+        if (!NumberUtils.isParsable(stringParameterValue)) {
             throw new LogicException();
         }
         return new BigDecimal(stringParameterValue);

@@ -17,9 +17,9 @@ public class UpdateServiceCommand implements ActionCommand {
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
-        Service service = RequestUtil.parseService(request);
 
         try {
+            Service service = RequestUtil.parseService(request);
             serviceLogic.updateService(service);
 
             request.getSession().setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE,Constants.SERVICE_UPDATE_MESSAGE);

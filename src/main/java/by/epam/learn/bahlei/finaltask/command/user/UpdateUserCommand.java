@@ -19,8 +19,8 @@ public class UpdateUserCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        User user = RequestUtil.parseUser(request);
         try {
+            User user = RequestUtil.parseUser(request);
             userLogic.updateUser(user);
             session.setAttribute(Constants.USER, user);
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.USER_UPDATE_MESSAGE);

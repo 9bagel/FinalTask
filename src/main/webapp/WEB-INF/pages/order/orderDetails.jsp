@@ -39,27 +39,27 @@
                         <c:if test="${order.orderStatus.id == 1}">
                             <c:import url="/WEB-INF/pages/fragments/order/controlOrder.jsp"/>
                         </c:if>
-                        <div class="card card-outline-secondary my-4">
-                        <div class="card-header">
-                            <fmt:message bundle="${locale}" key="text.leave_review"/>
-                        </div>
                             <c:choose>
                                 <c:when test="${not empty review}">
+                        <div class="card-header">
+                            <fmt:message bundle="${locale}" key="text.reviews"/>
+                        </div>
                                     <div class="card-body">
                                         <p>${review.message}</p>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
                                     <c:if test="${order.orderStatus.id == 3}">
+                                        <div class="card card-outline-secondary my-4">
                         <form method="POST" action="controller">
                             <input type="hidden" name="command" value="leave_review">
                             <input type="hidden" name="order_id" value="${order.id}">
                         <c:import url="/WEB-INF/pages/fragments/review/leaveReview.jsp"/>
                         </form>
+                        </div>
                                     </c:if>
                                 </c:otherwise>
                             </c:choose>
-                        </div>
                     </div>
                 </div>
         </div>

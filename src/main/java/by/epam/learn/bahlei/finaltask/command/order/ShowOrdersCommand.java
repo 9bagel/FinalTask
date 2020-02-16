@@ -12,6 +12,7 @@ import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 public class ShowOrdersCommand implements ActionCommand {
@@ -23,6 +24,7 @@ public class ShowOrdersCommand implements ActionCommand {
             User user = RequestUtil.getUser(request.getSession());
             List<Order> orders = orderLogic.getAllOrdersByUserId(user.getId());
 
+            Collections.reverse(orders);
             request.setAttribute(Constants.ATTRIBUTE_ORDERS, orders);
             return new Response(Constants.ORDERS_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {

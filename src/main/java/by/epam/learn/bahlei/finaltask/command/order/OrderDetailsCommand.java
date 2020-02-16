@@ -13,6 +13,7 @@ import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.logic.review.ReviewLogic;
 import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,8 +27,8 @@ public class OrderDetailsCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        int orderId = Integer.parseInt(request.getParameter(Constants.ORDER_ID));
         try {
+            int orderId = RequestUtil.parseOrderId(request);
             List<Service> services = serviceLogic.getOrderedServicesByOrderId(orderId);
             Order order = orderLogic.getOrderById(orderId);
             Review review = reviewLogic.getReviewByOrderId(orderId);

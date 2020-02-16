@@ -82,7 +82,10 @@ public class ServiceLogic {
 
     public Service getServiceById(int serviceId) throws LogicException {
         try {
-            return serviceDao.getServiceById(serviceId);
+            return serviceDao.getServiceById(serviceId)
+                    .stream()
+                    .findFirst()
+                    .orElseThrow(LogicException::new);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }

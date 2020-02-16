@@ -23,6 +23,7 @@ public class LeaveReviewCommand implements ActionCommand {
         try {
             Review review = RequestUtil.parseReview(request);
             reviewLogic.addReview(review);
+
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.REVIEW_LEAVE_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         } catch (LogicException e) {

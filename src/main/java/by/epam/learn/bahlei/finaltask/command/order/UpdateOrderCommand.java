@@ -21,7 +21,7 @@ public class UpdateOrderCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         try {
-            Order order = RequestUtil.parseOrder(session, request);
+            Order order = RequestUtil.parseOrder(request);
             orderLogic.updateOrder(order);
 
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_UPDATE_MESSAGE);

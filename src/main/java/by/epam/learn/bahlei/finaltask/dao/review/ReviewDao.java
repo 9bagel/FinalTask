@@ -56,7 +56,10 @@ public class ReviewDao extends ReviewDaoAbstract {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getReviewByOrderIdQuery())) {
             preparedStatement.setInt(1, orderId);
-            return parseResultSet(preparedStatement.executeQuery());
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException(e));
         }

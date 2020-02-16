@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public class UserLogic {
     private final Logger logger = LogManager.getLogger(UserLogic.class);
@@ -28,13 +27,11 @@ public class UserLogic {
     public User login(String login, String password) throws LogicException, UserException, ValidationException {
         try {
             Validator.validateLogin(login, password);
-            Optional<User> optionalUser = userDao.getUserByLogin(login)
+            User user = userDao.getUserByLogin(login)
                     .stream()
-                    .findFirst();
-            if (!optionalUser.isPresent()) {
-                throw logger.throwing(new UserException(Constants.LOGIN_ERROR));
-            }
-            User user = optionalUser.get();
+                    .findFirst()
+                    .orElseThrow(() -> new UserException(Constants.LOGIN_ERROR));
+
             if (!BcryptUtil.isPasswordCorrect(password, user.getHashedPassword())) {
                 throw logger.throwing(new UserException(Constants.LOGIN_ERROR));
             }

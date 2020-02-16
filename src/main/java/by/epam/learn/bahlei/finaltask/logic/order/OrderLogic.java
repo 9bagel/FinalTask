@@ -17,9 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class OrderLogic {
     private static final Logger LOGGER = LogManager.getLogger(OrderLogic.class);
@@ -65,7 +63,6 @@ public class OrderLogic {
             if (orders.isEmpty()) {
                 throw LOGGER.throwing(new LogicException());
             }
-            Collections.reverse(orders);
             return orders;
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
@@ -74,13 +71,10 @@ public class OrderLogic {
 
     public Order getOrderById(int orderId) throws OrderException, LogicException {
         try {
-            Optional<Order> optionalOrder = orderDao.getOrderById(orderId)
+            return orderDao.getOrderById(orderId)
                     .stream()
-                    .findFirst();
-            if (!optionalOrder.isPresent()) {
-                throw LOGGER.throwing(new OrderException());
-            }
-            return optionalOrder.get();
+                    .findFirst()
+                    .orElseThrow(OrderException::new);
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
@@ -128,13 +122,10 @@ public class OrderLogic {
     }
 
     private Order getOrderByUserIdAndOrderId(int userId, int orderId) throws OrderException, DaoException {
-        Optional<Order> optionalOrder = orderDao.getOrderByUserIdAndOrderId(userId, orderId)
+        return orderDao.getOrderByUserIdAndOrderId(userId, orderId)
                 .stream()
-                .findFirst();
-        if (!optionalOrder.isPresent()) {
-            throw LOGGER.throwing(new OrderException(Constants.ORDER_NOT_FOUND));
-        }
-        return optionalOrder.get();
+                .findFirst()
+                .orElseThrow(() -> new OrderException(Constants.ORDER_NOT_FOUND));
     }
 
     private void checkIfUserHasBalanceToPay(User user, Order order) throws UserException {

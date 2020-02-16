@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ServiceDao extends ServiceDaoAbstract {
     private static final Logger LOGGER = LogManager.getLogger(ServiceDao.class);
@@ -88,11 +89,12 @@ public class ServiceDao extends ServiceDaoAbstract {
     public List<Service> getServicesByType(ServiceType serviceType) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServicesByTypeIdQuery())) {
-
             int typeId = serviceType.getId();
             preparedStatement.setInt(1, typeId);
 
-            return parseResultSet(preparedStatement.executeQuery());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException();
         }
@@ -116,8 +118,12 @@ public class ServiceDao extends ServiceDaoAbstract {
 
             for (Integer serviceId : serviceIds) {
                 preparedStatement.setInt(1, serviceId);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                services.add(parseResultSet(resultSet).get(0));
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    Optional<Service> optionalService = parseResultSet(resultSet)
+                            .stream()
+                            .findFirst();
+                    services.add(optionalService.orElseThrow(DaoException::new));
+                }
             }
             return services;
         } catch (SQLException | ConnectionPoolException e) {
@@ -128,10 +134,11 @@ public class ServiceDao extends ServiceDaoAbstract {
     public List<Service> getOrderedServices(int orderId) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getOrderedServicesQuery())) {
-
             preparedStatement.setInt(1, orderId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return parseResultSet(resultSet);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException("Error in getOrderedServices()", e));
         }
@@ -148,11 +155,13 @@ public class ServiceDao extends ServiceDaoAbstract {
         }
     }
 
-    public Service getServiceById(int serviceId) throws DaoException {
+    public List<Service> getServiceById(int serviceId) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServiceByIdQuery())) {
             preparedStatement.setInt(1, serviceId);
-            return parseResultSet(preparedStatement.executeQuery()).get(0);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (SQLException | ConnectionPoolException e) {
             throw LOGGER.throwing(new DaoException(e));
         }
