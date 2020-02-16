@@ -145,9 +145,7 @@ public class OrderLogic {
 
     public List<Order> getAllOrders() throws LogicException {
         try {
-            List<Order> orders = orderDao.getAll();
-            Collections.reverse(orders);
-            return orders;
+            return orderDao.getAll();
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }

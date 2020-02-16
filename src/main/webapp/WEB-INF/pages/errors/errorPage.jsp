@@ -14,9 +14,10 @@
 
         <div class="col-lg-9">
             <div class="card mt-4">
-                <c:if test="${not empty errorMessage}">
+                <c:if test="${not empty sessionScope.errorMessage}">
                     <div class="alert alert-danger" role="alert">
                         <fmt:message bundle="${locale}" key="${sessionScope.errorMessage}"/>
+                        <c:remove var="errorMessage" scope="session"/>
                     </div>
                 </c:if>
                 <div class="d-flex justify-content-center">

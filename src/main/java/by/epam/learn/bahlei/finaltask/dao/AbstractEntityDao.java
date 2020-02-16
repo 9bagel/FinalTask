@@ -42,8 +42,9 @@ public abstract class AbstractEntityDao<T extends Entity> implements Dao<T> {
     public List<T> getAll() throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getSelectAllQuery())) {
-
-            return parseResultSet(preparedStatement.executeQuery());
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
         } catch (ConnectionPoolException | SQLException e) {
             throw LOGGER.throwing(new DaoException("Error in getAll method", e));
         }
