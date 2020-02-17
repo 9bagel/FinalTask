@@ -22,9 +22,9 @@ public class ServiceLogic {
 
     public List<Service> getServicesByTypeName(String serviceTypeName) throws LogicException {
         try {
-            ServiceType serviceType = ServiceType.valueOf(serviceTypeName.toUpperCase());
+            ServiceType serviceType = ServiceType.getByName(serviceTypeName.toUpperCase());
             return serviceDao.getServicesByType(serviceType);
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
     }

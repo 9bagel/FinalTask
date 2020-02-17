@@ -3,11 +3,13 @@ package by.epam.learn.bahlei.finaltask.command.service;
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
+import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
+import com.google.protobuf.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,7 +25,7 @@ public class AddServiceCommand implements ActionCommand {
 
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.SERVICE_ADD_MESSAGE);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
-        } catch (LogicException e) {
+        } catch (LogicException | ServiceException e) {
             session.setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, Constants.SERVICE_ADD_ERROR);
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);
         }

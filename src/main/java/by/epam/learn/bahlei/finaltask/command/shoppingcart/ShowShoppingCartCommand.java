@@ -20,14 +20,11 @@ public class ShowShoppingCartCommand implements ActionCommand {
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
+        List<Service> services;
+        HttpSession session = request.getSession();
         try {
-            List<Service> services;
-            HttpSession session = request.getSession();
-
             ShoppingCart shoppingCart = RequestUtil.getShoppingCart(session);
-
             List<Integer> serviceIds = shoppingCart.getServiceList();
-
             services = serviceLogic.getServicesById(serviceIds);
 
             request.setAttribute(Constants.SERVICES, services);

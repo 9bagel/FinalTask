@@ -28,17 +28,19 @@
                     <tr>
                         <form method="POST" action="controller">
                         <td>${user.id}</td>
-                        <td><input type="text" name="login" value="${user.login}" required></td>
-                        <td><input type="text" name="email" value="${user.email}" required></td>
+                        <td><input type="text" class="form-control" name="login" value="${user.login}" required></td>
+                        <td><input type="text" class="form-control" name="email" value="${user.email}" required></td>
                         <td>
-                            <select class="custom-select-col-10" name="role_id">
-                                <option value="${user.userRole.id}" selected><fmt:message bundle="${locale}" key="${user.userRole.name}"/></option>
-                                <option value="1"><fmt:message bundle="${locale}" key="text.user.type.administrator"/></option>
-                                <option value="2"><fmt:message bundle="${locale}" key="text.user.type.customer"/></option>
+                            <select class="custom-select" name="role_id">
+                                <c:forEach items="${userTypes}" var="userType">
+                                    <option value="${userType.id}" ${userType.id == user.userRole.id ? 'selected' : ''}>
+                                    <fmt:message bundle="${locale}" key="${userType.name}"/>
+                                    </option>
+                                </c:forEach>
                             </select>
                         </td>
                         <td>
-                            <input type="text" name="balance" class="col" value="${user.balance}" required></td>
+                            <input type="text"  name="balance" class="form-control" value="${user.balance}" required></td>
                         <td>
                             <input type="hidden" name="command" value="update_user">
                             <input type="hidden" name="user_id" value="${user.id}">

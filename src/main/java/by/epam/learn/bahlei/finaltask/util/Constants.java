@@ -134,4 +134,6 @@ public class Constants {
     public static final String REGISTRATION_MESSAGE = "text.registration.message";
     public static final String  REFILL_MESSAGE = "text.refill.message";
     public static final String ORDER_STATUSES = "orderStatuses";
+    public static final String ATTRIBUTE_USER_TYPES = "userTypes";
+    public static final String SERVICE_TYPES = "serviceTypes";
 }

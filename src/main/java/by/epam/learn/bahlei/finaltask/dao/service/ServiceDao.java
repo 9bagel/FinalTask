@@ -6,6 +6,7 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import com.google.protobuf.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,7 +43,7 @@ public class ServiceDao extends ServiceDaoAbstract {
                 services.add(service);
             }
             return services;
-        } catch (SQLException e) {
+        } catch (SQLException | ServiceException e) {
             throw LOGGER.throwing(new DaoException("Exception in parseResultSet in ServiceDao", e));
         }
     }
@@ -159,6 +160,7 @@ public class ServiceDao extends ServiceDaoAbstract {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServiceByIdQuery())) {
             preparedStatement.setInt(1, serviceId);
+
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 return parseResultSet(resultSet);
             }

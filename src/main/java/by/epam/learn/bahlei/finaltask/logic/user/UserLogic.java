@@ -42,12 +42,10 @@ public class UserLogic {
 
     }
 
-    public void register(RegistrationDto registrationDto) throws LogicException, ValidationException {
+    public void register(RegistrationDto registrationDto) throws LogicException, UserException {
         try {
-            Validator.validateRegistration(registrationDto);
-
             if (userDao.isUserExists(registrationDto.getLogin())) {
-                throw new ValidationException(Constants.LOGIN_TAKEN);
+                throw new UserException(Constants.LOGIN_TAKEN);
             }
             userDao.insert(registrationDto);
         } catch (DaoException e) {

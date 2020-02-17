@@ -1,6 +1,7 @@
 package by.epam.learn.bahlei.finaltask.entity.service;
 
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import com.google.protobuf.ServiceException;
 
 public enum ServiceType {
     HAIRCUT(1, Constants.SERVICE_TYPE_HAIRCUT),
@@ -26,11 +27,22 @@ public enum ServiceType {
         return id;
     }
 
-    public static ServiceType getById(int id) {
+    public static ServiceType getById(int id) throws ServiceException {
         for (ServiceType serviceType : values()) {
-            if (serviceType.id == id) return serviceType;
+            if (serviceType.id == id) {
+                return serviceType;
+            }
         }
-        throw new IllegalArgumentException("No such typeId for serviceType");
+        throw new ServiceException("No such typeId for serviceType");
+    }
+
+    public static ServiceType getByName(String serviceTypeName) throws ServiceException {
+        for (ServiceType serviceType : values()) {
+            if (serviceType.name().equals(serviceTypeName)) {
+                return serviceType;
+            }
+        }
+        throw new ServiceException("No such serviceType");
     }
 
     public String getName() {

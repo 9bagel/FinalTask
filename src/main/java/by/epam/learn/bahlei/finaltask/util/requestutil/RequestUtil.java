@@ -13,6 +13,7 @@ import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.XssCleaner;
+import com.google.protobuf.ServiceException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -104,7 +105,7 @@ public class RequestUtil {
         return user;
     }
 
-    public static Service parseService(HttpServletRequest request) throws LogicException {
+    public static Service parseService(HttpServletRequest request) throws LogicException, ServiceException {
         Service service = new Service();
 
         service.setTitleEn(XssCleaner.clean(request.getParameter(Constants.TITLE_EN)));
@@ -160,7 +161,7 @@ public class RequestUtil {
         return Integer.parseInt(stringParameterValue);
     }
 
-    private static BigDecimal parseBigDecimal(HttpServletRequest request, String parameterName) throws LogicException {
+    public static BigDecimal parseBigDecimal(HttpServletRequest request, String parameterName) throws LogicException {
         String stringParameterValue = request.getParameter(parameterName);
 
         if (!NumberUtils.isParsable(stringParameterValue)) {

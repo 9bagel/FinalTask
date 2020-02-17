@@ -9,6 +9,7 @@ import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.user.UserLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.XssCleaner;
+import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
 import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +22,9 @@ public class MakeDepositCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        BigDecimal amount = new BigDecimal(XssCleaner.clean((request.getParameter(Constants.AMOUNT))));
-        User user = (User) session.getAttribute(Constants.USER);
         try {
+            User user = (User) session.getAttribute(Constants.USER);
+            BigDecimal amount = RequestUtil.parseBigDecimal(request, Constants.AMOUNT);
             userLogic.makeDeposit(user, amount);
 
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.REFILL_MESSAGE);
