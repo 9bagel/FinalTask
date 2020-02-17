@@ -26,11 +26,15 @@ public abstract class ServiceDaoAbstract extends AbstractEntityDao<Service> {
 
     @Override
     protected String getSelectLimitQuery() {
-        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE id > ? LIMIT ?";
+        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services LIMIT ?, ?";
     }
 
     protected String getServicesByTypeIdQuery() {
         return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE type_id = ?";
+    }
+
+    protected String getLimitServicesByTypeQuery() {
+        return "SELECT id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM services WHERE type_id = ? LIMIT ?, ?";
     }
 
     protected String getServiceByIdQuery() {
@@ -44,7 +48,12 @@ public abstract class ServiceDaoAbstract extends AbstractEntityDao<Service> {
     protected String getAllServicesByOrderIdQuery() {
         return "SELECT services.id, type_id, title_en, title_ru, title_by, description_en, description_ru, description_by, price FROM ordered_services JOIN services on ordered_services.service_id=services.id where order_id = ?";
     }
+
     protected String getSelectServiceByIdQuery() {
         return "SELECT * FROM services WHERE id = ?";
+    }
+
+    protected String getServiceCountQuery() {
+        return "SELECT COUNT(*) from services";
     }
 }

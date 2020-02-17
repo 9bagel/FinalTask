@@ -168,4 +168,46 @@ public class ServiceDao extends ServiceDaoAbstract {
             throw LOGGER.throwing(new DaoException(e));
         }
     }
+
+    public List<Service> getLimitServices(int offset, int limit) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getSelectLimitQuery())) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, limit);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException(e));
+        }
+    }
+
+    public int getServiceCount() throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getServiceCountQuery())) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                resultSet.next();
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException(e));
+        }
+    }
+
+    public List<Service> getLimitServicesByType(int offset, int limit, ServiceType serviceType) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getLimitServicesByTypeQuery())) {
+            int typeId = serviceType.getId();
+            preparedStatement.setInt(1, typeId);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException();
+        }
+    }
 }

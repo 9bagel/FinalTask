@@ -4,8 +4,8 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 import by.epam.learn.bahlei.finaltask.dto.RegistrationDto;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
+import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
-import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -38,22 +38,22 @@ public class RegistrationTest {
         userLogic = null;
     }
 
-    @Test(expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = UserException.class,
             expectedExceptionsMessageRegExp = Constants.LOGIN_TAKEN)
-    public void throwValidationExceptionIfUserExists() throws DaoException, LogicException, ValidationException {
+    public void throwUserExceptionIfUserExists() throws DaoException, LogicException, UserException {
         Mockito.when(userDao.isUserExists(Mockito.anyString())).thenReturn(true);
         userLogic.register(registrationDto);
     }
 
     @Test(expectedExceptions = LogicException.class)
-    public void throwLogicExceptionIfErrorWithDB() throws DaoException, LogicException, ValidationException {
+    public void throwLogicExceptionIfErrorWithDB() throws DaoException, LogicException, UserException {
         Mockito.when(userDao.getUserByLogin(Mockito.anyString())).thenReturn(new ArrayList<>());
         Mockito.doThrow(new DaoException()).when(userDao).insert(registrationDto);
         userLogic.register(registrationDto);
     }
 
     @Test
-    public void okRegister() throws DaoException, LogicException, ValidationException {
+    public void okRegister() throws DaoException, LogicException, UserException {
         Mockito.when(userDao.getUserByLogin(Mockito.anyString())).thenReturn(new ArrayList<>());
         Mockito.doNothing().when(userDao).insert(registrationDto);
         userLogic.register(registrationDto);

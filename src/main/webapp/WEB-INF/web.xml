@@ -20,6 +20,11 @@
         <location>/WEB-INF/pages/errors/500.jsp</location>
     </error-page>
 
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/pages/errors/500.jsp</location>
+    </error-page>
+
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

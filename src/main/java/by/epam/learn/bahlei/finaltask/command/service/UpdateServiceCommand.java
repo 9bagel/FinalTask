@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.Response;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
+import by.epam.learn.bahlei.finaltask.entity.service.ServiceType;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;

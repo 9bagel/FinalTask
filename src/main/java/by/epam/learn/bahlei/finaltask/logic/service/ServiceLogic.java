@@ -20,15 +20,6 @@ public class ServiceLogic {
         this.serviceDao = serviceDao;
     }
 
-    public List<Service> getServicesByTypeName(String serviceTypeName) throws LogicException {
-        try {
-            ServiceType serviceType = ServiceType.getByName(serviceTypeName.toUpperCase());
-            return serviceDao.getServicesByType(serviceType);
-        } catch (DaoException | ServiceException e) {
-            throw LOGGER.throwing(new LogicException(e));
-        }
-    }
-
 
     public List<Service> getAllServices() throws LogicException {
         try {
@@ -95,6 +86,40 @@ public class ServiceLogic {
         try {
             serviceDao.update(service);
         } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public List<Service> getLimitServices(int offset, int limit) throws LogicException {
+        try {
+            return serviceDao.getLimitServices(offset, limit);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public int getServiceCount() throws LogicException {
+        try {
+            return serviceDao.getServiceCount();
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public List<Service> getServicesByTypeName(String serviceTypeName) throws LogicException {
+        try {
+            ServiceType serviceType = ServiceType.getByName(serviceTypeName.toUpperCase());
+            return serviceDao.getServicesByType(serviceType);
+        } catch (DaoException | ServiceException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
+    public List<Service> getLimitServicesByType(int offset, int limit, String serviceTypeName) throws LogicException {
+        try {
+            ServiceType serviceType = ServiceType.getByName(serviceTypeName.toUpperCase());
+            return serviceDao.getLimitServicesByType(offset, limit, serviceType);
+        } catch (DaoException | ServiceException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
     }

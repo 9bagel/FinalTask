@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="ctg" uri="customtags" %>
-
+<c:import url="/WEB-INF/pages/fragments/pagination.jsp"/>
 <c:forEach items="${services}" var="service">
     <div class="card mt-4">
         <div class="card-body">

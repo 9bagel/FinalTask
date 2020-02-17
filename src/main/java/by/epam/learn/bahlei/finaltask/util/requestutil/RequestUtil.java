@@ -152,7 +152,7 @@ public class RequestUtil {
         return parseInteger(request, Constants.ORDER_ID);
     }
 
-    private static int parseInteger(HttpServletRequest request, String parameterName) throws LogicException {
+    public static int parseInteger(HttpServletRequest request, String parameterName) throws LogicException {
         String stringParameterValue = request.getParameter(parameterName);
 
         if (!NumberUtils.isParsable(stringParameterValue)) {
@@ -168,5 +168,23 @@ public class RequestUtil {
             throw new LogicException();
         }
         return new BigDecimal(stringParameterValue);
+    }
+
+    public static int getLimit(HttpServletRequest request) {
+        String stringLimit = request.getParameter(Constants.LIMIT);
+
+        if (!NumberUtils.isParsable(stringLimit)) {
+            return 10;
+        }
+        return Integer.parseInt(stringLimit);
+    }
+
+    public static int getPage(HttpServletRequest request) {
+        String stringPage = request.getParameter(Constants.PAGE);
+
+        if (!NumberUtils.isParsable(stringPage)) {
+            return 1;
+        }
+        return Integer.parseInt(stringPage);
     }
 }
