@@ -176,6 +176,12 @@ public enum CommandEnum {
         }
     },
 
+    SEARCH {
+        {
+            this.command = new SearchServiceCommand();
+        }
+    },
+
     ADD_SERVICE_PAGE {
         {
             this.command = new ShowAddServicePageCommand();

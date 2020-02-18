@@ -54,6 +54,7 @@ public class Constants {
     public static final String SHOPPING_CART_JSP = "/WEB-INF/pages/shoppingCart/shoppingCart.jsp";
     public static final String ORDERS_JSP = "/WEB-INF/pages/order/orders.jsp";
     public static final String DETAILS_JSP = "/WEB-INF/pages/order/orderDetails.jsp";
+    public static final String SEARCH_JSP = "/WEB-INF/pages/search.jsp";
 
 
     public static final String LOGIN_PAGE = "/controller/login";
@@ -139,4 +140,5 @@ public class Constants {
     public static final String LIMIT = "limit";
     public static final String PAGE = "page";
     public static final String TOTAL_PAGES = "totalPages";
+    public static final String SEARCH_PHRASE = "searchPhrase";
 }

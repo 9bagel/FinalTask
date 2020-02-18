@@ -16,7 +16,6 @@
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
         <div class="col-lg-9">
             <c:import url="/WEB-INF/pages/fragments/messages.jsp"/>
-            <c:import url="/WEB-INF/pages/fragments/pagination.jsp"/>
             <c:import url="/WEB-INF/pages/fragments/service/serviceList.jsp"/>
         </div>
     </div>

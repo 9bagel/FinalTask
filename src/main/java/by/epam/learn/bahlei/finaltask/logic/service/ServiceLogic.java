@@ -114,12 +114,14 @@ public class ServiceLogic {
             throw LOGGER.throwing(new LogicException(e));
         }
     }
-
-    public List<Service> getLimitServicesByType(int offset, int limit, String serviceTypeName) throws LogicException {
+    public List<Service> getServicesLike(String searchPhrase) throws LogicException, ServiceException {
         try {
-            ServiceType serviceType = ServiceType.getByName(serviceTypeName.toUpperCase());
-            return serviceDao.getLimitServicesByType(offset, limit, serviceType);
-        } catch (DaoException | ServiceException e) {
+            List<Service> services = serviceDao.getServicesLike(searchPhrase);
+            if (services.isEmpty()){
+                throw new ServiceException(Constants.SERVICE_NOT_FOUND_MESSAGE);
+            }
+            return serviceDao.getServicesLike(searchPhrase);
+        } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
     }

@@ -210,4 +210,19 @@ public class ServiceDao extends ServiceDaoAbstract {
             throw new DaoException();
         }
     }
+
+    public List<Service> getServicesLike(String searchPhrase) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getServicesLikeQuery())) {
+            for (int i = 1; i <= 6; i++) {
+                preparedStatement.setString(i, "%" + searchPhrase + "%");
+            }
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException();
+        }
+    }
 }

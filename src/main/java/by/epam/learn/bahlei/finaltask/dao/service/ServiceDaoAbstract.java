@@ -56,4 +56,17 @@ public abstract class ServiceDaoAbstract extends AbstractEntityDao<Service> {
     protected String getServiceCountQuery() {
         return "SELECT COUNT(*) from services";
     }
+    protected String getServicesLikeQuery() {
+        return "SELECT \n" +
+                "    *\n" +
+                "FROM\n" +
+                "    services\n" +
+                "WHERE\n" +
+                "    title_en LIKE ?\n" +
+                "        OR title_by LIKE ?\n" +
+                "        OR title_ru LIKE ?\n" +
+                "        OR description_en LIKE ?\n" +
+                "        OR description_ru LIKE ?\n" +
+                "        OR description_by LIKE ?";
+    }
 }

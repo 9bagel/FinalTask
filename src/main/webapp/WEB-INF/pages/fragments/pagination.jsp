@@ -9,22 +9,22 @@
         <input class="btn btn-primary btn-sm" name="limit" type="submit" value="10">
         <input class="btn btn-primary btn-sm" name="limit" type="submit" value="20">
     </form>
-    <span>Go to page</span>
+    <span><fmt:message bundle="${locale}" key="text.page"/></span>
     <form style="display: inline-block" role="form" action="controller" method="get">
         <input type="number" max="${totalPages}" min="1" name="page" placeholder="${page}/${totalPages}" required="">
         <input type="hidden" name="limit" value="${limit}">
-        <input class="btn btn-primary btn-sm" type="submit" value="Go" >
+        <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.go"/>" >
     </form>
     <c:choose>
         <c:when test="${page != 1}">
             <form style="display: inline-block" role="form" action="controller" method="get">
                 <input type="hidden" name="page" value="${page - 1}">
                 <input type="hidden" name="limit" value="${limit}">
-                <input class="btn btn-primary btn-sm" type="submit" value="previous">
+                <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.back"/>">
             </form>
         </c:when>
         <c:otherwise>
-            <input class="btn btn-primary btn-sm" type="submit" value="previous" disabled>
+            <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.back"/>" disabled>
         </c:otherwise>
     </c:choose>
     <c:choose>
@@ -32,12 +32,12 @@
             <form style="display: inline-block" role="form" action="controller" method="get">
                 <input type="hidden" name="page" value="${page + 1}">
                 <input type="hidden" name="limit" value="${limit}">
-                <input class="btn btn-primary btn-sm" type="submit" value="next">
+                <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.forward"/>">
             </form>
         </c:when>
 
         <c:otherwise>
-            <input class="btn btn-primary btn-sm" type="submit" value="next" disabled>
+            <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.forward"/>" disabled>
         </c:otherwise>
     </c:choose>
 </div>

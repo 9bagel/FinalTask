@@ -37,6 +37,11 @@
                     </c:otherwise>
                 </c:choose>
             </ul>
+            <form method="POST" action="controller" class="form-inline my-2 my-lg-0" >
+                <input type="hidden" name="command" value="search">
+                <input class="form-control mr-sm-2" type="search" name="searchPhrase" placeholder="<fmt:message bundle="${locale}" key="text.search"/>" aria-label="Search">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><fmt:message bundle="${locale}" key="text.search"/></button>
+            </form>
         </div>
     </div>
 </nav>
