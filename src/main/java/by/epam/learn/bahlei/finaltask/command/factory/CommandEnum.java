@@ -1,6 +1,7 @@
 package by.epam.learn.bahlei.finaltask.command.factory;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
+import by.epam.learn.bahlei.finaltask.command.ShowMainPageCommand;
 import by.epam.learn.bahlei.finaltask.command.ShowSuccessPageCommand;
 import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
@@ -11,187 +12,208 @@ import by.epam.learn.bahlei.finaltask.command.shoppingcart.AddServiceToCartComma
 import by.epam.learn.bahlei.finaltask.command.shoppingcart.RemoveServiceFromShoppingCartCommand;
 import by.epam.learn.bahlei.finaltask.command.shoppingcart.ShowShoppingCartCommand;
 import by.epam.learn.bahlei.finaltask.command.user.*;
+import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
+
+import java.util.Arrays;
+import java.util.EnumSet;
 
 public enum CommandEnum {
-    LOGIN {
+    MAIN(new ShowMainPageCommand()) {
         {
-            this.command = new ShowLoginPageCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    LOGIN(new ShowLoginPageCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    LOGIN_ACTION {
+    LOGIN_ACTION(new LoginCommand()) {
         {
-            this.command = new LoginCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    REGISTRATION_ACTION {
+    REGISTRATION_ACTION(new RegistrationCommand()) {
         {
-            this.command = new RegistrationCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    REGISTRATION {
+    REGISTRATION(new ShowRegistrationPageCommand()) {
         {
-            this.command = new ShowRegistrationPageCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    LEAVE_REVIEW(new LeaveReviewCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    SERVICE_LIST {
+    SEARCH(new SearchServiceCommand()) {
         {
-            this.command = new ShowServiceTypePageCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    CHANGE_LOCALE {
+    SERVICE_LIST(new ShowServiceTypePageCommand()) {
         {
-            this.command = new ChangeLocaleCommand();
-        }
-    },
-    LOGOUT {
-        {
-            this.command = new LogoutCommand();
-        }
-    },
-    ADD_TO_CART {
-        {
-            this.command = new AddServiceToCartCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    SHOPPING_CART {
+    CHANGE_LOCALE(new ChangeLocaleCommand()) {
         {
-            this.command = new ShowShoppingCartCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    LOGOUT(new LogoutCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    ADD_TO_CART(new AddServiceToCartCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    BALANCE {
+    SHOPPING_CART(new ShowShoppingCartCommand()) {
         {
-            this.command = new ShowBalancePageCommand();
-        }
-    },
-    MAKE_DEPOSIT {
-        {
-            this.command = new MakeDepositCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    REMOVE_FROM_SHOPPING_CART {
+    BALANCE(new ShowBalancePageCommand()) {
         {
-            this.command = new RemoveServiceFromShoppingCartCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    MAKE_DEPOSIT(new MakeDepositCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    PAY_ORDER {
+    REMOVE_FROM_SHOPPING_CART(new RemoveServiceFromShoppingCartCommand()) {
         {
-            this.command = new PayOrderCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    CREATE_ORDER {
+    PAY_ORDER(new PayOrderCommand()) {
         {
-            this.command = new CreateOrderCommand();
-        }
-    },
-    CANCEL_ORDER {
-        {
-            this.command = new CancelOrderCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    ERROR {
+    CREATE_ORDER(new CreateOrderCommand()) {
         {
-            this.command = new ShowErrorPageCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    CANCEL_ORDER(new CancelOrderCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    SHOW_ORDERS {
+    ERROR(new ShowErrorPageCommand()) {
         {
-            this.command = new ShowOrdersCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    ORDER_DETAILS {
+    SHOW_ORDERS(new ShowOrdersCommand()) {
         {
-            this.command = new OrderDetailsCommand();
-        }
-    },
-    MANAGE_ORDERS {
-        {
-            this.command = new ManageOrdersCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }
     },
 
-    UPDATE_ORDER {
+    SUCCESS(new ShowSuccessPageCommand()) {
         {
-            this.command = new UpdateOrderCommand();
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    ORDER_DETAILS(new OrderDetailsCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
+        }
+    },
+    MANAGE_ORDERS(new ManageOrdersCommand()) {
+        {
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    MANAGE_USERS {
+    UPDATE_ORDER(new UpdateOrderCommand()) {
         {
-            this.command = new ManageUsersCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    UPDATE_USER {
+    MANAGE_USERS(new ManageUsersCommand()) {
         {
-            this.command = new UpdateUserCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    SUCCESS {
+    UPDATE_USER(new UpdateUserCommand()) {
         {
-            this.command = new ShowSuccessPageCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    ADD_SERVICE {
+
+    ADD_SERVICE(new AddServiceCommand()) {
         {
-            this.command = new AddServiceCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    DELETE_SERVICE {
+    DELETE_SERVICE(new DeleteServiceCommand()) {
         {
-            this.command = new DeleteServiceCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    EDIT_SERVICE_PAGE {
+    EDIT_SERVICE_PAGE(new ShowUpdateServicePageCommand()) {
         {
-            this.command = new ShowUpdateServicePageCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    UPDATE_SERVICE {
+    UPDATE_SERVICE(new UpdateServiceCommand()) {
         {
-            this.command = new UpdateServiceCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     },
 
-    LEAVE_REVIEW {
-        {
-            this.command = new LeaveReviewCommand();
-        }
-    },
 
-    SEARCH {
+    ADD_SERVICE_PAGE(new ShowAddServicePageCommand()) {
         {
-            this.command = new SearchServiceCommand();
-        }
-    },
-
-    ADD_SERVICE_PAGE {
-        {
-            this.command = new ShowAddServicePageCommand();
+            setAllowedUserRoles(UserRole.ADMIN);
         }
     };
 
     ActionCommand command;
+    EnumSet<UserRole> allowedUserRoles = EnumSet.noneOf(UserRole.class);
 
     public ActionCommand getCurrentCommand() {
         return command;
     }
-}
 
+    CommandEnum(ActionCommand command) {
+        this.command = command;
+    }
+
+    public void setAllowedUserRoles(UserRole... userRoles) {
+        this.allowedUserRoles.addAll(Arrays.asList(userRoles));
+    }
+
+    public boolean isRoleAllowed(UserRole userRole) {
+        return allowedUserRoles.contains(userRole);
+    }
+}

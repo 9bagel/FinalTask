@@ -39,9 +39,14 @@ public class ServiceLogic {
         }
     }
 
-    public List<Service> getServicesById(List<Integer> serviceIds) throws LogicException {
+    public List<Service> getServicesById(List<Integer> serviceIds) throws LogicException, ServiceException {
         try {
-            return serviceDao.getServicesById(serviceIds);
+            List<Service> services = serviceDao.getServicesById(serviceIds);
+
+            if (services.isEmpty()) {
+                throw LOGGER.throwing(new ServiceException(Constants.SHOPPING_CART_EMPTY));
+            }
+            return services;
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
@@ -114,10 +119,11 @@ public class ServiceLogic {
             throw LOGGER.throwing(new LogicException(e));
         }
     }
+
     public List<Service> getServicesLike(String searchPhrase) throws LogicException, ServiceException {
         try {
             List<Service> services = serviceDao.getServicesLike(searchPhrase);
-            if (services.isEmpty()){
+            if (services.isEmpty()) {
                 throw new ServiceException(Constants.SERVICE_NOT_FOUND_MESSAGE);
             }
             return serviceDao.getServicesLike(searchPhrase);

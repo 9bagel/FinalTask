@@ -14,7 +14,7 @@
                 <form method="POST" action="controller" class="float-right" style="margin-right: 5px;">
                     <input type="hidden" name="command" value="edit_service_page">
                     <input type="hidden" name="service_id" value="${service.id}">
-                    <button type="submit" class="btn btn-success"><fmt:message bundle="${locale}" key="text.edit"/></button>
+                    <button type="submit" class="btn btn-secondary"><fmt:message bundle="${locale}" key="text.edit"/></button>
                 </form>
             </c:if>
             <h3 class="card-title"><ctg:serviceTitle service="${service}"/></h3>

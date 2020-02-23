@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    List<Integer> services = new ArrayList<>();
+    final List<Integer> services = new ArrayList<>();
 
     public void addServiceId(int serviceId) {
         services.add(serviceId);

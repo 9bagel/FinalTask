@@ -12,8 +12,7 @@ public class PaginationTag extends SimpleTagSupport {
     private int maxLinks = 10;
 
     private Writer getWriter() {
-        JspWriter out = getJspContext().getOut();
-        return out;
+        return getJspContext().getOut();
     }
 
     @Override

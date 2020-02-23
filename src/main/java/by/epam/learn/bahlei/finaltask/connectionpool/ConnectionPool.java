@@ -15,7 +15,7 @@ import static by.epam.learn.bahlei.finaltask.util.Constants.DATABASE_PROPERTIES;
 import static by.epam.learn.bahlei.finaltask.util.Constants.DB_POOL;
 
 public class ConnectionPool {
-    private static ConnectionPool instance = new ConnectionPool();
+    private static final ConnectionPool instance = new ConnectionPool();
     private BlockingQueue<ProxyConnection> connectionQueue;
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
@@ -57,9 +57,9 @@ public class ConnectionPool {
         }
     }
 
-    public boolean closeConnection(ProxyConnection connection) {
+    public void closeConnection(ProxyConnection connection) {
         LOGGER.info("Return connection back to connectionPool");
-        return connectionQueue.offer(connection);
+        connectionQueue.offer(connection);
     }
 
     public void closeAllRealConnections() {

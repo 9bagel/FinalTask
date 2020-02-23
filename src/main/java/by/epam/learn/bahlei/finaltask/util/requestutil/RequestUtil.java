@@ -93,7 +93,7 @@ public class RequestUtil {
         }
     }
 
-    public static User parseUser(HttpServletRequest request) throws LogicException {
+    public static User parseUserData(HttpServletRequest request) throws LogicException {
         User user = new User();
 
         user.setId(parseInteger(request, Constants.USER_ID));

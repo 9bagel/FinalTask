@@ -15,8 +15,8 @@ public enum ServiceType {
     TEETH_CLEANING(9, Constants.SERVICE_TYPE_TEETH_CLEANING),
     TAXI(10, Constants.SERVICE_TYPE_TAXI);
 
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
     ServiceType(int id, String name) {
         this.id = id;

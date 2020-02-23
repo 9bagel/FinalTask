@@ -1,8 +1,6 @@
 package by.epam.learn.bahlei.finaltask.command.factory;
 
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
-import by.epam.learn.bahlei.finaltask.command.ShowMainPageCommand;
-import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.UrlEncoder;
@@ -14,24 +12,33 @@ import javax.servlet.http.HttpServletRequest;
 public class CommandFactory {
     private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
-    public ActionCommand defineCommand(HttpServletRequest request) throws CommandException {
-        ActionCommand command = new ShowMainPageCommand();
-        String requestCommand = request.getParameter(Constants.COMMAND);
-        String pathInfo = request.getPathInfo();
+    public static ActionCommand defineCommand(HttpServletRequest request) throws CommandException {
+        String requestCommand = parseRequestCommand(request);
 
-        if (requestCommand == null || requestCommand.isEmpty()) {
-            if (pathInfo == null || pathInfo.isEmpty()) {
-                return command;
-            } else {
-                requestCommand = UrlEncoder.getPath(pathInfo);
-            }
-        }
         try {
             CommandEnum commandEnum = CommandEnum.valueOf(requestCommand.toUpperCase());
-            command = commandEnum.getCurrentCommand();
-            return command;
+            return commandEnum.getCurrentCommand();
         } catch (IllegalArgumentException e) {
             throw LOGGER.throwing(new CommandException(e));
+        }
+    }
+
+    public static String parseRequestCommand(HttpServletRequest request) {
+        String requestCommand = request.getParameter(Constants.COMMAND);
+
+        if (requestCommand == null || requestCommand.isEmpty()) {
+            requestCommand = parsePathInfo(request);
+        }
+        return requestCommand;
+    }
+
+    private static String parsePathInfo(HttpServletRequest request) {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo == null || pathInfo.isEmpty()) {
+            return Constants.MAIN;
+        } else {
+            return UrlEncoder.getPath(pathInfo);
         }
     }
 }

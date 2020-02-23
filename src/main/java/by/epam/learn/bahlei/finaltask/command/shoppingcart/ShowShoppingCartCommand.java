@@ -10,13 +10,14 @@ import by.epam.learn.bahlei.finaltask.logic.service.ServiceLogic;
 import by.epam.learn.bahlei.finaltask.model.ShoppingCart;
 import by.epam.learn.bahlei.finaltask.util.Constants;
 import by.epam.learn.bahlei.finaltask.util.requestutil.RequestUtil;
+import com.google.protobuf.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class ShowShoppingCartCommand implements ActionCommand {
-    private ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
+    private final ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
@@ -31,6 +32,9 @@ public class ShowShoppingCartCommand implements ActionCommand {
             return new Response(Constants.SHOPPING_CART_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
+        } catch (ServiceException e) {
+            request.getSession().setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
+            return new Response(Constants.SHOPPING_CART_JSP, Response.ResponseType.FORWARD);
         }
     }
 }

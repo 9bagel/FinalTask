@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class AddServiceToCartCommand implements ActionCommand {
-    private ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
+    private final ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ShowMainPageCommand implements ActionCommand {
-    private ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
+    private final ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

@@ -13,7 +13,7 @@ public class ConnectionPoolListener implements javax.servlet.ServletContextListe
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPoolListener.class);
 
-    private ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

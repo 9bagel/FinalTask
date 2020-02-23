@@ -57,11 +57,11 @@ public class OrderLogic {
         }
     }
 
-    public List<Order> getAllOrdersByUserId(int userId) throws LogicException {
+    public List<Order> getAllOrdersByUserId(int userId) throws LogicException, OrderException {
         try {
             List<Order> orders = orderDao.getOrdersByUserId(userId);
             if (orders.isEmpty()) {
-                throw LOGGER.throwing(new LogicException());
+                throw LOGGER.throwing(new OrderException(Constants.ORDERS_EMPTY_ERROR));
             }
             return orders;
         } catch (DaoException e) {

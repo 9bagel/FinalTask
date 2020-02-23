@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum UserRole {
-    ADMINISTRATOR(1, Constants.USER_ROLE_ADMINISTRATOR),
-    CUSTOMER(2, Constants.USER_ROLE_CUSTOMER);
+    ADMIN(1, Constants.USER_ROLE_ADMINISTRATOR),
+    USER(2, Constants.USER_ROLE_CUSTOMER);
 
     private static final Map<Integer, UserRole> map;
     private int id;

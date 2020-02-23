@@ -14,23 +14,12 @@
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
         <div class="col-lg-9">
             <c:import url="/WEB-INF/pages/fragments/messages.jsp"/>
-                <c:choose>
-                    <c:when test="${not empty services}">
+                    <c:if test="${not empty services}">
                 <c:import url="/WEB-INF/pages/fragments/shoppingCart/shoppingCart.jsp"/>
-                    </c:when>
-                    <c:otherwise>
-            <div class="card mt-4">
-                <div class="card-body">
-                    <div class="alert alert-danger" role="alert">
-                        <fmt:message bundle="${locale}" key="text.shopping_cart.empty"/>
-                    </div>
-                </div>
-            </div>
-                    </c:otherwise>
-                </c:choose>
+                    </c:if>
         </div>
     </div>
-    <script type="text/javascript">
+    <script>
                                     $(function () {
                                     $('#date').datetimepicker();});
                                  </script>

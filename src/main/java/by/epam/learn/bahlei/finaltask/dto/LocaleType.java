@@ -7,8 +7,8 @@ public enum LocaleType {
     RU_RU(Constants.TITLE_RU, Constants.DESCRIPTION_RU),
     BE_BY(Constants.TITLE_BY, Constants.DESCRIPTION_BY);
 
-    private String titleName;
-    private String descriptionName;
+    private final String titleName;
+    private final String descriptionName;
 
     LocaleType(String titleName, String descriptionName) {
         this.titleName = titleName;

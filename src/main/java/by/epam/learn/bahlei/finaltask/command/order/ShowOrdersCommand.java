@@ -6,6 +6,7 @@ import by.epam.learn.bahlei.finaltask.command.exception.CommandException;
 import by.epam.learn.bahlei.finaltask.entity.order.Order;
 import by.epam.learn.bahlei.finaltask.entity.user.User;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
+import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.logic.factory.LogicFactory;
 import by.epam.learn.bahlei.finaltask.logic.order.OrderLogic;
 import by.epam.learn.bahlei.finaltask.util.Constants;
@@ -16,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ShowOrdersCommand implements ActionCommand {
-    private OrderLogic orderLogic = LogicFactory.getOrderLogic();
+    private final OrderLogic orderLogic = LogicFactory.getOrderLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
@@ -29,6 +30,9 @@ public class ShowOrdersCommand implements ActionCommand {
             return new Response(Constants.ORDERS_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
             return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
+        } catch (OrderException e) {
+            request.getSession().setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
+            return new Response(Constants.ORDERS_JSP, Response.ResponseType.FORWARD);
         }
     }
 }

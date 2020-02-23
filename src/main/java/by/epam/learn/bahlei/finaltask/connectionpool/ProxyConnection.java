@@ -3,7 +3,7 @@ package by.epam.learn.bahlei.finaltask.connectionpool;
 import java.sql.*;
 
 public class ProxyConnection implements AutoCloseable {
-    private Connection connection;
+    private final Connection connection;
 
     public ProxyConnection(Connection connection) {
         this.connection = connection;

@@ -141,4 +141,9 @@ public class Constants {
     public static final String PAGE = "page";
     public static final String TOTAL_PAGES = "totalPages";
     public static final String SEARCH_PHRASE = "searchPhrase";
+    public static final String MAIN = "main";
+    public static final String INDEX_JSP = "/index.jsp";
+    public static final String  PERMISSION_ERROR = "text.permission.error";
+    public static final String ORDERS_EMPTY_ERROR = "text.orders.empty";
+    public static final String SHOPPING_CART_EMPTY = "text.shopping_cart.empty";
 }

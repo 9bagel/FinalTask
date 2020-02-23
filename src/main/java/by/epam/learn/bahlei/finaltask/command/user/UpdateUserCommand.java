@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class UpdateUserCommand implements ActionCommand {
-    private UserLogic userLogic = LogicFactory.getUserLogic();
+    private final UserLogic userLogic = LogicFactory.getUserLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         try {
-            User user = RequestUtil.parseUser(request);
+            User user = RequestUtil.parseUserData(request);
             userLogic.updateUser(user);
 
             session.setAttribute(Constants.USER, user);

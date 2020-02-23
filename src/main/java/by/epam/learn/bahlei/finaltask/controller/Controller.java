@@ -31,9 +31,8 @@ public class Controller extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CommandFactory commandFactory = new CommandFactory();
         try {
-            ActionCommand command = commandFactory.defineCommand(request);
+            ActionCommand command = CommandFactory.defineCommand(request);
             Response commandResponse = command.execute(request);
 
             switch (commandResponse.getType()) {

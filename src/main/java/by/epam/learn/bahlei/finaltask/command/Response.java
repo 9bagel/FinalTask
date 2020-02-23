@@ -1,8 +1,8 @@
 package by.epam.learn.bahlei.finaltask.command;
 
 public class Response {
-    private String path;
-    private ResponseType type;
+    private final String path;
+    private final ResponseType type;
 
     public Response(String path, ResponseType type) {
         this.path = path;

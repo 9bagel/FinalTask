@@ -20,9 +20,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class OrderDetailsCommand implements ActionCommand {
-    private ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
-    private OrderLogic orderLogic = LogicFactory.getOrderLogic();
-    private ReviewLogic reviewLogic = LogicFactory.getReviewLogic();
+    private final ServiceLogic serviceLogic = LogicFactory.getServiceLogic();
+    private final OrderLogic orderLogic = LogicFactory.getOrderLogic();
+    private final ReviewLogic reviewLogic = LogicFactory.getReviewLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

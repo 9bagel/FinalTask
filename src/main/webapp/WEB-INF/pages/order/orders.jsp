@@ -13,6 +13,8 @@
     <div class="row">
         <c:import url="/WEB-INF/pages/fragments/menu.jsp"/>
         <div class="col-lg-9">
+            <c:import url="/WEB-INF/pages/fragments/messages.jsp"/>
+            <c:if test="${not empty orders}">
                 <div class="card-body">
                     <table class="table table-striped">
                         <tbody>
@@ -43,6 +45,7 @@
                         </tbody>
                     </table>
                 </div>
+            </c:if>
         </div>
     </div>
 </div>

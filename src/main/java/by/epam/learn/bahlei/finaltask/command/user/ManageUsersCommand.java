@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ManageUsersCommand implements ActionCommand {
-    private UserLogic userLogic = LogicFactory.getUserLogic();
+    private final UserLogic userLogic = LogicFactory.getUserLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

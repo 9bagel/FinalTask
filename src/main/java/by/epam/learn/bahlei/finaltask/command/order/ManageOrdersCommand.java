@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ManageOrdersCommand implements ActionCommand {
-    private OrderLogic orderLogic = LogicFactory.getOrderLogic();
+    private final OrderLogic orderLogic = LogicFactory.getOrderLogic();
 
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {

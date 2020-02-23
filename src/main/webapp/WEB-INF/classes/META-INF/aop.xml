@@ -1,7 +1,6 @@
 <!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
 <aspectj>
-    <!-- -verbose -debug -->
-    <weaver options="-showWeaveInfo">
+    <weaver>
         <include within="by.epam..*" />
     </weaver>
     <aspects>
