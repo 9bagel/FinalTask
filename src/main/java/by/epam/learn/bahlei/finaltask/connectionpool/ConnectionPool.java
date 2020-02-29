@@ -1,11 +1,12 @@
 package by.epam.learn.bahlei.finaltask.connectionpool;
 
 import by.epam.learn.bahlei.finaltask.connectionpool.exception.ConnectionPoolException;
-import by.epam.learn.bahlei.finaltask.database.DBConnector;
+import by.epam.learn.bahlei.finaltask.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -36,7 +37,7 @@ public class ConnectionPool {
         for (int i = 0; i < POOL_SIZE; i++) {
             Connection connection;
             try {
-                connection = DBConnector.createConnection();
+                connection = createConnection();
                 connectionQueue.offer(new ProxyConnection(connection));
 
             } catch (ClassNotFoundException e) {
@@ -46,6 +47,19 @@ public class ConnectionPool {
                 throw LOGGER.throwing(new ConnectionPoolException("Exception create connectionPool", e));
             }
         }
+    }
+
+
+    public static Connection createConnection() throws ClassNotFoundException, SQLException {
+        Class.forName(Constants.DRIVER);
+
+        ResourceBundle resource = ResourceBundle.getBundle(Constants.DATABASE_PROPERTIES);
+
+        String user = resource.getString(Constants.DB_USER);
+        String password = resource.getString(Constants.DB_PASSWORD);
+        String url = resource.getString(Constants.DB_URL);
+        LOGGER.info("Establishing connection with database");
+        return DriverManager.getConnection(url, user, password);
     }
 
     public ProxyConnection getConnection() throws ConnectionPoolException {

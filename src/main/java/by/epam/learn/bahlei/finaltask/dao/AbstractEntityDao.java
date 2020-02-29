@@ -22,20 +22,44 @@ public abstract class AbstractEntityDao<T extends Entity> implements Dao<T> {
         connectionPool = ConnectionPool.getInstance();
     }
 
+    /**
+     * Returns query to delete entity
+     */
     protected abstract String getDeleteQuery();
 
+    /**
+     * Returns query to add entity
+     */
     protected abstract String getInsertQuery();
 
+    /**
+     * Returns query to update entity
+     */
     protected abstract String getUpdateQuery();
 
+    /**
+     * Returns query to select all entities
+     */
     protected abstract String getSelectAllQuery();
 
+    /**
+     * Returns query to select limited list of entities
+     */
     protected abstract String getSelectLimitQuery();
 
+    /**
+     * Parses ResultSet and returns list of entities
+     */
     protected abstract List<T> parseResultSet(ResultSet resultSet) throws DaoException;
 
+    /**
+     * Prepares statement for insert
+     */
     protected abstract void prepareInsert(PreparedStatement preparedStatement, T entity) throws DaoException;
 
+    /**
+     * Prepares statement for uppdate
+     */
     protected abstract void prepareUpdate(PreparedStatement preparedStatement, T entity) throws DaoException;
 
     @Override

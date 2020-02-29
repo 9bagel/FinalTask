@@ -6,6 +6,9 @@ import by.epam.learn.bahlei.finaltask.util.validator.exception.ValidationExcepti
 
 import java.math.BigDecimal;
 
+/**
+ * Helps validate data
+ */
 public class Validator {
     private static final String LOGIN_REGEX = "^[A-Za-z0-9]{5,20}$";
     private static final String PASSWORD_REGEX = "^.{8,15}$";

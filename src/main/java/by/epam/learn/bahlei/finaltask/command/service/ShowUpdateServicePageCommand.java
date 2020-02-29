@@ -26,7 +26,7 @@ public class ShowUpdateServicePageCommand implements ActionCommand {
             request.setAttribute(Constants.SERVICE_TYPES, ServiceType.values());
             return new Response(Constants.UPDATE_SERVICE_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
-            return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
+            return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         }
     }
 }

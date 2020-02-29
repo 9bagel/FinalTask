@@ -22,7 +22,7 @@ public class ShowOrdersCommand implements ActionCommand {
     @Override
     public Response execute(HttpServletRequest request) throws CommandException {
         try {
-            User user = RequestUtil.getUser(request.getSession());
+            User user = RequestUtil.getUser(request);
             List<Order> orders = orderLogic.getAllOrdersByUserId(user.getId());
 
             Collections.reverse(orders);

@@ -23,24 +23,14 @@ public class Constants {
 
     public static final String SESSION_ERROR_ATTRIBUTE = "errorMessage";
     public static final String SESSION_SUCCESS_ATTRIBUTE = "successMessage";
-    public static final String SESSION_BASKET_ID = "basket_id";
-    public static final String YOU_NEED_TO_LOGIN_MESSAGE = "text.login.message";
-    public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
-    public static final String SERVICE_ADDED_TO_SHOPPING_CART = "text.shopping_cart.add.success";
-    public static final String CREATE_ORDER_ERROR = "text.order.create.error";
-    public static final String EMPTY_CART_ERROR = "text.empty_cart.error";
-    public static final String USER_NOT_FOUND_ERROR = "text.user.not_found";
-    public static final String ORDER_NOT_FOUND = "text.order.not_found";
-    public static final String REFILL_ERROR = "text.refill_error";
-    public static final String ORDER_CREATED_MESSAGE = "text.order.success";
 
-    public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String SERVICES = "services";
     public static final String ATTRIBUTE_ORDERS = "orders";
     public static final String ATTRIBUTE_USERS = "users";
     public static final String TOTAL = "total";
     public static final String ORDER_ID = "order_id";
 
+    //JSPs ================================================
     public static final String LOGIN_JSP = "/WEB-INF/pages/user/login.jsp";
     public static final String BALANCE_JSP = "/WEB-INF/pages/user/balance.jsp";
     public static final String REGISTRATION_JSP = "/WEB-INF/pages/user/registration.jsp";
@@ -55,20 +45,44 @@ public class Constants {
     public static final String ORDERS_JSP = "/WEB-INF/pages/order/orders.jsp";
     public static final String DETAILS_JSP = "/WEB-INF/pages/order/orderDetails.jsp";
     public static final String SEARCH_JSP = "/WEB-INF/pages/search.jsp";
+    public static final String UPDATE_SERVICE_JSP = "/WEB-INF/pages/service/updateService.jsp";
 
-
-    public static final String LOGIN_PAGE = "/controller/login";
     public static final String SUCCESS_PAGE = "/controller/success";
-
-    public static final String LOGIN_ERROR = "error.login";
 
     public static final String LOCALE = "lang";
     public static final String REFERER = "referer";
 
+    public static final String ORDER_STATUSES = "orderStatuses";
+    public static final String ATTRIBUTE_USER_TYPES = "userTypes";
+    public static final String SERVICE_TYPES = "serviceTypes";
+    public static final String LIMIT = "limit";
+    public static final String PAGE = "page";
+    public static final String MAIN = "main";
+    public static final String TOTAL_PAGES = "totalPages";
+    public static final String SEARCH_PHRASE = "searchPhrase";
+    public static final String REVIEW = "review";
+    public static final String PASSWORD_REPEAT = "passwordRepeat";
 
+    public static final int DEFAULT_NUMBER_VALUE = 5;
+    public static final int DEFAULT_PAGE_NUMBER = 1;
     public static final String PRICE = "price";
 
     //Services ================================================
+    public static final String SERVICE_TYPE_HAIRCUT = "service.haircut";
+    public static final String SERVICE_TYPE_PAW_CARE = "service.paw_care";
+    public static final String SERVICE_TYPE_WASHING_DRYING = "service.washing_drying";
+    public static final String SERVICE_TYPE_COMBING_OUT = "service.combing_out";
+    public static final String SERVICE_TYPE_CLAW_TRIMMING = "service.claw_trimming";
+    public static final String SERVICE_TYPE_EAR_CLEANING = "service.ear_cleaning";
+    public static final String SERVICE_TYPE_EYE_BRUSHING = "service.eye_brushing";
+    public static final String SERVICE_TYPE_SPA = "service.spa";
+    public static final String SERVICE_TYPE_TEETH_CLEANING = "service.teeth_cleaning";
+    public static final String SERVICE_TYPE_TAXI = "service.taxi";
+
+    public static final String SERVICE_TYPE_ID = "service_type_id";
+    public static final String SERVICE_TYPE = "service_type";
+    public static final String ATTRIBUTE_SERVICE = "service";
+
     public static final String TITLE_EN = "title_en";
     public static final String TITLE_RU = "title_ru";
     public static final String TITLE_BY = "title_by";
@@ -83,6 +97,7 @@ public class Constants {
 
     public static final String SERVICE_ID = "service_id";
     public static final String ORDER = "order";
+    public static final String MESSAGE = "message";
 
     public static final String ORDER_STATUS_NEW = "text.order.status.new";
     public static final String ORDER_STATUS_IN_PROGRESS = "text.order.status.in_progress";
@@ -105,45 +120,25 @@ public class Constants {
     public static final String SERVICE_ADD_MESSAGE = "text.service.add.message";
     public static final String SERVICE_DELETE_ERROR = "text.service.delete.error";
     public static final String SERVICE_DELETE_MESSAGE = "text.service.delete.message";
-    public static final String SERVICE_TYPE_ID = "service_type_id";
-    public static final String SERVICE_TYPE = "service_type";
-    public static final String ATTRIBUTE_SERVICE = "service";
-    public static final String UPDATE_SERVICE_JSP = "/WEB-INF/pages/service/updateService.jsp";
-    public static final String SERVICE_TYPE_HAIRCUT = "service.haircut";
-    public static final String SERVICE_TYPE_PAW_CARE = "service.paw_care";
-    public static final String SERVICE_TYPE_WASHING_DRYING = "service.washing_drying";
-    public static final String SERVICE_TYPE_COMBING_OUT = "service.combing_out";
-    public static final String SERVICE_TYPE_CLAW_TRIMMING = "service.claw_trimming";
-    public static final String SERVICE_TYPE_EAR_CLEANING = "service.ear_cleaning";
-    public static final String SERVICE_TYPE_EYE_BRUSHING = "service.eye_brushing";
-    public static final String SERVICE_TYPE_SPA = "service.spa";
-    public static final String SERVICE_TYPE_TEETH_CLEANING = "service.teeth_cleaning";
-    public static final String SERVICE_TYPE_TAXI = "service.taxi";
     public static final String SERVICE_UPDATE_MESSAGE = "text.service.update.message";
     public static final String SERVICE_UPDATE_ERROR = "text.service.update.error";
-    public static final String MESSAGE = "message";
     public static final String REVIEW_LEAVE_MESSAGE = "text.review.leave.message";
     public static final String REVIEW_LEAVE_ERROR = "text.review.leave.error";
-    public static final String REVIEW = "review";
-    public static final String LOGIN_INVALID = "text.login.invalid";
-    public static final String PASSWORD_INVALID = "text.password.invalid";
-    public static final String PASSWORD_REPEAT = "passwordRepeat";
     public static final String LOGIN_DATA_INVALID = "text.login.data.invalid";
     public static final String REGISTRATION_DATA_INVALID = "text.registration.data.invalid";
     public static final String LOGIN_TAKEN = "text.login.taken.error";
     public static final String REGISTRATION_ERROR = "text.registration.error";
     public static final String REGISTRATION_MESSAGE = "text.registration.message";
     public static final String  REFILL_MESSAGE = "text.refill.message";
-    public static final String ORDER_STATUSES = "orderStatuses";
-    public static final String ATTRIBUTE_USER_TYPES = "userTypes";
-    public static final String SERVICE_TYPES = "serviceTypes";
-    public static final String LIMIT = "limit";
-    public static final String PAGE = "page";
-    public static final String TOTAL_PAGES = "totalPages";
-    public static final String SEARCH_PHRASE = "searchPhrase";
-    public static final String MAIN = "main";
-    public static final String INDEX_JSP = "/index.jsp";
     public static final String  PERMISSION_ERROR = "text.permission.error";
     public static final String ORDERS_EMPTY_ERROR = "text.orders.empty";
     public static final String SHOPPING_CART_EMPTY = "text.shopping_cart.empty";
+    public static final String LOGIN_ERROR = "error.login";
+    public static final String SERVICE_NOT_FOUND_MESSAGE = "text.service.not_found";
+    public static final String SERVICE_ADDED_TO_SHOPPING_CART = "text.shopping_cart.add.success";
+    public static final String CREATE_ORDER_ERROR = "text.order.create.error";
+    public static final String EMPTY_CART_ERROR = "text.empty_cart.error";
+    public static final String ORDER_NOT_FOUND = "text.order.not_found";
+    public static final String REFILL_ERROR = "text.refill_error";
+    public static final String ORDER_CREATED_MESSAGE = "text.order.success";
 }

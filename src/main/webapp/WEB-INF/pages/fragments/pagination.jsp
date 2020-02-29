@@ -5,12 +5,22 @@
 
     <form role="form" action="controller" method="get" style="display: inline-block">
         <input type="hidden" name="page" value="1">
+        <c:forEach var="par" items="${paramValues}">
+            <c:if test="${par.key != 'page' and par.key != 'limit'}">
+                <input type="hidden" name="${par.key}" value="${par.value[0]}">
+            </c:if>
+        </c:forEach>
         <input class="btn btn-primary btn-sm" name="limit" type="submit" value="5">
         <input class="btn btn-primary btn-sm" name="limit" type="submit" value="10">
         <input class="btn btn-primary btn-sm" name="limit" type="submit" value="20">
     </form>
     <span><fmt:message bundle="${locale}" key="text.page"/></span>
     <form style="display: inline-block" role="form" action="controller" method="get">
+        <c:forEach var="par" items="${paramValues}">
+            <c:if test="${par.key != 'page' and par.key != 'limit'}">
+                <input type="hidden" name="${par.key}" value="${par.value[0]}">
+            </c:if>
+        </c:forEach>
         <input type="number" max="${totalPages}" min="1" name="page" placeholder="${page}/${totalPages}" required="">
         <input type="hidden" name="limit" value="${limit}">
         <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.go"/>" >
@@ -18,6 +28,11 @@
     <c:choose>
         <c:when test="${page != 1}">
             <form style="display: inline-block" role="form" action="controller" method="get">
+                <c:forEach var="par" items="${paramValues}">
+                    <c:if test="${par.key != 'page' and par.key != 'limit'}">
+                    <input type="hidden" name="${par.key}" value="${par.value[0]}">
+                    </c:if>
+                </c:forEach>
                 <input type="hidden" name="page" value="${page - 1}">
                 <input type="hidden" name="limit" value="${limit}">
                 <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.back"/>">
@@ -30,6 +45,11 @@
     <c:choose>
         <c:when test="${page < totalPages}">
             <form style="display: inline-block" role="form" action="controller" method="get">
+                <c:forEach var="par" items="${paramValues}">
+                    <c:if test="${par.key != 'page' and par.key != 'limit'}">
+                        <input type="hidden" name="${par.key}" value="${par.value[0]}">
+                    </c:if>
+                </c:forEach>
                 <input type="hidden" name="page" value="${page + 1}">
                 <input type="hidden" name="limit" value="${limit}">
                 <input class="btn btn-primary btn-sm" type="submit" value="<fmt:message bundle="${locale}" key="text.forward"/>">

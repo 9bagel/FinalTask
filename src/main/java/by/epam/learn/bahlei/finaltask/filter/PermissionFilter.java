@@ -14,7 +14,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static org.apache.logging.log4j.web.WebLoggerContextUtils.getServletContext;
-
+/**
+ * Filters all requests to the servlet by checking whether the user has corresponding rights to execute
+ * a specified command.
+ */
 @WebFilter(urlPatterns = "/controller")
 public class PermissionFilter implements Filter {
 

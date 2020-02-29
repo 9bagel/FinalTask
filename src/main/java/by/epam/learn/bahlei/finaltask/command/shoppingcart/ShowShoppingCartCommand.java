@@ -31,7 +31,7 @@ public class ShowShoppingCartCommand implements ActionCommand {
             request.setAttribute(Constants.SERVICES, services);
             return new Response(Constants.SHOPPING_CART_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
-            return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
+            return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         } catch (ServiceException e) {
             request.getSession().setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
             return new Response(Constants.SHOPPING_CART_JSP, Response.ResponseType.FORWARD);

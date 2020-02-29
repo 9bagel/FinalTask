@@ -26,7 +26,7 @@ public class SearchServiceCommand implements ActionCommand {
             request.setAttribute(Constants.SERVICES, services);
             return new Response(Constants.SEARCH_JSP, Response.ResponseType.FORWARD);
         } catch (LogicException e) {
-            return new Response(Constants.ERROR_JSP, Response.ResponseType.REDIRECT);
+            return new Response(Constants.ERROR_JSP, Response.ResponseType.FORWARD);
         } catch (ServiceException e) {
             request.getSession().setAttribute(Constants.SESSION_ERROR_ATTRIBUTE, e.getMessage());
             return new Response(request.getHeader(Constants.REFERER), Response.ResponseType.REDIRECT);

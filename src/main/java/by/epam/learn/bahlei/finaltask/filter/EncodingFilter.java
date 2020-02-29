@@ -3,7 +3,9 @@ package by.epam.learn.bahlei.finaltask.filter;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
-
+/**
+ * Filters all requests to the servlet and sets encoding
+ */
 @WebFilter(urlPatterns = "/*")
 public class EncodingFilter implements Filter {
     @Override

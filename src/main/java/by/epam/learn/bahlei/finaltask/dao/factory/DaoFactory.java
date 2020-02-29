@@ -5,6 +5,9 @@ import by.epam.learn.bahlei.finaltask.dao.review.ReviewDao;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.dao.user.UserDao;
 
+/**
+ * This class based on factory design pattern provides DAO classes on demand.
+ */
 public class DaoFactory {
     private static ServiceDao serviceDao;
     private static OrderDao orderDao;

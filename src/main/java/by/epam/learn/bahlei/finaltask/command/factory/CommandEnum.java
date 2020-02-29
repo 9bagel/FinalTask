@@ -3,7 +3,6 @@ package by.epam.learn.bahlei.finaltask.command.factory;
 import by.epam.learn.bahlei.finaltask.command.ActionCommand;
 import by.epam.learn.bahlei.finaltask.command.ShowMainPageCommand;
 import by.epam.learn.bahlei.finaltask.command.ShowSuccessPageCommand;
-import by.epam.learn.bahlei.finaltask.command.error.ShowErrorPageCommand;
 import by.epam.learn.bahlei.finaltask.command.locale.ChangeLocaleCommand;
 import by.epam.learn.bahlei.finaltask.command.order.*;
 import by.epam.learn.bahlei.finaltask.command.review.LeaveReviewCommand;
@@ -17,6 +16,9 @@ import by.epam.learn.bahlei.finaltask.entity.user.UserRole;
 import java.util.Arrays;
 import java.util.EnumSet;
 
+/**
+ * This class based on factory design pattern and provides all possible commands on demand.
+ */
 public enum CommandEnum {
     MAIN(new ShowMainPageCommand()) {
         {
@@ -115,12 +117,6 @@ public enum CommandEnum {
         }
     },
     CANCEL_ORDER(new CancelOrderCommand()) {
-        {
-            setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
-        }
-    },
-
-    ERROR(new ShowErrorPageCommand()) {
         {
             setAllowedUserRoles(UserRole.ADMIN, UserRole.USER);
         }

@@ -87,11 +87,26 @@ public class ServiceDao extends ServiceDaoAbstract {
         }
     }
 
-    public List<Service> getServicesByType(ServiceType serviceType) throws DaoException {
+    public List<Service> getLimitServices(int offset, int limit) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getServicesByTypeIdQuery())) {
-            int typeId = serviceType.getId();
-            preparedStatement.setInt(1, typeId);
+             PreparedStatement preparedStatement = connection.prepareStatement(getSelectLimitQuery())) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, limit);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return parseResultSet(resultSet);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw LOGGER.throwing(new DaoException(e));
+        }
+    }
+
+    public List<Service> getLimitServices(ServiceType serviceType, int offset, int limit) throws DaoException {
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getSelectLimitByTypeQuery())) {
+            preparedStatement.setInt(1, serviceType.getId());
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 return parseResultSet(resultSet);
@@ -169,20 +184,6 @@ public class ServiceDao extends ServiceDaoAbstract {
         }
     }
 
-    public List<Service> getLimitServices(int offset, int limit) throws DaoException {
-        try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getSelectLimitQuery())) {
-            preparedStatement.setInt(1, offset);
-            preparedStatement.setInt(2, limit);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return parseResultSet(resultSet);
-            }
-        } catch (SQLException | ConnectionPoolException e) {
-            throw LOGGER.throwing(new DaoException(e));
-        }
-    }
-
     public int getServiceCount() throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getServiceCountQuery())) {
@@ -195,19 +196,17 @@ public class ServiceDao extends ServiceDaoAbstract {
         }
     }
 
-    public List<Service> getLimitServicesByType(int offset, int limit, ServiceType serviceType) throws DaoException {
+    public int getServiceCount(ServiceType serviceType) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getLimitServicesByTypeQuery())) {
-            int typeId = serviceType.getId();
-            preparedStatement.setInt(1, typeId);
-            preparedStatement.setInt(2, offset);
-            preparedStatement.setInt(3, limit);
+             PreparedStatement preparedStatement = connection.prepareStatement(getServiceCountByTypeQuery())) {
+            preparedStatement.setInt(1, serviceType.getId());
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return parseResultSet(resultSet);
+                resultSet.next();
+                return resultSet.getInt(1);
             }
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException();
+            throw LOGGER.throwing(new DaoException(e));
         }
     }
 

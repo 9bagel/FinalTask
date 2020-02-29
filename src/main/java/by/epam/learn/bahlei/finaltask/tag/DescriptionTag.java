@@ -7,7 +7,9 @@ import by.epam.learn.bahlei.finaltask.util.LocaleUtil;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-
+/**
+ * Jstl custom tag class to represent service descriptions on multiple language
+ */
 public class DescriptionTag extends TagSupport {
     private Service service;
 

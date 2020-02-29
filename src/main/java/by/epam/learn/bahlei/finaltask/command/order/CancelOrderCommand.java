@@ -21,7 +21,7 @@ public class CancelOrderCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         try {
-            User user = RequestUtil.getUser(session);
+            User user = RequestUtil.getUser(request);
             int orderId = RequestUtil.parseOrderId(request);
             orderLogic.cancelOrder(user.getId(), orderId);
 

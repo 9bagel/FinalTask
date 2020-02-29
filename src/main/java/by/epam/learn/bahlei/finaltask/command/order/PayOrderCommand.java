@@ -24,7 +24,7 @@ public class PayOrderCommand implements ActionCommand {
 
         try {
             int orderId = RequestUtil.parseOrderId(request);
-            User user = RequestUtil.getUser(session);
+            User user = RequestUtil.getUser(request);
             orderLogic.payOrder(orderId, user);
 
             session.setAttribute(Constants.SESSION_SUCCESS_ATTRIBUTE, Constants.ORDER_PAYED_MESSAGE);

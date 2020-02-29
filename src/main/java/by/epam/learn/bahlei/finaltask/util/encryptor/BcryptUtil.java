@@ -3,7 +3,9 @@ package by.epam.learn.bahlei.finaltask.util.encryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
-
+/**
+ * Class to create Bcrypt hash and check hashes
+ */
 public class BcryptUtil {
     private static final Logger LOGGER = LogManager.getLogger(BcryptUtil.class);
 

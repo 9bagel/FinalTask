@@ -9,6 +9,9 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * This class based on factory design pattern and provides all possible commands on demand.
+ */
 public class CommandFactory {
     private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 

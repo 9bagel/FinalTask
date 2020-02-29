@@ -103,6 +103,14 @@ public class ServiceLogic {
         }
     }
 
+    public List<Service> getLimitServices(ServiceType serviceType, int offset, int limit) throws LogicException {
+        try {
+            return serviceDao.getLimitServices(serviceType, offset, limit);
+        } catch (DaoException e) {
+            throw LOGGER.throwing(new LogicException(e));
+        }
+    }
+
     public int getServiceCount() throws LogicException {
         try {
             return serviceDao.getServiceCount();
@@ -111,11 +119,10 @@ public class ServiceLogic {
         }
     }
 
-    public List<Service> getServicesByTypeName(String serviceTypeName) throws LogicException {
+    public int getServiceCount(ServiceType serviceType) throws LogicException {
         try {
-            ServiceType serviceType = ServiceType.getByName(serviceTypeName.toUpperCase());
-            return serviceDao.getServicesByType(serviceType);
-        } catch (DaoException | ServiceException e) {
+            return serviceDao.getServiceCount(serviceType);
+        } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
         }
     }

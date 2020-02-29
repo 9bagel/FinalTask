@@ -1,5 +1,8 @@
 package by.epam.learn.bahlei.finaltask.command;
 
+/**
+ * Represents forward or redirect for desired JSP path
+ */
 public class Response {
     private final String path;
     private final ResponseType type;

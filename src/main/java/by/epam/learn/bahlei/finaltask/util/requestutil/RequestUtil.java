@@ -26,6 +26,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Utility class that provides methods to parse data from request
+ */
 public class RequestUtil {
     private static final String dateFormatPattern = "MM/dd/yyyy hh:mm";
     private static final Logger LOGGER = LogManager.getLogger(RequestUtil.class);
@@ -46,8 +49,8 @@ public class RequestUtil {
         session.removeAttribute(Constants.SHOPPING_CART);
     }
 
-    public static User getUser(HttpSession session) throws LogicException {
-        User user = (User) session.getAttribute(Constants.USER);
+    public static User getUser(HttpServletRequest request) throws LogicException {
+        User user = (User) request.getSession().getAttribute(Constants.USER);
 
         if (user == null) {
             throw new LogicException();
@@ -59,7 +62,7 @@ public class RequestUtil {
         Order order = new Order();
 
         order.setId(parseOrderId(request));
-        order.setUserId(getUser(request.getSession()).getId());
+        order.setUserId(getUser(request).getId());
         order.setTotal(parseBigDecimal(request, Constants.TOTAL));
         order.setOrderStatus(getOrderStatus(request));
         order.setDate(getDate(request));
@@ -70,7 +73,7 @@ public class RequestUtil {
     public static Order parseNewOrder(HttpServletRequest request) throws LogicException {
         Order order = new Order();
 
-        order.setUserId(getUser(request.getSession()).getId());
+        order.setUserId(getUser(request).getId());
         order.setTotal(parseBigDecimal(request, Constants.TOTAL));
         order.setOrderStatus(OrderStatus.NEW);
         order.setDate(getDate(request));
@@ -117,9 +120,13 @@ public class RequestUtil {
         service.setDescriptionBy(XssCleaner.clean(request.getParameter(Constants.DESCRIPTION_BY)));
 
         service.setPrice(parseBigDecimal(request, Constants.PRICE));
-        service.setServiceType(ServiceType.getById(parseServiceId(request)));
-        service.setId(parseInteger(request, Constants.SERVICE_ID));
+        service.setServiceType(ServiceType.getById(parseServiceTypeId(request)));
 
+        if (request.getParameter(Constants.SERVICE_ID) == null) {
+            service.setId(0);
+        } else {
+            service.setId(parseInteger(request, Constants.SERVICE_ID));
+        }
         return service;
     }
 
@@ -127,7 +134,7 @@ public class RequestUtil {
         Review review = new Review();
 
         review.setOrderId(parseOrderId(request));
-        review.setUserId(getUser(request.getSession()).getId());
+        review.setUserId(getUser(request).getId());
         review.setMessage(XssCleaner.clean(request.getParameter(Constants.MESSAGE)));
 
         return review;
@@ -146,6 +153,10 @@ public class RequestUtil {
 
     public static int parseServiceId(HttpServletRequest request) throws LogicException {
         return parseInteger(request, Constants.SERVICE_ID);
+    }
+
+    public static int parseServiceTypeId(HttpServletRequest request) throws LogicException {
+        return parseInteger(request, Constants.SERVICE_TYPE_ID);
     }
 
     public static int parseOrderId(HttpServletRequest request) throws LogicException {
@@ -174,7 +185,7 @@ public class RequestUtil {
         String stringLimit = request.getParameter(Constants.LIMIT);
 
         if (!NumberUtils.isParsable(stringLimit)) {
-            return 10;
+            return Constants.DEFAULT_NUMBER_VALUE;
         }
         return Integer.parseInt(stringLimit);
     }
@@ -183,8 +194,13 @@ public class RequestUtil {
         String stringPage = request.getParameter(Constants.PAGE);
 
         if (!NumberUtils.isParsable(stringPage)) {
-            return 1;
+            return Constants.DEFAULT_PAGE_NUMBER;
         }
         return Integer.parseInt(stringPage);
+    }
+
+    public static ServiceType getServiceType(HttpServletRequest request) throws ServiceException {
+        String serviceTypeName = XssCleaner.clean(request.getParameter(Constants.SERVICE_TYPE));
+        return ServiceType.getByName(serviceTypeName.toUpperCase());
     }
 }

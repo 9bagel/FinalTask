@@ -21,9 +21,6 @@ import java.util.List;
 public class UserDao extends UserDaoAbstract {
     private final Logger logger = LogManager.getLogger(UserDao.class);
 
-    public UserDao() {
-    }
-
     public List<User> getUserByLogin(String login) throws DaoException {
         try (ProxyConnection connection = connectionPool.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getUserByLoginQuery())) {
