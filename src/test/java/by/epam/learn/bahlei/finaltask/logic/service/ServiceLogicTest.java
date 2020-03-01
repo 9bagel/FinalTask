@@ -4,6 +4,7 @@ import by.epam.learn.bahlei.finaltask.dao.exception.DaoException;
 import by.epam.learn.bahlei.finaltask.dao.service.ServiceDao;
 import by.epam.learn.bahlei.finaltask.entity.service.Service;
 import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
+import by.epam.learn.bahlei.finaltask.util.Constants;
 import com.google.protobuf.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -34,7 +35,7 @@ public class ServiceLogicTest {
     }
 
     @Test(expectedExceptions = LogicException.class)
-    public void throwLogicExceptionWhenProblemWithDB() throws DaoException, LogicException {
+    public void exceptionGetAllServices() throws DaoException, LogicException {
         Mockito.when(serviceDao.getAll()).thenThrow(new DaoException());
         serviceLogic.getAllServices();
     }
@@ -52,7 +53,41 @@ public class ServiceLogicTest {
 
     @Test
     public void okVerifyServiceById() throws DaoException, LogicException, ServiceException {
-        Mockito.when(serviceDao.isServiceExists(1)).thenReturn(true);
+        Mockito.when(serviceDao.isServiceExists(Mockito.anyInt())).thenReturn(true);
         serviceLogic.verifyServiceById(1);
+    }
+
+    @Test(expectedExceptions = ServiceException.class,
+            expectedExceptionsMessageRegExp = Constants.SERVICE_NOT_FOUND_MESSAGE)
+    public void serviceExceptionVerifyServiceById() throws DaoException, LogicException, ServiceException {
+        Mockito.when(serviceDao.isServiceExists(Mockito.anyInt())).thenReturn(false);
+        serviceLogic.verifyServiceById(1);
+    }
+
+    @Test(expectedExceptions = LogicException.class)
+    public void logicExceptionVerifyServiceById() throws DaoException, LogicException, ServiceException {
+        Mockito.when(serviceDao.isServiceExists(Mockito.anyInt())).thenThrow(new DaoException());
+        serviceLogic.verifyServiceById(1);
+    }
+
+    @Test
+    public void okGetServicesById() throws DaoException, LogicException, ServiceException {
+        ArrayList<Service> services = new ArrayList<>();
+        services.add(new Service());
+
+        Mockito.when(serviceDao.getServicesById(Mockito.any())).thenReturn(services);
+        serviceLogic.getServicesById(new ArrayList<>());
+    }
+
+    @Test(expectedExceptions = LogicException.class)
+    public void logicExceptionGetServicesById() throws DaoException, LogicException, ServiceException {
+        Mockito.when(serviceDao.getServicesById(Mockito.any())).thenThrow(new DaoException());
+        serviceLogic.getServicesById(new ArrayList<>());
+    }
+
+    @Test(expectedExceptions = ServiceException.class)
+    public void serviceExceptionGetServicesById() throws DaoException, LogicException, ServiceException {
+        Mockito.when(serviceDao.getServicesById(Mockito.any())).thenReturn(new ArrayList<>());
+        serviceLogic.getServicesById(new ArrayList<>());
     }
 }

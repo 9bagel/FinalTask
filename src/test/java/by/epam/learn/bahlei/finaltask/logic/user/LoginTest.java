@@ -35,19 +35,19 @@ public class LoginTest {
     }
 
     @Test(expectedExceptions = UserException.class)
-    public void throwUserExceptionIfLoginNotPresentInDB() throws DaoException, ValidationException, LogicException, UserException {
+    public void userExceptionLogin() throws DaoException, ValidationException, LogicException, UserException {
         Mockito.when(userDao.getUserByLogin("testLogin")).thenReturn(new ArrayList<>());
         userLogic.login("testLogin", "password");
     }
 
     @Test(expectedExceptions = LogicException.class)
-    public void throwLogicExceptionIfErrorWithDB() throws DaoException, ValidationException, LogicException, UserException {
+    public void logicExceptionLogin() throws DaoException, ValidationException, LogicException, UserException {
         Mockito.when(userDao.getUserByLogin(Mockito.anyString())).thenThrow(new DaoException());
         userLogic.login("login", "password");
     }
 
     @Test(expectedExceptions = UserException.class)
-    public void throwUserExceptionIfWrongPassword() throws DaoException, ValidationException, LogicException, UserException {
+    public void userExceptionLoginIfWrongPassword() throws DaoException, ValidationException, LogicException, UserException {
         User user = new User();
         user.setHashedPassword("$2a$10$bBFzQwn6wPVaMhURo3X0I.eBezmv8nhbtiW3ib.xLkI.u6zrzRAiy"); //validPassword
         List<User> users = new ArrayList<>();

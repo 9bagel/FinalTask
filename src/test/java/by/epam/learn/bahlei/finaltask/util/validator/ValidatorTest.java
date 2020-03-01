@@ -7,7 +7,7 @@ public class ValidatorTest {
 
     @Test(expectedExceptions = ValidationException.class)
     public void throwExceptionIfLoginIncorrect() throws ValidationException {
-        String invalidLogin = "$fdfd$gfg";
+        String invalidLogin = "$invalid#";
         String password = "password";
 
         Validator.validateLogin(invalidLogin, password);

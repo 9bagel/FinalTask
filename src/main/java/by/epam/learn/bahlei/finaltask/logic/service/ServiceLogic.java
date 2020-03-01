@@ -32,7 +32,7 @@ public class ServiceLogic {
     public void verifyServiceById(int serviceId) throws LogicException, ServiceException {
         try {
             if (!serviceDao.isServiceExists(serviceId)) {
-                throw LOGGER.throwing(new ServiceException(Constants.SERVICE_NOT_FOUND_MESSAGE));
+                throw new ServiceException(Constants.SERVICE_NOT_FOUND_MESSAGE);
             }
         } catch (DaoException e) {
             throw LOGGER.throwing(new LogicException(e));
