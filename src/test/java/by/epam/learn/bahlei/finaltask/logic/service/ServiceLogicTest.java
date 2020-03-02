@@ -71,23 +71,36 @@ public class ServiceLogicTest {
     }
 
     @Test
-    public void okGetServicesById() throws DaoException, LogicException, ServiceException {
+    public void okGetServiceListById() throws DaoException, LogicException, ServiceException {
         ArrayList<Service> services = new ArrayList<>();
         services.add(new Service());
 
         Mockito.when(serviceDao.getServicesById(Mockito.any())).thenReturn(services);
-        serviceLogic.getServicesById(new ArrayList<>());
+        serviceLogic.getServiceListById(new ArrayList<>());
     }
 
     @Test(expectedExceptions = LogicException.class)
-    public void logicExceptionGetServicesById() throws DaoException, LogicException, ServiceException {
+    public void logicExceptionGetServiceListById() throws DaoException, LogicException, ServiceException {
         Mockito.when(serviceDao.getServicesById(Mockito.any())).thenThrow(new DaoException());
-        serviceLogic.getServicesById(new ArrayList<>());
+        serviceLogic.getServiceListById(new ArrayList<>());
     }
 
     @Test(expectedExceptions = ServiceException.class)
-    public void serviceExceptionGetServicesById() throws DaoException, LogicException, ServiceException {
+    public void serviceExceptionGetServiceListById() throws DaoException, LogicException, ServiceException {
         Mockito.when(serviceDao.getServicesById(Mockito.any())).thenReturn(new ArrayList<>());
-        serviceLogic.getServicesById(new ArrayList<>());
+        serviceLogic.getServiceListById(new ArrayList<>());
+    }
+
+    @Test(expectedExceptions = LogicException.class)
+    public void logicExceptionGetServiceByIdWhenNoSuchId() throws DaoException, LogicException{
+        Mockito.when(serviceDao.getServiceById(Mockito.anyInt())).thenReturn(new ArrayList<>());
+        serviceLogic.getServiceById(3);
+    }
+
+    @Test(expectedExceptions = ServiceException.class,
+    expectedExceptionsMessageRegExp = Constants.SERVICE_NOT_FOUND_MESSAGE)
+    public void logicExceptionGetServicesLikeWhenNoServicesLike() throws DaoException, LogicException, ServiceException {
+        Mockito.when(serviceDao.getServicesLike(Mockito.anyString())).thenReturn(new ArrayList<>());
+        serviceLogic.getServicesLike("TAXI");
     }
 }

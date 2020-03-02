@@ -39,7 +39,7 @@ public class ServiceLogic {
         }
     }
 
-    public List<Service> getServicesById(List<Integer> serviceIds) throws LogicException, ServiceException {
+    public List<Service> getServiceListById(List<Integer> serviceIds) throws LogicException, ServiceException {
         try {
             List<Service> services = serviceDao.getServicesById(serviceIds);
 

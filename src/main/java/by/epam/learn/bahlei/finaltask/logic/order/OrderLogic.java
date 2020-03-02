@@ -13,6 +13,7 @@ import by.epam.learn.bahlei.finaltask.logic.exception.LogicException;
 import by.epam.learn.bahlei.finaltask.logic.exception.OrderException;
 import by.epam.learn.bahlei.finaltask.logic.exception.UserException;
 import by.epam.learn.bahlei.finaltask.util.Constants;
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -57,7 +58,7 @@ public class OrderLogic {
         }
     }
 
-    public List<Order> getAllOrdersByUserId(int userId) throws LogicException, OrderException {
+    public List<Order> getOrdersByUserId(int userId) throws LogicException, OrderException {
         try {
             List<Order> orders = orderDao.getOrdersByUserId(userId);
             if (orders.isEmpty()) {
@@ -121,17 +122,19 @@ public class OrderLogic {
         }
     }
 
-    private Order getOrderByUserIdAndOrderId(int userId, int orderId) throws OrderException, DaoException {
+    @VisibleForTesting
+    void checkIfUserHasBalanceToPay(User user, Order order) throws UserException {
+        if (user.getBalance().compareTo(order.getTotal()) < 0) {
+            throw LOGGER.throwing(new UserException(Constants.USER_NOT_ENOUGH_BALANCE_ERROR));
+        }
+    }
+
+    @VisibleForTesting
+    Order getOrderByUserIdAndOrderId(int userId, int orderId) throws OrderException, DaoException {
         return orderDao.getOrderByUserIdAndOrderId(userId, orderId)
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new OrderException(Constants.ORDER_NOT_FOUND));
-    }
-
-    private void checkIfUserHasBalanceToPay(User user, Order order) throws UserException {
-        if (user.getBalance().compareTo(order.getTotal()) < 0) {
-            throw LOGGER.throwing(new UserException(Constants.USER_NOT_ENOUGH_BALANCE));
-        }
     }
 
     public List<Order> getAllOrders() throws LogicException {

@@ -23,7 +23,7 @@ public class ShowOrdersCommand implements ActionCommand {
     public Response execute(HttpServletRequest request) throws CommandException {
         try {
             User user = RequestUtil.getUser(request);
-            List<Order> orders = orderLogic.getAllOrdersByUserId(user.getId());
+            List<Order> orders = orderLogic.getOrdersByUserId(user.getId());
 
             Collections.reverse(orders);
             request.setAttribute(Constants.ATTRIBUTE_ORDERS, orders);
